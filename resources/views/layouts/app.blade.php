@@ -39,6 +39,15 @@
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('blog.*') || request()->routeIs('posts.*') ? 'active' : '' }}" href="{{ route('blog.index') }}">Blog</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}" href="{{ route('categories.index') }}">Categories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -97,6 +106,9 @@
                         <ul class="list-unstyled">
                             <li class="mb-2"><a href="{{ route('home') }}" class="text-muted text-decoration-none">Home</a></li>
                             <li class="mb-2"><a href="{{ route('blog.index') }}" class="text-muted text-decoration-none">Blog</a></li>
+                            <li class="mb-2"><a href="{{ route('categories.index') }}" class="text-muted text-decoration-none">Categories</a></li>
+                            <li class="mb-2"><a href="{{ route('about') }}" class="text-muted text-decoration-none">About</a></li>
+                            <li class="mb-2"><a href="{{ route('contact') }}" class="text-muted text-decoration-none">Contact</a></li>
                             @auth
                                 <li class="mb-2"><a href="{{ route('posts.create') }}" class="text-muted text-decoration-none">Write Post</a></li>
                             @endauth

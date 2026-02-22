@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,18 @@ Route::get('/blog', [PostController::class, 'index'])->name('blog.index');
 
 // Blog routes
 Route::resource('posts', PostController::class);
+
+// Category routes
+Route::resource('categories', CategoryController::class);
+
+// Extra pages
+Route::get('/about', function () {
+    return view('pages.about');
+})->name('about');
+
+Route::get('/contact', function () {
+    return view('pages.contact');
+})->name('contact');
 
 Auth::routes();
 
