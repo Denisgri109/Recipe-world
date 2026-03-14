@@ -17,7 +17,7 @@
                         <div class="card-body p-4">
                             <i class="bi bi-envelope fs-1 text-primary mb-3 d-block"></i>
                             <h5>Email</h5>
-                            <p class="text-muted mb-0">info@laravelblog.com</p>
+                            <p class="text-muted mb-0">info@recipeworld.com</p>
                         </div>
                     </div>
                 </div>

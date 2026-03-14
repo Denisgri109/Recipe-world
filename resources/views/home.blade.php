@@ -6,15 +6,15 @@
     <div class="container py-5">
         <div class="row align-items-center">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-3 fw-bold mb-4">Welcome to Laravel Blog</h1>
-                <p class="lead mb-4">Build, Learn, and Share Your Coding Journey</p>
-                <p class="fs-5 mb-4">A modern blogging platform built with Laravel. Share your thoughts, tutorials, and experiences with the developer community.</p>
+                <h1 class="display-3 fw-bold mb-4">Welcome to Recipe World</h1>
+                <p class="lead mb-4">Create, Share, and Discover Delicious Recipes</p>
+                <p class="fs-5 mb-4">A collaborative community cookbook built with Laravel. Share your favourite recipes, discover new dishes, and connect with food enthusiasts everywhere.</p>
                 <div class="d-flex gap-3 justify-content-center">
-                    <a href="{{ route('blog.index') }}" class="btn btn-light btn-lg px-4">Explore Blog Posts</a>
+                    <a href="{{ route('blog.index') }}" class="btn btn-light btn-lg px-4">Browse Recipes</a>
                     @guest
                         <a href="{{ route('register') }}" class="btn btn-outline-light btn-lg px-4">Get Started</a>
                     @else
-                        <a href="{{ route('posts.create') }}" class="btn btn-outline-light btn-lg px-4">Write a Post</a>
+                        <a href="{{ route('posts.create') }}" class="btn btn-outline-light btn-lg px-4">Create a Recipe</a>
                     @endguest
                 </div>
             </div>
@@ -26,47 +26,47 @@
 <div class="container py-5 my-5">
     <div class="row text-center mb-5">
         <div class="col-lg-8 mx-auto">
-            <h2 class="display-5 fw-bold mb-3">Why Choose Our Platform?</h2>
-            <p class="lead text-muted">Everything you need to share your coding journey with the world</p>
+            <h2 class="display-5 fw-bold mb-3">Why Choose Recipe World?</h2>
+            <p class="lead text-muted">Everything you need to share your culinary creations with the world</p>
         </div>
     </div>
     
     <div class="row g-4">
         <div class="col-md-4">
             <div class="card h-100 border-0 shadow-sm">
-                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=500&fit=crop" 
+                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=500&fit=crop" 
                      class="card-img-top" 
-                     alt="Modern Development"
+                     alt="Fresh Ingredients"
                      style="height: 250px; object-fit: cover;">
                 <div class="card-body text-center p-4">
                     <div class="mb-3">
-                        <i class="bi bi-code-slash fs-1 text-primary"></i>
+                        <i class="bi bi-egg-fried fs-1 text-primary"></i>
                     </div>
-                    <h3 class="h4 mb-3">Modern Development</h3>
-                    <p class="text-muted">Built with Laravel 10 and Bootstrap 5, featuring the latest web development practices and tools for a seamless experience.</p>
+                    <h3 class="h4 mb-3">Share Your Recipes</h3>
+                    <p class="text-muted">Create detailed recipes with ingredients, step-by-step instructions, cooking times, and beautiful photos to share with the community.</p>
                 </div>
             </div>
         </div>
         
         <div class="col-md-4">
             <div class="card h-100 border-0 shadow-sm">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=500&fit=crop" 
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=500&fit=crop" 
                      class="card-img-top" 
-                     alt="Community Driven"
+                     alt="Community Cooking"
                      style="height: 250px; object-fit: cover;">
                 <div class="card-body text-center p-4">
                     <div class="mb-3">
                         <i class="bi bi-people fs-1 text-primary"></i>
                     </div>
                     <h3 class="h4 mb-3">Community Driven</h3>
-                    <p class="text-muted">Connect with fellow developers, share knowledge, and grow together in a supportive community of learners and experts.</p>
+                    <p class="text-muted">Connect with fellow food enthusiasts, discover new cuisines, and grow your culinary skills in a supportive community of home cooks.</p>
                 </div>
             </div>
         </div>
         
         <div class="col-md-4">
             <div class="card h-100 border-0 shadow-sm">
-                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=500&fit=crop" 
+                <img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=800&h=500&fit=crop" 
                      class="card-img-top" 
                      alt="Easy to Use"
                      style="height: 250px; object-fit: cover;">
@@ -75,7 +75,7 @@
                         <i class="bi bi-lightning-charge fs-1 text-primary"></i>
                     </div>
                     <h3 class="h4 mb-3">Easy to Use</h3>
-                    <p class="text-muted">Intuitive interface with powerful features. Start writing and publishing your blog posts in minutes, not hours.</p>
+                    <p class="text-muted">Intuitive interface with powerful features. Start creating and sharing your recipes in minutes, not hours.</p>
                 </div>
             </div>
         </div>
@@ -87,20 +87,20 @@
     <div class="container py-5">
         <div class="row align-items-center">
             <div class="col-lg-6 mb-4 mb-lg-0">
-                <h2 class="display-6 fw-bold mb-4">Powerful Features for Modern Blogging</h2>
-                <p class="lead text-muted mb-4">Everything you need to create, manage, and share your content effectively.</p>
+                <h2 class="display-6 fw-bold mb-4">Powerful Features for Recipe Sharing</h2>
+                <p class="lead text-muted mb-4">Everything you need to create, manage, and share your recipes effectively.</p>
                 <ul class="list-unstyled">
                     <li class="mb-3">
                         <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        <strong>Rich Text Editor</strong> - Write and format your posts with ease
+                        <strong>Detailed Instructions</strong> - Write step-by-step cooking instructions with ease
                     </li>
                     <li class="mb-3">
                         <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        <strong>Image Uploads</strong> - Add beautiful featured images to your posts
+                        <strong>Image Uploads</strong> - Add beautiful photos of your finished dishes
                     </li>
                     <li class="mb-3">
                         <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        <strong>SEO Friendly</strong> - Automatic slug generation for better search visibility
+                        <strong>Search & Filter</strong> - Find recipes by category, difficulty, or keyword
                     </li>
                     <li class="mb-3">
                         <i class="bi bi-check-circle-fill text-success me-2"></i>
@@ -108,14 +108,14 @@
                     </li>
                     <li class="mb-3">
                         <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        <strong>Post Management</strong> - Full CRUD operations for your content
+                        <strong>Recipe Management</strong> - Full CRUD operations for your recipes
                     </li>
                 </ul>
             </div>
             <div class="col-lg-6">
-                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop" 
+                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop" 
                      class="img-fluid rounded shadow" 
-                     alt="Coding workspace">
+                     alt="Kitchen workspace">
             </div>
         </div>
     </div>
@@ -125,14 +125,14 @@
 <div class="container py-5 my-5">
     <div class="row">
         <div class="col-lg-8 mx-auto text-center">
-            <h2 class="display-5 fw-bold mb-4">Ready to Start Your Blogging Journey?</h2>
-            <p class="lead text-muted mb-4">Join our community of developers and start sharing your knowledge today.</p>
+            <h2 class="display-5 fw-bold mb-4">Ready to Start Your Culinary Journey?</h2>
+            <p class="lead text-muted mb-4">Join our community of food enthusiasts and start sharing your recipes today.</p>
             @guest
                 <a href="{{ route('register') }}" class="btn btn-primary btn-lg px-5 me-3">Sign Up Free</a>
-                <a href="{{ route('blog.index') }}" class="btn btn-outline-primary btn-lg px-5">View Posts</a>
+                <a href="{{ route('blog.index') }}" class="btn btn-outline-primary btn-lg px-5">Browse Recipes</a>
             @else
-                <a href="{{ route('posts.create') }}" class="btn btn-primary btn-lg px-5 me-3">Create Your First Post</a>
-                <a href="{{ route('blog.index') }}" class="btn btn-outline-primary btn-lg px-5">View All Posts</a>
+                <a href="{{ route('posts.create') }}" class="btn btn-primary btn-lg px-5 me-3">Create Your First Recipe</a>
+                <a href="{{ route('blog.index') }}" class="btn btn-outline-primary btn-lg px-5">View All Recipes</a>
             @endguest
         </div>
     </div>
@@ -144,7 +144,7 @@
         <div class="row text-center">
             <div class="col-md-3 mb-4 mb-md-0">
                 <div class="display-4 fw-bold text-primary">{{ \App\Models\Post::count() }}+</div>
-                <p class="lead mb-0">Blog Posts</p>
+                <p class="lead mb-0">Recipes</p>
             </div>
             <div class="col-md-3 mb-4 mb-md-0">
                 <div class="display-4 fw-bold text-primary">{{ \App\Models\User::count() }}+</div>

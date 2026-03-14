@@ -6,7 +6,7 @@
         <div class="col-md-10">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h2 class="mb-1">Blog</h2>
+                    <h2 class="mb-1">Recipes</h2>
                     <p class="text-muted mb-0">Discover articles, tutorials, and insights from our community</p>
                 </div>
                 @auth

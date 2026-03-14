@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="mb-0">Create New Blog Post</h4>
+                    <h4 class="mb-0">Create New Recipe</h4>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">

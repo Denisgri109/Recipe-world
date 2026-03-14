@@ -7,7 +7,7 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
                     <h2 class="mb-1">Categories</h2>
-                    <p class="text-muted mb-0">Browse all blog categories</p>
+                    <p class="text-muted mb-0">Browse all recipe categories</p>
                 </div>
                 @auth
                     <a href="{{ route('categories.create') }}" class="btn btn-primary">Create New Category</a>

@@ -37,7 +37,7 @@
                             <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('blog.*') || request()->routeIs('posts.*') ? 'active' : '' }}" href="{{ route('blog.index') }}">Blog</a>
+                            <a class="nav-link {{ request()->routeIs('blog.*') || request()->routeIs('posts.*') ? 'active' : '' }}" href="{{ route('blog.index') }}">Recipes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}" href="{{ route('categories.index') }}">Categories</a>
@@ -98,19 +98,19 @@
             <div class="container py-5">
                 <div class="row">
                     <div class="col-md-4 mb-4 mb-md-0">
-                        <h5 class="fw-bold mb-3">{{ config('app.name', 'Laravel Blog') }}</h5>
-                        <p class="text-muted">A modern blogging platform built with Laravel. Share your coding journey, tutorials, and experiences with the developer community.</p>
+                        <h5 class="fw-bold mb-3">{{ config('app.name', 'Recipe World') }}</h5>
+                        <p class="text-muted">A collaborative, database-driven web application designed as a digital community cookbook. Create, share, and discover delicious recipes with food enthusiasts everywhere.</p>
                     </div>
                     <div class="col-md-2 mb-4 mb-md-0">
                         <h6 class="fw-bold mb-3">Quick Links</h6>
                         <ul class="list-unstyled">
                             <li class="mb-2"><a href="{{ route('home') }}" class="text-muted text-decoration-none">Home</a></li>
-                            <li class="mb-2"><a href="{{ route('blog.index') }}" class="text-muted text-decoration-none">Blog</a></li>
+                            <li class="mb-2"><a href="{{ route('blog.index') }}" class="text-muted text-decoration-none">Recipes</a></li>
                             <li class="mb-2"><a href="{{ route('categories.index') }}" class="text-muted text-decoration-none">Categories</a></li>
                             <li class="mb-2"><a href="{{ route('about') }}" class="text-muted text-decoration-none">About</a></li>
                             <li class="mb-2"><a href="{{ route('contact') }}" class="text-muted text-decoration-none">Contact</a></li>
                             @auth
-                                <li class="mb-2"><a href="{{ route('posts.create') }}" class="text-muted text-decoration-none">Write Post</a></li>
+                                <li class="mb-2"><a href="{{ route('posts.create') }}" class="text-muted text-decoration-none">Create Recipe</a></li>
                             @endauth
                         </ul>
                     </div>
@@ -135,7 +135,7 @@
                 <hr class="my-4 border-secondary">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
-                        <p class="text-muted mb-0">&copy; {{ date('Y') }} {{ config('app.name', 'Laravel Blog') }}. All rights reserved.</p>
+                        <p class="text-muted mb-0">&copy; {{ date('Y') }} {{ config('app.name', 'Recipe World') }}. All rights reserved.</p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <p class="text-muted mb-0">Built with <i class="bi bi-heart-fill text-danger"></i> using Laravel</p>
