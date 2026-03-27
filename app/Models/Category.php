@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 class Category extends Model
@@ -17,9 +18,6 @@ class Category extends Model
         'description',
     ];
 
-    /**
-     * Return the sluggable configuration array for this model.
-     */
     public function sluggable(): array
     {
         return [
@@ -27,5 +25,10 @@ class Category extends Model
                 'source' => 'name',
             ],
         ];
+    }
+
+    public function recipes(): HasMany
+    {
+        return $this->hasMany(Recipe::class);
     }
 }
