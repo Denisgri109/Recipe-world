@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,14 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [RecipeController::class, 'index'])->name('home');
 
-Route::get('/blog', [PostController::class, 'index'])->name('blog.index');
+Route::get('/browse', [RecipeController::class, 'index'])->name('recipes.browse');
 
-// Blog routes
-Route::resource('posts', PostController::class);
+// Recipe routes
+Route::resource('recipes', RecipeController::class);
 
 // Category routes
 Route::resource('categories', CategoryController::class);
@@ -38,10 +38,4 @@ Route::get('/contact', function () {
 
 Auth::routes();
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-
-
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
