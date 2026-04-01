@@ -41,6 +41,49 @@
                         <p class="card-text lead">{{ $recipe->description }}</p>
                     </div>
 
+                    <!-- Meta Info Section -->
+                    <div class="d-flex flex-wrap gap-4 py-3 px-4 mb-4 bg-light rounded shadow-sm border">
+                        @if($recipe->prep_time)
+                            <div class="d-flex align-items-center">
+                                <span class="fs-4 me-2">🕒</span>
+                                <div>
+                                    <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 0.75rem;">Prep Time</small>
+                                    <span class="fw-medium">{{ $recipe->prep_time }} mins</span>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if($recipe->cook_time)
+                            <div class="d-flex align-items-center">
+                                <span class="fs-4 me-2">🔥</span>
+                                <div>
+                                    <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 0.75rem;">Cook Time</small>
+                                    <span class="fw-medium">{{ $recipe->cook_time }} mins</span>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if($recipe->prep_time || $recipe->cook_time)
+                            <div class="d-flex align-items-center">
+                                <span class="fs-4 me-2">⏳</span>
+                                <div>
+                                    <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 0.75rem;">Total Time</small>
+                                    <span class="fw-medium">{{ ($recipe->prep_time ?? 0) + ($recipe->cook_time ?? 0) }} mins</span>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if($recipe->servings)
+                            <div class="d-flex align-items-center">
+                                <span class="fs-4 me-2">🍽️</span>
+                                <div>
+                                    <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 0.75rem;">Servings</small>
+                                    <span class="fw-medium">{{ $recipe->servings }}</span>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
                     <hr>
 
                     <div class="row mt-4">
