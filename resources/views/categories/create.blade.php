@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="mb-0">Create New Category</h4>
+                    <h4 class="mb-0">Create New Recipe Category</h4>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('categories.store') }}" method="POST">
@@ -38,7 +38,7 @@
 
                         <div class="d-flex justify-content-between">
                             <a href="{{ route('categories.index') }}" class="btn btn-secondary">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Create Category</button>
+                            <button type="submit" class="btn btn-primary">Create Recipe Category</button>
                         </div>
                     </form>
                 </div>
