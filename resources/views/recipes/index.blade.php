@@ -12,6 +12,27 @@
         @endauth
     </div>
 
+    <!-- Filter Area -->
+    <div class="card mb-4 shadow-sm border-0 bg-light">
+        <div class="card-body py-3">
+            <form action="{{ route('recipes.index') }}" method="GET" class="row g-2 align-items-center">
+                <div class="col-auto">
+                    <label for="category" class="col-form-label fw-bold">Category:</label>
+                </div>
+                <div class="col-auto col-md-3">
+                    <select name="category" id="category" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Categories</option>
+                        @foreach ($categories as $cat)
+                            <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
+                                {{ $cat->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+
     @if ($recipes->count())
         <div class="row g-4">
             @foreach ($recipes as $recipe)

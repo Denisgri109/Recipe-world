@@ -16,11 +16,18 @@ class RecipeController extends Controller
         $this->middleware('auth')->except(['index', 'show']);
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $recipes = Recipe::with(['user', 'category'])->latest()->paginate(12);
+        $query = Recipe::with(['user', 'category'])->latest();
 
-        return view('recipes.index', compact('recipes'));
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        $recipes = $query->paginate(12)->withQueryString();
+        $categories = Category::orderBy('name')->get();
+
+        return view('recipes.index', compact('recipes', 'categories'));
     }
 
     public function create(): View
