@@ -90,6 +90,10 @@
         </nav>
 
         <main class="flex-grow-1">
+            <div class="container pt-3">
+                @include('partials._flash')
+            </div>
+
             @yield('content')
         </main>
 

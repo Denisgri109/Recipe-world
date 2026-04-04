@@ -14,13 +14,6 @@
                 @endauth
             </div>
 
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
             @forelse($categories as $category)
                 <div class="card mb-3">
                     <div class="card-body">
