@@ -33,6 +33,10 @@ class RecipeController extends Controller
             $query->where('category_id', $request->category);
         }
 
+        if ($request->filled('difficulty') && in_array($request->difficulty, ['easy', 'medium', 'hard'], true)) {
+            $query->where('difficulty', $request->difficulty);
+        }
+
         $recipes = $query->paginate(12)->appends($request->query());
         $categories = Category::orderBy('name')->get();
 

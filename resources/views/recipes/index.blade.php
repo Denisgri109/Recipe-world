@@ -44,6 +44,18 @@
                         @endforeach
                     </select>
                 </div>
+
+                <div class="col-auto ms-md-2">
+                    <label for="difficulty" class="col-form-label fw-bold">Difficulty:</label>
+                </div>
+                <div class="col-auto col-md-2">
+                    <select name="difficulty" id="difficulty" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Difficulties</option>
+                        <option value="easy" {{ request('difficulty') === 'easy' ? 'selected' : '' }}>Easy</option>
+                        <option value="medium" {{ request('difficulty') === 'medium' ? 'selected' : '' }}>Medium</option>
+                        <option value="hard" {{ request('difficulty') === 'hard' ? 'selected' : '' }}>Hard</option>
+                    </select>
+                </div>
             </form>
         </div>
     </div>
