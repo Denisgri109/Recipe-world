@@ -40,11 +40,13 @@
                                 <label for="category_id" class="form-label">Category</label>
                                 <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
                                     <option value="">Select a Category...</option>
-                                    @foreach($categories ?? [] as $category)
-                                        <option value="{{ $category->id }}" {{ old('category_id', $recipe->category_id) == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
-                                        </option>
-                                    @endforeach
+                                    @isset($categories)
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}" {{ old('category_id', $recipe->category_id) == $category->id ? 'selected' : '' }}>
+                                                {{ $category->name }}
+                                            </option>
+                                        @endforeach
+                                    @endisset
                                 </select>
                                 @error('category_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -126,20 +128,20 @@
                             </div>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-4" data-ingredient-form>
                             <label class="form-label">Ingredients</label>
-                            <div id="ingredients-container">
+                            <div id="ingredients-container" class="vstack gap-2" data-ingredient-rows>
                                 @php
                                     $oldIngredients = old('ingredients', $recipe->ingredients ? $recipe->ingredients->toArray() : []);
                                 @endphp
                                 @foreach($oldIngredients as $index => $ingredient)
-                                    <div class="row mb-2 ingredient-row">
+                                    <div class="row g-2 align-items-start ingredient-row" data-ingredient-row>
                                         <div class="col-md-5">
                                             <input type="text" 
                                                    class="form-control @error('ingredients.'.$index.'.name') is-invalid @enderror" 
                                                    name="ingredients[{{ $index }}][name]" 
                                                    value="{{ is_array($ingredient) ? ($ingredient['name'] ?? '') : ($ingredient->name ?? '') }}" 
-                                                   placeholder="Ingredient Name" required>
+                                                   placeholder="Ingredient Name">
                                         </div>
                                         <div class="col-md-5">
                                             <input type="text" 
@@ -148,13 +150,13 @@
                                                    value="{{ is_array($ingredient) ? ($ingredient['quantity'] ?? '') : ($ingredient->quantity ?? '') }}" 
                                                    placeholder="Quantity (e.g., 2 cups)">
                                         </div>
-                                        <div class="col-md-2">
-                                            <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
+                                        <div class="col-md-2 d-grid">
+                                            <button type="button" class="btn btn-outline-danger js-remove-ingredient">Remove</button>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
-                            <button type="button" class="btn btn-success btn-sm mt-2" id="add-ingredient">Add Ingredient</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm mt-3 js-add-ingredient">Add Ingredient</button>
                         </div>
 
                         @if($recipe->image_path)

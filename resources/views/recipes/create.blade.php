@@ -168,6 +168,52 @@
                             @enderror
                         </div>
 
+                        <div class="mb-4" data-ingredient-form>
+                            <label class="form-label">Ingredients</label>
+
+                            @php
+                                $oldIngredients = old('ingredients', [['name' => '', 'quantity' => '']]);
+                            @endphp
+
+                            <div class="vstack gap-2" data-ingredient-rows>
+                                @foreach($oldIngredients as $index => $ingredient)
+                                    <div class="row g-2 align-items-start ingredient-row" data-ingredient-row>
+                                        <div class="col-md-5">
+                                            <input
+                                                type="text"
+                                                class="form-control @error('ingredients.'.$index.'.name') is-invalid @enderror"
+                                                name="ingredients[{{ $index }}][name]"
+                                                value="{{ is_array($ingredient) ? ($ingredient['name'] ?? '') : '' }}"
+                                                placeholder="Ingredient name"
+                                            >
+                                            @error('ingredients.'.$index.'.name')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-md-5">
+                                            <input
+                                                type="text"
+                                                class="form-control @error('ingredients.'.$index.'.quantity') is-invalid @enderror"
+                                                name="ingredients[{{ $index }}][quantity]"
+                                                value="{{ is_array($ingredient) ? ($ingredient['quantity'] ?? '') : '' }}"
+                                                placeholder="Quantity (e.g., 2 cups)"
+                                            >
+                                            @error('ingredients.'.$index.'.quantity')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-md-2 d-grid">
+                                            <button type="button" class="btn btn-outline-danger js-remove-ingredient">Remove</button>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <button type="button" class="btn btn-outline-primary btn-sm mt-3 js-add-ingredient">Add Ingredient</button>
+                        </div>
+
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{ route('recipes.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             <button type="submit" class="btn btn-primary">Create Recipe</button>
