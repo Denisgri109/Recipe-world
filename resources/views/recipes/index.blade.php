@@ -16,7 +16,22 @@
     <div class="card mb-4 shadow-sm border-0 bg-light">
         <div class="card-body py-3">
             <form action="{{ route('recipes.index') }}" method="GET" class="row g-2 align-items-center">
-                <div class="col-auto">
+                <div class="col-12 col-md-5">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            name="search"
+                            class="form-control"
+                            placeholder="Search by title or description"
+                            value="{{ request('search') }}"
+                        >
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search me-1"></i> Search
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-auto ms-md-2">
                     <label for="category" class="col-form-label fw-bold">Category:</label>
                 </div>
                 <div class="col-auto col-md-3">
