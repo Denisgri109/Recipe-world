@@ -16,9 +16,12 @@ class RecipeController extends Controller
         $this->middleware('auth')->except(['index', 'show']);
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $recipes = Recipe::with(['user', 'category'])->latest()->paginate(12);
+        $recipes = Recipe::with(['user', 'category'])
+            ->latest()
+            ->paginate(12)
+            ->appends($request->query());
 
         return view('recipes.index', compact('recipes'));
     }

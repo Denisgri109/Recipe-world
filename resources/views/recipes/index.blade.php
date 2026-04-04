@@ -49,7 +49,7 @@
             @endforeach
         </div>
 
-        <div class="mt-4 d-flex justify-content-center">
+        <div class="mt-4 d-flex justify-content-center border-top pt-4">
             {{ $recipes->links() }}
         </div>
     @else
