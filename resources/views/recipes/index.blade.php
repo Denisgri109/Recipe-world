@@ -60,6 +60,34 @@
         </div>
     </div>
 
+    @if(request('search') || request('category') || request('difficulty'))
+        <div class="d-flex align-items-center gap-2 mb-4">
+            <span class="text-muted small fw-bold">Active Filters:</span>
+            
+            @if(request('search'))
+                <span class="badge bg-secondary px-2 py-1">
+                    Search: {{ request('search') }}
+                </span>
+            @endif
+            
+            @if(request('category'))
+                <span class="badge bg-secondary px-2 py-1">
+                    Category: {{ $categories->firstWhere('id', request('category'))->name ?? 'Unknown' }}
+                </span>
+            @endif
+            
+            @if(request('difficulty'))
+                <span class="badge bg-secondary px-2 py-1">
+                    Difficulty: {{ ucfirst(request('difficulty')) }}
+                </span>
+            @endif
+            
+            <a href="{{ route('recipes.index') }}" class="btn btn-sm btn-outline-danger ms-auto">
+                <i class="bi bi-x-circle me-1"></i> Clear Filters
+            </a>
+        </div>
+    @endif
+
     @if ($recipes->count())
         <div class="row g-4">
             @foreach ($recipes as $recipe)
