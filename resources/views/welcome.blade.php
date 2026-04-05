@@ -11,8 +11,8 @@
                 <a href="{{ route('register') }}" class="btn btn-primary btn-lg px-4 me-2">Get Started</a>
                 <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-lg px-4">Log In</a>
             @else
-                <a href="{{ route('blog.index') }}" class="btn btn-primary btn-lg px-4 me-2">Browse Recipes</a>
-                <a href="{{ route('posts.create') }}" class="btn btn-outline-secondary btn-lg px-4">Create Recipe</a>
+                <a href="{{ route('recipes.index') }}" class="btn btn-primary btn-lg px-4 me-2">Browse Recipes</a>
+                <a href="{{ route('recipes.create') }}" class="btn btn-outline-secondary btn-lg px-4">Create Recipe</a>
             @endguest
         </div>
     </div>

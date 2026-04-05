@@ -37,7 +37,7 @@
                             <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('blog.*') || request()->routeIs('posts.*') ? 'active' : '' }}" href="{{ route('blog.index') }}">Recipes</a>
+                            <a class="nav-link {{ request()->routeIs('recipes.*') ? 'active' : '' }}" href="{{ route('recipes.index') }}">Recipes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}" href="{{ route('categories.index') }}">Categories</a>
@@ -105,12 +105,12 @@
                         <h6 class="fw-bold mb-3">Quick Links</h6>
                         <ul class="list-unstyled">
                             <li class="mb-2"><a href="{{ route('home') }}" class="text-muted text-decoration-none">Home</a></li>
-                            <li class="mb-2"><a href="{{ route('blog.index') }}" class="text-muted text-decoration-none">Recipes</a></li>
+                            <li class="mb-2"><a href="{{ route('recipes.index') }}" class="text-muted text-decoration-none">Recipes</a></li>
                             <li class="mb-2"><a href="{{ route('categories.index') }}" class="text-muted text-decoration-none">Categories</a></li>
                             <li class="mb-2"><a href="{{ route('about') }}" class="text-muted text-decoration-none">About</a></li>
                             <li class="mb-2"><a href="{{ route('contact') }}" class="text-muted text-decoration-none">Contact</a></li>
                             @auth
-                                <li class="mb-2"><a href="{{ route('posts.create') }}" class="text-muted text-decoration-none">Create Recipe</a></li>
+                                <li class="mb-2"><a href="{{ route('recipes.create') }}" class="text-muted text-decoration-none">Create Recipe</a></li>
                             @endauth
                         </ul>
                     </div>
