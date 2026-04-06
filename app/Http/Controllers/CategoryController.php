@@ -47,7 +47,7 @@ class CategoryController extends Controller
 
         Category::create($validated);
 
-        return redirect()->route('categories.index')->with('success', 'Category created successfully!');
+        return redirect()->route('categories.index')->with('success', 'Recipe category created successfully!');
     }
 
     /**
@@ -55,9 +55,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category): View
     {
-        $recipes = $category->recipes()->with('user')->latest()->paginate(12);
-
-        return view('categories.show', compact('category', 'recipes'));
+        return view('categories.show', compact('category'));
     }
 
     /**
@@ -80,7 +78,7 @@ class CategoryController extends Controller
 
         $category->update($validated);
 
-        return redirect()->route('categories.show', $category)->with('success', 'Category updated successfully!');
+        return redirect()->route('categories.show', $category)->with('success', 'Recipe category updated successfully!');
     }
 
     /**
@@ -90,6 +88,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully!');
+        return redirect()->route('categories.index')->with('success', 'Recipe category deleted successfully!');
     }
 }
