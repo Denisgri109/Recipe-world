@@ -224,4 +224,6 @@
         </div>
     </div>
 </div>
+
+@include('partials._recipe-validation')
 @endsection
