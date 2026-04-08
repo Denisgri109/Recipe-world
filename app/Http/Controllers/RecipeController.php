@@ -18,12 +18,29 @@ class RecipeController extends Controller
 
     public function index(Request $request): View
     {
-        $recipes = Recipe::with(['user', 'category'])
-            ->latest()
-            ->paginate(12)
-            ->appends($request->query());
+        $query = Recipe::with(['user', 'category'])->latest();
 
-        return view('recipes.index', compact('recipes'));
+        if ($request->filled('search')) {
+            $searchTerm = trim($request->string('search')->toString());
+
+            $query->where(function ($subQuery) use ($searchTerm) {
+                $subQuery->where('title', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('description', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        if ($request->filled('difficulty') && in_array($request->difficulty, ['easy', 'medium', 'hard'], true)) {
+            $query->where('difficulty', $request->difficulty);
+        }
+
+        $recipes = $query->paginate(12)->appends($request->query());
+        $categories = Category::orderBy('name')->get();
+
+        return view('recipes.index', compact('recipes', 'categories'));
     }
 
     public function create(): View

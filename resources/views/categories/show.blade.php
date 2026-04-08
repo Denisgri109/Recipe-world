@@ -40,6 +40,51 @@
                     </div>
                 </div>
             </div>
+
+            <h3 class="mt-5 mb-4">Recipes in {{ $category->name }}</h3>
+
+            @if ($recipes->count())
+                <div class="row g-4 mb-4">
+                    @foreach ($recipes as $recipe)
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="card h-100 shadow-sm">
+                                @if ($recipe->image_path)
+                                    <img
+                                        src="{{ asset('storage/' . $recipe->image_path) }}"
+                                        class="card-img-top"
+                                        alt="{{ $recipe->title }}"
+                                        style="height: 220px; object-fit: cover;"
+                                    >
+                                @else
+                                    <div class="bg-light d-flex align-items-center justify-content-center" style="height: 220px;">
+                                        <i class="bi bi-image text-muted" style="font-size: 2rem;"></i>
+                                    </div>
+                                @endif
+
+                                <div class="card-body d-flex flex-column">
+                                    <h4 class="h5 card-title mb-2">{{ $recipe->title }}</h4>
+
+                                    <p class="card-text text-muted mb-3">
+                                        <strong>Author:</strong> {{ optional($recipe->user)->name ?? 'Unknown' }}
+                                    </p>
+
+                                    <div class="mt-auto">
+                                        <a href="{{ route('recipes.show', $recipe) }}" class="btn btn-outline-primary btn-sm">View Recipe</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="mt-4 d-flex justify-content-center">
+                    {{ $recipes->links() }}
+                </div>
+            @else
+                <div class="alert alert-info mb-0">
+                    No recipes have been posted in this category yet.
+                </div>
+            @endif
         </div>
     </div>
 </div>

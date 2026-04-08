@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="mb-0">Edit Category</h4>
+                    <h4 class="mb-0">Edit Recipe Category</h4>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('categories.update', $category) }}" method="POST">
@@ -39,7 +39,7 @@
 
                         <div class="d-flex justify-content-between">
                             <a href="{{ route('categories.show', $category) }}" class="btn btn-secondary">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Update Category</button>
+                            <button type="submit" class="btn btn-primary">Update Recipe Category</button>
                         </div>
                     </form>
                 </div>

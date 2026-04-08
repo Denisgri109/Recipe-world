@@ -12,6 +12,82 @@
         @endauth
     </div>
 
+    <!-- Filter Area -->
+    <div class="card mb-4 shadow-sm border-0 bg-light">
+        <div class="card-body py-3">
+            <form action="{{ route('recipes.index') }}" method="GET" class="row g-2 align-items-center">
+                <div class="col-12 col-md-5">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            name="search"
+                            class="form-control"
+                            placeholder="Search by title or description"
+                            value="{{ request('search') }}"
+                        >
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search me-1"></i> Search
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-auto ms-md-2">
+                    <label for="category" class="col-form-label fw-bold">Category:</label>
+                </div>
+                <div class="col-auto col-md-3">
+                    <select name="category" id="category" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Categories</option>
+                        @foreach ($categories as $cat)
+                            <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
+                                {{ $cat->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-auto ms-md-2">
+                    <label for="difficulty" class="col-form-label fw-bold">Difficulty:</label>
+                </div>
+                <div class="col-auto col-md-2">
+                    <select name="difficulty" id="difficulty" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Difficulties</option>
+                        <option value="easy" {{ request('difficulty') === 'easy' ? 'selected' : '' }}>Easy</option>
+                        <option value="medium" {{ request('difficulty') === 'medium' ? 'selected' : '' }}>Medium</option>
+                        <option value="hard" {{ request('difficulty') === 'hard' ? 'selected' : '' }}>Hard</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if(request('search') || request('category') || request('difficulty'))
+        <div class="d-flex align-items-center gap-2 mb-4">
+            <span class="text-muted small fw-bold">Active Filters:</span>
+            
+            @if(request('search'))
+                <span class="badge bg-secondary px-2 py-1">
+                    Search: {{ request('search') }}
+                </span>
+            @endif
+            
+            @if(request('category'))
+                <span class="badge bg-secondary px-2 py-1">
+                    Category: {{ $categories->firstWhere('id', request('category'))->name ?? 'Unknown' }}
+                </span>
+            @endif
+            
+            @if(request('difficulty'))
+                <span class="badge bg-secondary px-2 py-1">
+                    Difficulty: {{ ucfirst(request('difficulty')) }}
+                </span>
+            @endif
+            
+            <a href="{{ route('recipes.index') }}" class="btn btn-sm btn-outline-danger ms-auto">
+                <i class="bi bi-x-circle me-1"></i> Clear Filters
+            </a>
+        </div>
+    @endif
+
     @if ($recipes->count())
         <div class="row g-4">
             @foreach ($recipes as $recipe)

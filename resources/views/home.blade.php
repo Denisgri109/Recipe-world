@@ -10,11 +10,11 @@
                 <p class="lead mb-4">Create, Share, and Discover Delicious Recipes</p>
                 <p class="fs-5 mb-4">A collaborative community cookbook built with Laravel. Share your favourite recipes, discover new dishes, and connect with food enthusiasts everywhere.</p>
                 <div class="d-flex gap-3 justify-content-center">
-                    <a href="{{ route('blog.index') }}" class="btn btn-light btn-lg px-4">Browse Recipes</a>
+                    <a href="{{ route('recipes.index') }}" class="btn btn-light btn-lg px-4">Browse Recipes</a>
                     @guest
                         <a href="{{ route('register') }}" class="btn btn-outline-light btn-lg px-4">Get Started</a>
                     @else
-                        <a href="{{ route('posts.create') }}" class="btn btn-outline-light btn-lg px-4">Create a Recipe</a>
+                        <a href="{{ route('recipes.create') }}" class="btn btn-outline-light btn-lg px-4">Create a Recipe</a>
                     @endguest
                 </div>
             </div>
@@ -129,10 +129,10 @@
             <p class="lead text-muted mb-4">Join our community of food enthusiasts and start sharing your recipes today.</p>
             @guest
                 <a href="{{ route('register') }}" class="btn btn-primary btn-lg px-5 me-3">Sign Up Free</a>
-                <a href="{{ route('blog.index') }}" class="btn btn-outline-primary btn-lg px-5">Browse Recipes</a>
+                <a href="{{ route('recipes.index') }}" class="btn btn-outline-primary btn-lg px-5">Browse Recipes</a>
             @else
-                <a href="{{ route('posts.create') }}" class="btn btn-primary btn-lg px-5 me-3">Create Your First Recipe</a>
-                <a href="{{ route('blog.index') }}" class="btn btn-outline-primary btn-lg px-5">View All Recipes</a>
+                <a href="{{ route('recipes.create') }}" class="btn btn-primary btn-lg px-5 me-3">Create Your First Recipe</a>
+                <a href="{{ route('recipes.index') }}" class="btn btn-outline-primary btn-lg px-5">View All Recipes</a>
             @endguest
         </div>
     </div>
@@ -143,7 +143,7 @@
     <div class="container py-4">
         <div class="row text-center">
             <div class="col-md-3 mb-4 mb-md-0">
-                <div class="display-4 fw-bold text-primary">{{ \App\Models\Post::count() }}+</div>
+                <div class="display-4 fw-bold text-primary">{{ \App\Models\Recipe::count() }}+</div>
                 <p class="lead mb-0">Recipes</p>
             </div>
             <div class="col-md-3 mb-4 mb-md-0">
