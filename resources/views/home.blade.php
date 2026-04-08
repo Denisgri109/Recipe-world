@@ -139,24 +139,37 @@
 </div>
 
 <!-- Statistics Section -->
-<div class="bg-dark text-white py-5">
+<div class="text-white py-5" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
     <div class="container py-4">
-        <div class="row text-center">
-            <div class="col-md-3 mb-4 mb-md-0">
-                <div class="display-4 fw-bold text-primary">{{ \App\Models\Recipe::count() }}+</div>
-                <p class="lead mb-0">Recipes</p>
+        <h2 class="text-center fw-bold mb-5">Recipe World in Numbers</h2>
+        <div class="row g-4 text-center">
+            <div class="col-6 col-md-3">
+                <div class="p-4 rounded-3 h-100" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);">
+                    <i class="bi bi-journal-richtext fs-2 d-block mb-2" style="color: #667eea;"></i>
+                    <div class="display-5 fw-bold mb-1" style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{{ \App\Models\Recipe::count() }}+</div>
+                    <p class="mb-0" style="color: rgba(255,255,255,.7);">Recipes Shared</p>
+                </div>
             </div>
-            <div class="col-md-3 mb-4 mb-md-0">
-                <div class="display-4 fw-bold text-primary">{{ \App\Models\User::count() }}+</div>
-                <p class="lead mb-0">Active Users</p>
+            <div class="col-6 col-md-3">
+                <div class="p-4 rounded-3 h-100" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);">
+                    <i class="bi bi-people-fill fs-2 d-block mb-2" style="color: #667eea;"></i>
+                    <div class="display-5 fw-bold mb-1" style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{{ \App\Models\User::count() }}+</div>
+                    <p class="mb-0" style="color: rgba(255,255,255,.7);">Active Users</p>
+                </div>
             </div>
-            <div class="col-md-3 mb-4 mb-md-0">
-                <div class="display-4 fw-bold text-primary">100%</div>
-                <p class="lead mb-0">Free & Open</p>
+            <div class="col-6 col-md-3">
+                <div class="p-4 rounded-3 h-100" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);">
+                    <i class="bi bi-unlock-fill fs-2 d-block mb-2" style="color: #667eea;"></i>
+                    <div class="display-5 fw-bold mb-1" style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">100%</div>
+                    <p class="mb-0" style="color: rgba(255,255,255,.7);">Free &amp; Open</p>
+                </div>
             </div>
-            <div class="col-md-3 mb-4 mb-md-0">
-                <div class="display-4 fw-bold text-primary">24/7</div>
-                <p class="lead mb-0">Available</p>
+            <div class="col-6 col-md-3">
+                <div class="p-4 rounded-3 h-100" style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);">
+                    <i class="bi bi-clock-fill fs-2 d-block mb-2" style="color: #667eea;"></i>
+                    <div class="display-5 fw-bold mb-1" style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">24/7</div>
+                    <p class="mb-0" style="color: rgba(255,255,255,.7);">Always Available</p>
+                </div>
             </div>
         </div>
     </div>
