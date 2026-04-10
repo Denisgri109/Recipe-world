@@ -3,6 +3,7 @@
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Models\Recipe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +19,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    $featuredRecipes = Recipe::with(['user', 'category'])
+        ->latest()
+        ->take(6)
+        ->get();
+
+    return view('home', compact('featuredRecipes'));
 })->name('home');
 
 Route::get('/browse', [RecipeController::class, 'index'])->name('recipes.browse');
