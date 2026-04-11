@@ -107,7 +107,10 @@
                         @endif
 
                         <div class="card-body d-flex flex-column">
-                            <h2 class="h5 card-title mb-2">{{ $recipe->title }}</h2>
+                            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                                <h2 class="h5 card-title mb-0">{{ $recipe->title }}</h2>
+                                <x-difficulty-badge :difficulty="$recipe->difficulty" />
+                            </div>
 
                             <p class="card-text text-muted mb-1">
                                 <strong>Category:</strong> {{ optional($recipe->category)->name ?? 'Uncategorized' }}
