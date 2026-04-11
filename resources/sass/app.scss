@@ -61,13 +61,14 @@ h1, h2, h3, h4, h5 {
     color: $text-dark;
 }
 
-// ─── Navbar ─────────────────────────────────────────────────
 .navbar {
     border-bottom: none;
     box-shadow: 0 1px 30px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(16px);
     background: rgba(255, 252, 248, 0.92) !important;
     padding: 0.6rem 0;
+    position: relative;
+    z-index: 1050;
 
     .navbar-brand {
         font-family: 'Playfair Display', serif;
@@ -1089,6 +1090,38 @@ footer {
 .empty-icon {
     font-size: 3.5rem;
     margin-bottom: 1rem;
+}
+
+// ─── Hero Elevate & Browse Header ───────────────────────────
+.browse-header, .custom-hero {
+    background: linear-gradient(135deg, $coral 0%, $amber 100%);
+    padding: 4rem 0 6rem;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+
+    h1 {
+        color: #fff;
+    }
+
+    p {
+        color: rgba(255, 255, 255, 0.9);
+    }
+}
+
+.browse-wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+
+    svg {
+        display: block;
+        width: calc(100% + 1.3px);
+        height: 60px;
+    }
 }
 
 // ─── Hero Enhancements ──────────────────────────────────────
