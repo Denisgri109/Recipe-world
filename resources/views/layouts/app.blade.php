@@ -122,13 +122,13 @@
         </main>
 
         <!-- Footer -->
-        <footer class="mt-auto" style="background: #1a1a2e;">
-            <div style="height: 4px; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);"></div>
+        <footer class="mt-auto">
+            <div class="footer-accent-bar"></div>
             <div class="container py-5">
                 <div class="row">
                     <div class="col-md-4 mb-4 mb-md-0">
-                        <h5 class="fw-bold mb-3 text-white"><i class="bi bi-egg-fried me-2" style="color: #667eea;"></i>{{ config('app.name', 'Recipe World') }}</h5>
-                        <p style="color: rgba(255,255,255,.65); line-height: 1.7;">A collaborative, database-driven web application designed as a digital community cookbook. Create, share, and discover delicious recipes with food enthusiasts everywhere.</p>
+                        <h5 class="fw-bold mb-3 text-white"><i class="bi bi-egg-fried me-2 footer-brand-icon"></i>{{ config('app.name', 'Recipe World') }}</h5>
+                        <p class="footer-text">A collaborative, database-driven web application designed as a digital community cookbook. Create, share, and discover delicious recipes with food enthusiasts everywhere.</p>
                     </div>
                     <div class="col-md-2 mb-4 mb-md-0">
                         <h6 class="fw-bold mb-3 text-white">Quick Links</h6>
@@ -159,49 +159,20 @@
                             <a href="#" class="footer-social"><i class="bi bi-linkedin fs-4"></i></a>
                             <a href="#" class="footer-social"><i class="bi bi-envelope fs-4"></i></a>
                         </div>
-                        <p class="small" style="color: rgba(255,255,255,.5);">Follow us for updates, new recipes, and cooking tips.</p>
+                        <p class="small footer-text-muted">Follow us for updates, new recipes, and cooking tips.</p>
                     </div>
                 </div>
-                <hr style="border-color: rgba(255,255,255,.1);" class="my-4">
+                <hr class="my-4 footer-hr">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
-                        <p class="mb-0" style="color: rgba(255,255,255,.5);">&copy; {{ date('Y') }} {{ config('app.name', 'Recipe World') }}. All rights reserved.</p>
+                        <p class="mb-0 footer-text-muted">&copy; {{ date('Y') }} {{ config('app.name', 'Recipe World') }}. All rights reserved.</p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="mb-0" style="color: rgba(255,255,255,.5);">Built with <i class="bi bi-heart-fill text-danger"></i> using Laravel &amp; Bootstrap</p>
+                        <p class="mb-0 footer-text-muted">Built with <i class="bi bi-heart-fill text-danger"></i> using Laravel &amp; Bootstrap</p>
                     </div>
                 </div>
             </div>
         </footer>
-
-        <style>
-            .footer-links a {
-                color: rgba(255,255,255,.65);
-                text-decoration: none;
-                transition: color .2s ease, padding-left .2s ease;
-            }
-            .footer-links a:hover {
-                color: #667eea;
-                padding-left: 4px;
-            }
-            .footer-social {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                background: rgba(255,255,255,.08);
-                color: rgba(255,255,255,.65);
-                text-decoration: none;
-                transition: all .2s ease;
-            }
-            .footer-social:hover {
-                background: #667eea;
-                color: #fff;
-                transform: translateY(-2px);
-            }
-        </style>
     </div>
 </body>
 </html>

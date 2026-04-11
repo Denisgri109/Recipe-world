@@ -1,6 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+{{-- ─── Hero ──────────────────────────────────────────────── --}}
+<div class="browse-header">
+    <div class="container hero-content">
+        <h1 class="mb-1"><i class="bi bi-tag me-2"></i>{{ $category->name }}</h1>
+        <p class="mb-0">Created {{ $category->created_at->format('F j, Y') }}
+            @if($category->created_at != $category->updated_at)
+                · Updated {{ $category->updated_at->format('M d, Y') }}
+            @endif
+        </p>
+    </div>
+    <div class="browse-wave">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C480,70 960,0 1440,30 L1440,60 L0,60 Z" fill="#FFFCF8"/>
+        </svg>
+    </div>
+</div>
+
 <div class="container py-4">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -10,66 +27,65 @@
                 </a>
             </div>
 
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="card-title mb-3">{{ $category->name }}</h1>
-                    
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="text-muted">
-                            <small>
-                                Created {{ $category->created_at->format('F j, Y \a\t g:i a') }}
-                                @if($category->created_at != $category->updated_at)
-                                    <span class="ms-2">(Updated: {{ $category->updated_at->format('M d, Y') }})</span>
-                                @endif
-                            </small>
+            <div class="feature-card mb-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <p class="mb-0">{{ $category->description ?? 'No description provided.' }}</p>
+                    @auth
+                        <div class="d-flex gap-2 ms-3 flex-shrink-0">
+                            <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
+                            </form>
                         </div>
-                        @auth
-                            <div>
-                                <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-                                <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
-                                </form>
-                            </div>
-                        @endauth
-                    </div>
-
-                    <div class="card-text">
-                        {!! nl2br(e($category->description ?? 'No description provided.')) !!}
-                    </div>
+                    @endauth
                 </div>
             </div>
 
-            <h3 class="mt-5 mb-4">Recipes in {{ $category->name }}</h3>
+            <div class="section-header text-center">
+                <h2>Recipes in {{ $category->name }}</h2>
+                <span class="section-line"></span>
+            </div>
 
             @if ($recipes->count())
                 <div class="row g-4 mb-4">
-                    @foreach ($recipes as $recipe)
+                    @foreach ($recipes as $index => $recipe)
                         <div class="col-sm-6 col-lg-4">
-                            <div class="card h-100 shadow-sm">
-                                @if ($recipe->image_path)
-                                    <img
-                                        src="{{ asset('storage/' . $recipe->image_path) }}"
-                                        class="card-img-top"
-                                        alt="{{ $recipe->title }}"
-                                        style="height: 220px; object-fit: cover;"
-                                    >
-                                @else
-                                    <div class="bg-light d-flex align-items-center justify-content-center" style="height: 220px;">
-                                        <i class="bi bi-image text-muted" style="font-size: 2rem;"></i>
+                            <div class="recipe-card animate-in animate-delay-{{ ($index % 6) + 1 }}">
+                                <div class="recipe-card-img">
+                                    @if ($recipe->image_path)
+                                        <img src="{{ asset('storage/' . $recipe->image_path) }}" alt="{{ $recipe->title }}">
+                                    @else
+                                        <div class="recipe-card-placeholder">🍽️</div>
+                                    @endif
+                                    <div class="recipe-card-overlay"></div>
+                                </div>
+
+                                <div class="recipe-card-body">
+                                    <h2>{{ $recipe->title }}</h2>
+                                    <div class="recipe-meta">
+                                        @if($recipe->difficulty)
+                                            <span class="meta-item">
+                                                <i class="bi bi-speedometer2"></i>
+                                                {{ ucfirst($recipe->difficulty) }}
+                                            </span>
+                                        @endif
+                                        @if($recipe->prep_time)
+                                            <span class="meta-item">
+                                                <i class="bi bi-clock"></i>
+                                                {{ $recipe->prep_time }} min
+                                            </span>
+                                        @endif
                                     </div>
-                                @endif
-
-                                <div class="card-body d-flex flex-column">
-                                    <h4 class="h5 card-title mb-2">{{ $recipe->title }}</h4>
-
-                                    <p class="card-text text-muted mb-3">
-                                        <strong>Author:</strong> {{ optional($recipe->user)->name ?? 'Unknown' }}
-                                    </p>
-
-                                    <div class="mt-auto">
-                                        <a href="{{ route('recipes.show', $recipe) }}" class="btn btn-outline-primary btn-sm">View Recipe</a>
+                                    <div class="recipe-card-footer">
+                                        <span class="recipe-author">
+                                            <i class="bi bi-person-circle"></i>
+                                            {{ optional($recipe->user)->name ?? 'Unknown' }}
+                                        </span>
+                                        <a href="{{ route('recipes.show', $recipe) }}" class="btn-view">
+                                            View <i class="bi bi-arrow-right"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -81,8 +97,10 @@
                     {{ $recipes->links() }}
                 </div>
             @else
-                <div class="alert alert-info mb-0">
-                    No recipes have been posted in this category yet.
+                <div class="empty-state mt-4">
+                    <div class="empty-icon">🍽️</div>
+                    <h3>No Recipes Yet</h3>
+                    <p>No recipes have been posted in this category yet.</p>
                 </div>
             @endif
         </div>

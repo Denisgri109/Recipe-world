@@ -1,40 +1,51 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-4">
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-        <h1 class="h3 mb-0">Browse Recipes</h1>
-
-        @auth
-            <a href="{{ route('recipes.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus-circle me-1"></i> Create New Recipe
-            </a>
-        @endauth
+{{-- ─── Browse Header ─────────────────────────────────────── --}}
+<div class="browse-header">
+    <div class="container hero-content">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <h1 class="mb-1"><i class="bi bi-book me-2"></i>Browse Recipes</h1>
+                <p class="mb-0">Discover delicious recipes from our community</p>
+            </div>
+            @auth
+                <a href="{{ route('recipes.create') }}" class="btn-hero btn-white btn-hero-sm">
+                    <i class="bi bi-plus-circle me-2"></i>Create New Recipe
+                </a>
+            @endauth
+        </div>
     </div>
+    <div class="browse-wave">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C480,70 960,0 1440,30 L1440,60 L0,60 Z" fill="#FFFCF8"/>
+        </svg>
+    </div>
+</div>
 
-    <!-- Filter Area -->
-    <div class="card mb-4 shadow-sm border-0 bg-light">
-        <div class="card-body py-3">
-            <form action="{{ route('recipes.index') }}" method="GET" class="row g-2 align-items-center">
+{{-- ─── Filter Bar ────────────────────────────────────────── --}}
+<div class="container">
+    <div class="filter-bar">
+        <form action="{{ route('recipes.index') }}" method="GET">
+            <div class="row g-3 align-items-end">
                 <div class="col-12 col-md-5">
+                    <label class="filter-label">Search</label>
                     <div class="input-group">
                         <input
                             type="text"
                             name="search"
                             class="form-control"
-                            placeholder="Search by title or description"
+                            placeholder="Search by title or description..."
                             value="{{ request('search') }}"
                         >
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-search">
                             <i class="bi bi-search me-1"></i> Search
                         </button>
                     </div>
                 </div>
 
-                <div class="col-auto ms-md-2">
-                    <label for="category" class="col-form-label fw-bold">Category:</label>
-                </div>
-                <div class="col-auto col-md-3">
+                <div class="col-6 col-md-3">
+                    <label class="filter-label" for="category">Category</label>
                     <select name="category" id="category" class="form-select" onchange="this.form.submit()">
                         <option value="">All Categories</option>
                         @foreach ($categories as $cat)
@@ -45,10 +56,8 @@
                     </select>
                 </div>
 
-                <div class="col-auto ms-md-2">
-                    <label for="difficulty" class="col-form-label fw-bold">Difficulty:</label>
-                </div>
-                <div class="col-auto col-md-2">
+                <div class="col-6 col-md-3">
+                    <label class="filter-label" for="difficulty">Difficulty</label>
                     <select name="difficulty" id="difficulty" class="form-select" onchange="this.form.submit()">
                         <option value="">All Difficulties</option>
                         <option value="easy" {{ request('difficulty') === 'easy' ? 'selected' : '' }}>Easy</option>
@@ -56,68 +65,101 @@
                         <option value="hard" {{ request('difficulty') === 'hard' ? 'selected' : '' }}>Hard</option>
                     </select>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 
+    {{-- ─── Active Filters ────────────────────────────────── --}}
     @if(request('search') || request('category') || request('difficulty'))
-        <div class="d-flex align-items-center gap-2 mb-4">
-            <span class="text-muted small fw-bold">Active Filters:</span>
-            
+        <div class="active-filters mt-3">
+            <span class="text-muted small fw-bold me-1">Active Filters:</span>
+
             @if(request('search'))
-                <span class="badge bg-secondary px-2 py-1">
-                    Search: {{ request('search') }}
+                <span class="filter-badge">
+                    <i class="bi bi-search"></i> {{ request('search') }}
                 </span>
             @endif
-            
+
             @if(request('category'))
-                <span class="badge bg-secondary px-2 py-1">
-                    Category: {{ $categories->firstWhere('id', request('category'))->name ?? 'Unknown' }}
+                <span class="filter-badge">
+                    <i class="bi bi-tag"></i> {{ $categories->firstWhere('id', request('category'))->name ?? 'Unknown' }}
                 </span>
             @endif
-            
+
             @if(request('difficulty'))
-                <span class="badge bg-secondary px-2 py-1">
-                    Difficulty: {{ ucfirst(request('difficulty')) }}
+                <span class="filter-badge">
+                    <i class="bi bi-speedometer2"></i> {{ ucfirst(request('difficulty')) }}
                 </span>
             @endif
-            
-            <a href="{{ route('recipes.index') }}" class="btn btn-sm btn-outline-danger ms-auto">
-                <i class="bi bi-x-circle me-1"></i> Clear Filters
+
+            <a href="{{ route('recipes.index') }}" class="btn btn-sm btn-outline-danger ms-auto btn-clear">
+                <i class="bi bi-x-circle me-1"></i> Clear
             </a>
         </div>
     @endif
 
+    {{-- ─── Result Count ──────────────────────────────────── --}}
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <p class="result-count mb-0">
+            Showing <span>{{ $recipes->count() }}</span> recipe{{ $recipes->count() !== 1 ? 's' : '' }}
+        </p>
+    </div>
+
+    {{-- ─── Recipe Grid ───────────────────────────────────── --}}
     @if ($recipes->count())
         <div class="row g-4">
-            @foreach ($recipes as $recipe)
+            @foreach ($recipes as $index => $recipe)
                 <div class="col-sm-6 col-lg-4">
-                    <div class="card h-100 shadow-sm">
-                        @if ($recipe->image_path)
-                            <img
-                                src="{{ asset('storage/' . $recipe->image_path) }}"
-                                class="card-img-top"
-                                alt="{{ $recipe->title }}"
-                                style="height: 220px; object-fit: cover;"
-                            >
-                        @else
-                            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 220px;">
-                                <i class="bi bi-image text-muted" style="font-size: 2rem;"></i>
+                    <div class="recipe-card animate-in animate-delay-{{ ($index % 6) + 1 }}">
+                        {{-- Image --}}
+                        <div class="recipe-card-img">
+                            @if ($recipe->image_path)
+                                <img src="{{ asset('storage/' . $recipe->image_path) }}" alt="{{ $recipe->title }}">
+                            @else
+                                <div class="recipe-card-placeholder">🍽️</div>
+                            @endif
+                            <div class="recipe-card-overlay"></div>
+
+                            @if(optional($recipe->category)->name)
+                                <div class="recipe-card-badge">
+                                    <span class="badge">{{ $recipe->category->name }}</span>
+                                </div>
+                            @endif
+                        </div>
+
+                        {{-- Body --}}
+                        <div class="recipe-card-body">
+                            <h2>{{ $recipe->title }}</h2>
+
+                            <div class="recipe-meta">
+                                @if($recipe->difficulty)
+                                    <span class="meta-item">
+                                        <i class="bi bi-speedometer2"></i>
+                                        {{ ucfirst($recipe->difficulty) }}
+                                    </span>
+                                @endif
+                                @if($recipe->prep_time)
+                                    <span class="meta-item">
+                                        <i class="bi bi-clock"></i>
+                                        {{ $recipe->prep_time }} min
+                                    </span>
+                                @endif
+                                @if($recipe->servings)
+                                    <span class="meta-item">
+                                        <i class="bi bi-people"></i>
+                                        {{ $recipe->servings }} servings
+                                    </span>
+                                @endif
                             </div>
-                        @endif
 
-                        <div class="card-body d-flex flex-column">
-                            <h2 class="h5 card-title mb-2">{{ $recipe->title }}</h2>
-
-                            <p class="card-text text-muted mb-1">
-                                <strong>Category:</strong> {{ optional($recipe->category)->name ?? 'Uncategorized' }}
-                            </p>
-                            <p class="card-text text-muted mb-3">
-                                <strong>Author:</strong> {{ optional($recipe->user)->name ?? 'Unknown' }}
-                            </p>
-
-                            <div class="mt-auto">
-                                <a href="{{ route('recipes.show', $recipe) }}" class="btn btn-outline-primary btn-sm">View Recipe</a>
+                            <div class="recipe-card-footer">
+                                <span class="recipe-author">
+                                    <i class="bi bi-person-circle"></i>
+                                    {{ optional($recipe->user)->name ?? 'Unknown' }}
+                                </span>
+                                <a href="{{ route('recipes.show', $recipe) }}" class="btn-view">
+                                    View <i class="bi bi-arrow-right"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -125,14 +167,19 @@
             @endforeach
         </div>
 
-        <div class="mt-4 d-flex justify-content-center border-top pt-4">
+        {{-- Pagination --}}
+        <div class="mt-5 d-flex justify-content-center pb-4">
             {{ $recipes->links() }}
         </div>
     @else
-        <div class="alert alert-info mb-0">
-            No recipes have been posted yet.
+        <div class="empty-state mt-4">
+            <div class="empty-icon">🍽️</div>
+            <h3>No Recipes Yet</h3>
+            <p>No recipes have been posted yet. Be the first to share something delicious!</p>
             @auth
-                <a href="{{ route('recipes.create') }}" class="alert-link">Create the first recipe</a>.
+                <a href="{{ route('recipes.create') }}" class="btn btn-primary mt-3">
+                    <i class="bi bi-plus-circle me-1"></i> Create First Recipe
+                </a>
             @endauth
         </div>
     @endif
