@@ -1,13 +1,51 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    @php
+        $appName = config('app.name', 'Recipe World');
+        $routeName = \Illuminate\Support\Facades\Route::currentRouteName();
+
+        $defaultPageTitle = match ($routeName) {
+            'home' => 'Home',
+            'dashboard' => 'Dashboard',
+            'recipes.index', 'recipes.browse' => 'Browse Recipes',
+            'recipes.create' => 'Create Recipe',
+            'recipes.show' => 'Recipe Details',
+            'recipes.edit' => 'Edit Recipe',
+            'categories.index' => 'Recipe Categories',
+            'categories.create' => 'Create Category',
+            'categories.show' => 'Category Recipes',
+            'categories.edit' => 'Edit Category',
+            'about' => 'About',
+            'contact' => 'Contact',
+            'login' => 'Login',
+            'register' => 'Register',
+            'password.request' => 'Forgot Password',
+            'password.reset' => 'Reset Password',
+            'password.confirm' => 'Confirm Password',
+            'verification.notice' => 'Verify Email',
+            default => $appName,
+        };
+
+        $pageTitle = trim($__env->yieldContent('title', $defaultPageTitle));
+        $fullTitle = $pageTitle === $appName ? $appName : $pageTitle . ' | ' . $appName;
+
+        $defaultMetaDescription = 'Recipe World is a collaborative community cookbook where users can create, share, and discover recipes by category and difficulty.';
+        $defaultMetaKeywords = 'Recipe World, recipes, cooking, community cookbook, Laravel, food, categories, difficulty';
+    @endphp
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="@yield('meta_description', $defaultMetaDescription)">
+    <meta name="keywords" content="@yield('meta_keywords', $defaultMetaKeywords)">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $fullTitle }}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
