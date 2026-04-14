@@ -32,13 +32,13 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => env('VERCEL') ? '/tmp/storage/app' : storage_path('app'),
             'throw' => false,
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => env('VERCEL') ? '/tmp/storage/app/public' : storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
