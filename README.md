@@ -144,3 +144,14 @@ Recipe-world/
 └── routes/
     └── web.php                        # Route definitions
 ```
+
+## Known Issues & Limitations
+
+- **Contact form** - The contact page includes a form layout for demonstration purposes but does not send emails. A mail driver would need to be configured in production.
+- **Image storage** - Uploaded recipe images are stored on the local filesystem via Laravel's `storage/app/public` disk. In a production deployment, a cloud storage solution would be more scalable.
+- **No admin role** - Any authenticated user can create, edit and delete categories. A future improvement would add an admin role to restrict category management.
+
+## Assumptions
+
+- Users have PHP 8.1+, Composer, Node.js 16+, and MySQL installed locally for development.
+- The application is accessed via a modern web browser (Chrome, Firefox, Safari, Edge).
