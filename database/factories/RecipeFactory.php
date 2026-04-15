@@ -126,6 +126,7 @@ class RecipeFactory extends Factory
             'cook_time' => $this->faker->numberBetween(10, 120),
             'servings' => $this->faker->numberBetween(1, 8),
             'difficulty' => $this->faker->randomElement(['easy', 'medium', 'hard']),
+            'image_path' => 'https://picsum.photos/seed/' . $this->faker->uuid() . '/800/600',
         ];
     }
 }

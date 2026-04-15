@@ -37,7 +37,7 @@
 {{-- ─── Stats Strip ───────────────────────────────────────── --}}
 <div class="stats-section">
     <div class="container">
-        <div class="row g-3">
+        <div class="row animate-on-scroll opacity-0 g-3">
             <div class="col-6 col-md-3">
                 <div class="stat-item">
                     <span class="stat-icon"><i class="bi bi-journal-richtext"></i></span>
@@ -78,7 +78,7 @@
         <span class="section-line"></span>
     </div>
 
-    <div class="row g-4 g-lg-5">
+    <div class="row animate-on-scroll opacity-0 g-4 g-lg-5">
         <div class="col-md-4">
             <div class="feature-card text-center animate-in animate-delay-1">
                 <span class="feature-step">01</span>
@@ -165,3 +165,4 @@
     </div>
 </div>
 @endsection
+

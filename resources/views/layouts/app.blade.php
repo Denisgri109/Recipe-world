@@ -77,6 +77,13 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('orders.my') }}">
+                                        {{ __('My Orders') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('orders.sales') }}">
+                                        {{ __('My Sales') }}
+                                    </a>
+                                    <hr class="dropdown-divider">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -176,5 +183,7 @@
             </div>
         </footer>
     </div>
+<script>document.addEventListener('DOMContentLoaded',()=>{const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}});},{threshold:0.1});document.querySelectorAll('.animate-on-scroll').forEach(el=>observer.observe(el));});</script>
 </body>
 </html>
+

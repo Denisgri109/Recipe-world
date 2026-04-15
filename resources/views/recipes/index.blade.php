@@ -114,7 +114,7 @@
                         {{-- Image --}}
                         <div class="recipe-card-img">
                             @if ($recipe->image_path)
-                                <img src="{{ asset('storage/' . $recipe->image_path) }}" alt="{{ $recipe->title }}">
+                                <img src="{{ $recipe->image_url }}" alt="{{ $recipe->title }}">
                             @else
                                 <div class="recipe-card-placeholder">🍽️</div>
                             @endif
@@ -152,14 +152,26 @@
                                 @endif
                             </div>
 
-                            <div class="recipe-card-footer">
+                            <div class="recipe-card-footer d-flex align-items-center justify-content-between w-100">
                                 <span class="recipe-author">
                                     <i class="bi bi-person-circle"></i>
                                     {{ optional($recipe->user)->name ?? 'Unknown' }}
                                 </span>
-                                <a href="{{ route('recipes.show', $recipe) }}" class="btn-view">
-                                    View <i class="bi bi-arrow-right"></i>
-                                </a>
+                                <div class="d-flex align-items-center gap-2">
+                                      @if(auth()->check() && $recipe->user_id !== auth()->id() && !\App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists())
+                                          <form action="{{ route('orders.purchase', $recipe) }}" method="POST" class="m-0 p-0">
+                                              @csrf
+                                              <button type="submit" class="btn btn-sm btn-success">
+                                                  <i class="bi bi-cart"></i> Buy
+                                              </button>
+                                          </form>
+                                      @elseif(auth()->check() && \App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists())
+                                          <span class="badge bg-success"><i class="bi bi-check-circle"></i> Purchased</span>
+                                    @endif
+                                    <a href="{{ route('recipes.show', $recipe) }}" class="btn-view">
+                                        View <i class="bi bi-arrow-right"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -185,3 +197,4 @@
     @endif
 </div>
 @endsection
+

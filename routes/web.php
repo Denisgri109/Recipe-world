@@ -41,3 +41,11 @@ Route::get('/contact', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
+
+use App\Http\Controllers\OrderController;
+
+Route::middleware(['auth'])->prefix('orders')->name('orders.')->group(function () {
+    Route::get('my-purchases', [OrderController::class, 'myOrders'])->name('my');
+    Route::get('sales', [OrderController::class, 'sales'])->name('sales');
+    Route::post('{recipe}/purchase', [OrderController::class, 'purchase'])->name('purchase');
+});
