@@ -43,7 +43,7 @@
                         <a href="{{ route('categories.show', $category) }}" class="btn-view">
                             View <i class="bi bi-arrow-right"></i>
                         </a>
-                        @auth
+                        @if(auth()->check() && auth()->id() === $category->user_id)
                             <div class="d-flex gap-2">
                                 <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
                                 <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline">
@@ -52,7 +52,7 @@
                                     <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
                                 </form>
                             </div>
-                        @endauth
+                        @endif
                     </div>
                 </div>
             @empty

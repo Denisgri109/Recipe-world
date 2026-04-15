@@ -50,4 +50,17 @@ class Recipe extends Model
             ],
         ];
     }
+
+    public function getImageUrlAttribute(): ?string
+    {
+        if (!$this->image_path) {
+            return null;
+        }
+        
+        if (str_starts_with($this->image_path, 'http')) {
+            return $this->image_path;
+        }
+
+        return asset('storage/' . $this->image_path);
+    }
 }

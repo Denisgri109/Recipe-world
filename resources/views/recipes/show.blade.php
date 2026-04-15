@@ -10,7 +10,7 @@
 
             <div class="recipe-detail-card">
                 @if($recipe->image_path)
-                    <img src="{{ asset('storage/' . $recipe->image_path) }}" class="recipe-detail-img" alt="{{ $recipe->title }}">
+                    <img src="{{ $recipe->image_url }}" class="recipe-detail-img" alt="{{ $recipe->title }}">
                 @endif
 
                 <div class="recipe-detail-body">
@@ -20,6 +20,14 @@
                             <p class="text-muted mb-0">By {{ $recipe->user->name ?? 'Unknown Author' }}</p>
                         </div>
                         <div class="d-flex gap-2">
+                              @if(auth()->check() && $recipe->user_id !== auth()->id() && !\App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists())
+                                  <form action="{{ route('orders.purchase', $recipe) }}" method="POST" class="m-0 p-0">
+                                      @csrf
+                                      <button type="submit" class="btn btn-success">Buy Recipe</button>
+                                  </form>
+                              @elseif(auth()->check() && \App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists())
+                                  <button class="btn btn-secondary" disabled>Purchased</button>
+                            @endif
                             @can('update', $recipe)
                                 <a href="{{ route('recipes.edit', $recipe) }}" class="btn btn-primary">Edit</a>
                             @endcan

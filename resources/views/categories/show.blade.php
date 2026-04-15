@@ -30,7 +30,7 @@
             <div class="feature-card mb-4">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <p class="mb-0">{{ $category->description ?? 'No description provided.' }}</p>
-                    @auth
+                    @if(auth()->check() && auth()->id() === $category->user_id)
                         <div class="d-flex gap-2 ms-3 flex-shrink-0">
                             <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-outline-primary">Edit</a>
                             <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline">
@@ -39,7 +39,7 @@
                                 <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
                             </form>
                         </div>
-                    @endauth
+                    @endif
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
                             <div class="recipe-card animate-in animate-delay-{{ ($index % 6) + 1 }}">
                                 <div class="recipe-card-img">
                                     @if ($recipe->image_path)
-                                        <img src="{{ asset('storage/' . $recipe->image_path) }}" alt="{{ $recipe->title }}">
+                                        <img src="{{ $recipe->image_url }}" alt="{{ $recipe->title }}">
                                     @else
                                         <div class="recipe-card-placeholder">🍽️</div>
                                     @endif

@@ -135,7 +135,7 @@
                     @if($recipe->image_path)
                         <div class="mb-3">
                             <label class="form-label d-block">Current Image</label>
-                            <img src="{{ asset('storage/' . $recipe->image_path) }}" alt="{{ $recipe->title }}" class="img-thumbnail mb-2 edit-preview-img">
+                            <img src="{{ $recipe->image_url }}" alt="{{ $recipe->title }}" class="img-thumbnail mb-2 edit-preview-img">
                         </div>
                     @endif
 

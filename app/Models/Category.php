@@ -16,6 +16,7 @@ class Category extends Model
         'name',
         'slug',
         'description',
+        'user_id',
     ];
 
     public function sluggable(): array
@@ -25,6 +26,11 @@ class Category extends Model
                 'source' => 'name',
             ],
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function recipes(): HasMany
