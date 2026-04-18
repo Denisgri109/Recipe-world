@@ -45,7 +45,7 @@
                         <p class="card-text lead">{{ $recipe->description }}</p>
                     </div>
 
-                    {{-- Meta Info --}}
+                    {{-- Meta Info (visible to everyone as preview) --}}
                     <div class="recipe-detail-meta">
                         @if($recipe->prep_time)
                             <div class="d-flex align-items-center">
@@ -90,30 +90,63 @@
 
                     <hr>
 
-                    <div class="row mt-4">
-                        <div class="col-md-4 mb-4">
-                            <h4 class="fw-bold mb-3">Ingredients</h4>
-                            <ul class="list-group list-group-flush">
-                                @forelse($recipe->ingredients->sortBy('order') as $ingredient)
-                                    <li class="list-group-item px-0">
-                                        {{ $ingredient->quantity }} {{ $ingredient->name }}
-                                    </li>
-                                @empty
-                                    <li class="list-group-item px-0 text-muted">No ingredients listed.</li>
-                                @endforelse
-                            </ul>
-                        </div>
+                    {{-- ─── Purchase Gate: Only show full recipe to owner or purchaser ─── --}}
+                    @php
+                        $isOwner = auth()->check() && $recipe->user_id === auth()->id();
+                        $hasPurchased = auth()->check() && \App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists();
+                        $canViewFull = $isOwner || $hasPurchased;
+                    @endphp
 
-                        <div class="col-md-8 mb-4">
-                            <h4 class="fw-bold mb-3">Instructions</h4>
-                            <div class="recipe-instructions">
-                                {!! nl2br(e($recipe->instructions)) !!}
+                    @if($canViewFull)
+                        <div class="row mt-4">
+                            <div class="col-md-4 mb-4">
+                                <h4 class="fw-bold mb-3">Ingredients</h4>
+                                <ul class="list-group list-group-flush">
+                                    @forelse($recipe->ingredients->sortBy('order') as $ingredient)
+                                        <li class="list-group-item px-0">
+                                            {{ $ingredient->quantity }} {{ $ingredient->name }}
+                                        </li>
+                                    @empty
+                                        <li class="list-group-item px-0 text-muted">No ingredients listed.</li>
+                                    @endforelse
+                                </ul>
+                            </div>
+
+                            <div class="col-md-8 mb-4">
+                                <h4 class="fw-bold mb-3">Instructions</h4>
+                                <div class="recipe-instructions">
+                                    {!! nl2br(e($recipe->instructions)) !!}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @else
+                        {{-- Locked content for non-purchasers --}}
+                        <div class="text-center py-5">
+                            <div class="mb-3">
+                                <span style="font-size: 3rem;">🔒</span>
+                            </div>
+                            <h4 class="fw-bold mb-2">Full Recipe Locked</h4>
+                            <p class="text-muted mb-4">
+                                Purchase this recipe to view the full ingredients list and step-by-step instructions.
+                            </p>
+                            @auth
+                                <form action="{{ route('orders.purchase', $recipe) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <i class="bi bi-cart me-1"></i> Buy This Recipe
+                                    </button>
+                                </form>
+                            @else
+                                <a href="{{ route('login') }}" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-box-arrow-in-right me-1"></i> Log In to Purchase
+                                </a>
+                            @endauth
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
