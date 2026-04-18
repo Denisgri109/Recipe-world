@@ -2,54 +2,57 @@
 
 # ============================================================
 # Azure App Service Startup Script for Laravel
-# This runs each time the container starts.
+# Runs each time the container starts, BEFORE php-fpm.
+# Must complete quickly — slow/hanging commands block php-fpm.
 # ============================================================
 
 echo ">>> Starting Laravel Azure startup script..."
 
-# Copy custom Nginx configuration
-cp /home/site/wwwroot/default /etc/nginx/sites-available/default
-service nginx reload
-
-echo ">>> Nginx configuration applied."
-
-# Ensure storage directories exist and are writable
-mkdir -p /home/site/wwwroot/storage/framework/cache/data
-mkdir -p /home/site/wwwroot/storage/framework/sessions
-mkdir -p /home/site/wwwroot/storage/framework/views
-mkdir -p /home/site/wwwroot/storage/logs
-mkdir -p /home/site/wwwroot/bootstrap/cache
-
-# Set permissions
-chmod -R 775 /home/site/wwwroot/storage
-chmod -R 775 /home/site/wwwroot/bootstrap/cache
-chown -R www-data:www-data /home/site/wwwroot/storage
-chown -R www-data:www-data /home/site/wwwroot/bootstrap/cache
-
-echo ">>> Storage directories created and permissions set."
-
 cd /home/site/wwwroot
 
-# Clear and rebuild caches
-php artisan config:clear
-php artisan cache:clear
-php artisan view:clear
-php artisan route:clear
+# Copy custom Nginx configuration
+if [ -f /home/site/wwwroot/default ]; then
+    cp /home/site/wwwroot/default /etc/nginx/sites-available/default
+    service nginx reload 2>/dev/null || true
+    echo ">>> Nginx configuration applied."
+fi
 
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+# Ensure storage directories exist and are writable
+mkdir -p storage/framework/cache/data
+mkdir -p storage/framework/sessions
+mkdir -p storage/framework/views
+mkdir -p storage/logs
+mkdir -p bootstrap/cache
+
+chmod -R 775 storage
+chmod -R 775 bootstrap/cache
+chown -R www-data:www-data storage 2>/dev/null || true
+chown -R www-data:www-data bootstrap/cache 2>/dev/null || true
+
+echo ">>> Storage directories ready."
+
+# Clear caches (these are fast and don't need DB)
+php artisan config:clear 2>&1 || true
+php artisan cache:clear 2>&1 || true
+php artisan view:clear 2>&1 || true
+php artisan route:clear 2>&1 || true
+
+echo ">>> Caches cleared."
+
+# Build config cache (does NOT need DB connection)
+php artisan config:cache 2>&1 || true
+php artisan route:cache 2>&1 || true
+php artisan view:cache 2>&1 || true
 
 echo ">>> Caches rebuilt."
 
-# Run migrations
-php artisan migrate --force
+# Run migrations in the background so they don't block php-fpm startup
+# Output goes to storage/logs/migration.log for debugging
+nohup bash -c 'cd /home/site/wwwroot && php artisan migrate --force 2>&1 >> storage/logs/migration.log' &
 
-echo ">>> Migrations complete."
+echo ">>> Migrations started in background."
 
-# Create storage symlink (public/storage -> storage/app/public)
-php artisan storage:link --force 2>/dev/null || true
+# Create storage symlink
+php artisan storage:link --force 2>&1 || true
 
-echo ">>> Storage link created."
-
-echo ">>> Laravel startup complete!"
+echo ">>> Laravel startup complete! PHP-FPM will start next."
