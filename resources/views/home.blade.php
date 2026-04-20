@@ -2,7 +2,7 @@
 
 @section('content')
 {{-- ─── Hero ──────────────────────────────────────────────── --}}
-<div class="custom-hero-small">
+<div class="custom-hero-small" style="background: linear-gradient(rgba(232,87,61,0.8), rgba(209,68,41,0.9)), url('https://images.unsplash.com/photo-1542010589005-d1eabd39f864?q=80&w=2670&auto=format&fit=crop') no-repeat center center; background-size: cover; padding-top: 5rem; padding-bottom: 5rem;">
     <div class="container text-center hero-content">
         <div class="hero-emoji">🍳</div>
         <h1 class="hero-title mb-2">Recipe World</h1>
@@ -189,9 +189,9 @@
 
 {{-- ─── CTA Banner ────────────────────────────────────────── --}}
 <div class="container pb-5">
-    <div class="cta-banner text-center cta-content">
-        <h3 class="mb-2">Ready to Start Cooking?</h3>
-        <p class="mb-4">Join our community of food lovers sharing their best recipes every day.</p>
+    <div class="cta-banner text-center cta-content py-5 rounded-4 shadow-lg text-white" style="background: linear-gradient(rgba(232,87,61,0.7), rgba(209,68,41,0.85)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2670&auto=format&fit=crop') center/cover; z-index: 1;">
+        <h3 class="mb-2 fw-bold" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">Ready to Start Cooking?</h3>
+        <p class="mb-4 lead text-white-50">Join our community of food lovers sharing their best recipes every day.</p>
         @guest
             <a href="{{ route('register') }}" class="btn-cta">
                 <i class="bi bi-arrow-right-circle me-2"></i>Sign Up Free

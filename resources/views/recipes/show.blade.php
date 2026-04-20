@@ -8,12 +8,14 @@
                 <a href="{{ route('recipes.index') }}" class="btn btn-outline-secondary">&larr; Back to Recipes</a>
             </div>
 
-            <div class="recipe-detail-card">
+            <div class="recipe-detail-card" style="overflow: hidden; border-radius: 15px; background: #fff;">
                 @if($recipe->image_path)
-                    <img src="{{ $recipe->image_url }}" class="recipe-detail-img" alt="{{ $recipe->title }}">
+                    <img src="{{ $recipe->image_url }}" class="recipe-detail-img w-100" style="object-fit: cover; max-height: 450px;" alt="{{ $recipe->title }}">
+                @else
+                    <img src="https://images.unsplash.com/photo-1495521821757-a1efb6729352?q=80&w=1200&auto=format&fit=crop" class="recipe-detail-img w-100" style="object-fit: cover; max-height: 450px;" alt="Default Recipe Image">
                 @endif
 
-                <div class="recipe-detail-body">
+                <div class="recipe-detail-body p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
                         <div>
                             <h2 class="recipe-detail-title">{{ $recipe->title }}</h2>
@@ -32,10 +34,10 @@
                                 <a href="{{ route('recipes.edit', $recipe) }}" class="btn btn-primary">Edit</a>
                             @endcan
                             @can('delete', $recipe)
-                                <form action="{{ route('recipes.destroy', $recipe) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this recipe?');">
+                                <form action="{{ route('recipes.destroy', $recipe) }}" method="POST" class="delete-form">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger delete-btn" data-confirm-message="Are you sure you want to delete the recipe '{{ $recipe->title }}'?">Delete</button>
                                 </form>
                             @endcan
                         </div>

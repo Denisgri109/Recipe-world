@@ -755,6 +755,110 @@ h1, h2, h3, h4, h5 {
     }
 }
 
+// ─── Auth Pages ───────────────────────────────────────────
+.auth-shell {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 28px 70px rgba(49, 17, 6, 0.28) !important;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 36px 80px rgba(49, 17, 6, 0.34) !important;
+    }
+}
+
+.auth-panel {
+    border-left: 1.5px solid rgba(0, 0, 0, 0.1);
+}
+
+.auth-shell-register {
+    .auth-panel {
+        border-left: 0;
+        border-right: 1.5px solid rgba(0, 0, 0, 0.1);
+    }
+}
+
+.auth-media {
+    transition: transform 0.5s ease;
+}
+
+.auth-shell:hover .auth-media {
+    transform: scale(1.015);
+}
+
+.auth-media-content {
+    transform: translateY(0);
+    transition: transform 0.35s ease, opacity 0.35s ease;
+    opacity: 0.95;
+    z-index: 2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.auth-shell:hover .auth-media-content {
+    transform: translateY(-4px);
+    opacity: 1;
+}
+
+.auth-form {
+    .auth-input {
+        border: 1.5px solid rgba(0, 0, 0, 0.08) !important;
+        border-radius: 12px;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+
+        &:hover {
+            border-color: rgba(232, 87, 61, 0.4) !important;
+            background-color: #fff !important;
+        }
+
+        &:focus {
+            border-color: rgba(232, 87, 61, 0.6) !important;
+            box-shadow: 0 0 0 4px rgba(232, 87, 61, 0.15) !important;
+            background-color: #fff !important;
+            transform: translateY(-1px);
+        }
+    }
+}
+
+.auth-submit-btn {
+    background-color: $coral !important;
+    border-color: $coral !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+
+    &:hover {
+        background-color: $coral-dark !important;
+        border-color: $coral-dark !important;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 26px rgba(232, 87, 61, 0.36);
+    }
+}
+
+.auth-google-btn {
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        border-color: rgba(232, 87, 61, 0.32) !important;
+        box-shadow: 0 10px 24px rgba(42, 42, 58, 0.12);
+    }
+}
+
+.auth-link {
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+
+    &:hover {
+        color: $coral-dark !important;
+        text-shadow: 0 0 1px rgba(209, 68, 41, 0.25);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .auth-panel,
+    .auth-shell-register .auth-panel {
+        border-left: 0;
+        border-right: 0;
+    }
+}
+
 // ─── General ────────────────────────────────────────────────
 .card {
     transition: $transition;

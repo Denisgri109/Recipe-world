@@ -46,6 +46,13 @@ Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallb
 
 Auth::routes();
 
+use App\Http\Controllers\ProfileController;
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
+
 Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
 
 use App\Http\Controllers\OrderController;

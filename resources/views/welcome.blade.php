@@ -2,7 +2,7 @@
 
 @section('content')
 {{-- ─── Hero ──────────────────────────────────────────────── --}}
-<div class="custom-hero-small">
+<div class="custom-hero-small" style="background: linear-gradient(rgba(232,87,61,0.7), rgba(209,68,41,0.9)), url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=2670&auto=format&fit=crop') no-repeat center center; background-size: cover; padding-top: 5rem; padding-bottom: 5rem;">
     <div class="container text-center position-relative" style="z-index: 3;">
         <div class="hero-emoji">🍳</div>
         <h1 class="hero-title mb-2">Recipe World</h1>
@@ -80,33 +80,42 @@
 
     <div class="row animate-on-scroll opacity-0 g-4 g-lg-5">
         <div class="col-md-4">
-            <div class="feature-card text-center animate-in animate-delay-1">
-                <span class="feature-step">01</span>
-                <div class="feature-icon">
-                    <i class="bi bi-person-plus"></i>
+            <div class="feature-card text-center animate-in animate-delay-1 h-100 d-flex flex-column" style="overflow: hidden; padding: 0; border: none;">
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop" style="height: 180px; object-fit: cover;" alt="Create An Account" class="w-100">
+                <div style="padding: 2rem;">
+                    <span class="feature-step" style="top: 15px; right: 15px;">01</span>
+                    <div class="feature-icon mt-2">
+                        <i class="bi bi-person-plus"></i>
+                    </div>
+                    <h5>Create an Account</h5>
+                    <p class="mb-0">Sign up for free and join our growing community of food enthusiasts and home cooks.</p>
                 </div>
-                <h5>Create an Account</h5>
-                <p>Sign up for free and join our growing community of food enthusiasts and home cooks.</p>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="feature-card text-center animate-in animate-delay-2">
-                <span class="feature-step">02</span>
-                <div class="feature-icon">
-                    <i class="bi bi-pencil-square"></i>
+            <div class="feature-card text-center animate-in animate-delay-2 h-100 d-flex flex-column" style="overflow: hidden; padding: 0; border: none;">
+                <img src="https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?q=80&w=600&auto=format&fit=crop" style="height: 180px; object-fit: cover;" alt="Share Your Recipes" class="w-100">
+                <div style="padding: 2rem;">
+                    <span class="feature-step" style="top: 15px; right: 15px;">02</span>
+                    <div class="feature-icon mt-2">
+                        <i class="bi bi-pencil-square"></i>
+                    </div>
+                    <h5>Share Your Recipes</h5>
+                    <p class="mb-0">Add your favourite recipes with ingredients, instructions, images, and cooking details.</p>
                 </div>
-                <h5>Share Your Recipes</h5>
-                <p>Add your favourite recipes with ingredients, instructions, images, and cooking details.</p>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="feature-card text-center animate-in animate-delay-3">
-                <span class="feature-step">03</span>
-                <div class="feature-icon">
-                    <i class="bi bi-search-heart"></i>
+            <div class="feature-card text-center animate-in animate-delay-3 h-100 d-flex flex-column" style="overflow: hidden; padding: 0; border: none;">
+                <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=600&auto=format&fit=crop" style="height: 180px; object-fit: cover;" alt="Discover & Cook" class="w-100">
+                <div style="padding: 2rem;">
+                    <span class="feature-step" style="top: 15px; right: 15px;">03</span>
+                    <div class="feature-icon mt-2">
+                        <i class="bi bi-search-heart"></i>
+                    </div>
+                    <h5>Discover & Cook</h5>
+                    <p class="mb-0">Browse, search, and filter recipes by category or difficulty to find your next meal.</p>
                 </div>
-                <h5>Discover & Cook</h5>
-                <p>Browse, search, and filter recipes by category or difficulty to find your next meal.</p>
             </div>
         </div>
     </div>
@@ -150,9 +159,9 @@
 
 {{-- ─── CTA Banner ────────────────────────────────────────── --}}
 <div class="container pb-5">
-    <div class="cta-banner text-center position-relative" style="z-index: 1;">
-        <h3 class="mb-2">Ready to Start Cooking?</h3>
-        <p class="mb-4">Join thousands of food lovers sharing their best recipes every day.</p>
+    <div class="cta-banner text-center position-relative py-5 rounded-4 shadow-lg text-white" style="background: linear-gradient(rgba(232,87,61,0.6), rgba(209,68,41,0.8)), url('https://images.unsplash.com/photo-1495195134817-a169d32d0b00?auto=format&fit=crop&q=80&w=2000') center/cover; z-index: 1;">
+        <h3 class="mb-2 fw-bold" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">Ready to Start Cooking?</h3>
+        <p class="mb-4 lead text-white-50">Join thousands of food lovers sharing their best recipes every day.</p>
         @guest
             <a href="{{ route('register') }}" class="btn-cta">
                 <i class="bi bi-arrow-right-circle me-2"></i>Join the Community

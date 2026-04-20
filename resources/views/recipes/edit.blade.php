@@ -2,13 +2,13 @@
 
 @section('content')
 {{-- ─── Hero ──────────────────────────────────────────────── --}}
-<div class="browse-header">
+<div class="browse-header position-relative" style="background: linear-gradient(rgba(232,87,61,0.8), rgba(209,68,41,0.85)), url('https://images.unsplash.com/photo-1466637574441-749b8f19452f?q=80&w=2670&auto=format&fit=crop') center/cover; padding: 4rem 0 6rem; color: #fff;">
     <div class="container hero-content">
-        <h1 class="mb-1"><i class="bi bi-pencil-square me-2"></i>Edit Recipe</h1>
-        <p class="mb-0">{{ $recipe->title }}</p>
+        <h1 class="mb-1 text-white"><i class="bi bi-pencil-square me-2"></i>Edit Recipe</h1>
+        <p class="mb-0 text-white-50">{{ $recipe->title }}</p>
     </div>
-    <div class="browse-wave">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="browse-wave position-absolute bottom-0 w-100">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:60px; display:block;">
             <path d="M0,30 C480,70 960,0 1440,30 L1440,60 L0,60 Z" fill="#FFFCF8"/>
         </svg>
     </div>

@@ -2,12 +2,12 @@
 
 @section('content')
 {{-- ─── Browse Header ─────────────────────────────────────── --}}
-<div class="browse-header">
+<div class="browse-header position-relative" style="background: linear-gradient(rgba(232,87,61,0.8), rgba(209,68,41,0.85)), url('https://images.unsplash.com/photo-1542010589005-d1eabd39f864?q=80&w=2670&auto=format&fit=crop') center/cover; padding: 4rem 0 6rem; color: #fff;">
     <div class="container hero-content">
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
             <div>
-                <h1 class="mb-1"><i class="bi bi-book me-2"></i>Browse Recipes</h1>
-                <p class="mb-0">Discover delicious recipes from our community</p>
+                <h1 class="mb-1 text-white"><i class="bi bi-book me-2"></i>Browse Recipes</h1>
+                <p class="mb-0 text-white-50">Discover delicious recipes from our community</p>
             </div>
             @auth
                 <a href="{{ route('recipes.create') }}" class="btn-hero btn-white btn-hero-sm">
@@ -16,8 +16,8 @@
             @endauth
         </div>
     </div>
-    <div class="browse-wave">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="browse-wave position-absolute bottom-0 w-100">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:60px; display:block;">
             <path d="M0,30 C480,70 960,0 1440,30 L1440,60 L0,60 Z" fill="#FFFCF8"/>
         </svg>
     </div>
@@ -112,11 +112,11 @@
                 <div class="col-sm-6 col-lg-4">
                     <div class="recipe-card animate-in animate-delay-{{ ($index % 6) + 1 }}">
                         {{-- Image --}}
-                        <div class="recipe-card-img">
+                        <div class="recipe-card-img" style="min-height: 200px; background-color: #f8f9fa; position: relative;">
                             @if ($recipe->image_path)
-                                <img src="{{ $recipe->image_url }}" alt="{{ $recipe->title }}">
+                                <img src="{{ $recipe->image_url }}" alt="{{ $recipe->title }}" style="width: 100%; height: 200px; object-fit: cover;">
                             @else
-                                <div class="recipe-card-placeholder">🍽️</div>
+                                <img src="https://images.unsplash.com/photo-1495521821757-a1efb6729352?q=80&w=800&auto=format&fit=crop" alt="Default Recipe Image" style="width: 100%; height: 200px; object-fit: cover;">
                             @endif
                             <div class="recipe-card-overlay"></div>
 

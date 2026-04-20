@@ -33,10 +33,10 @@
                     @if(auth()->check() && auth()->id() === $category->user_id)
                         <div class="d-flex gap-2 ms-3 flex-shrink-0">
                             <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-                            <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline">
+                            <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline delete-form">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger delete-btn" data-confirm-message="Are you sure you want to delete the category '{{ $category->name }}'?">Delete</button>
                             </form>
                         </div>
                     @endif

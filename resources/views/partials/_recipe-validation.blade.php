@@ -1,48 +1,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-    // ── Dynamic Ingredient Add / Remove ──
-    document.querySelectorAll('[data-ingredient-form]').forEach(function (formSection) {
-        const rowsContainer = formSection.querySelector('[data-ingredient-rows]');
-        const addBtn = formSection.querySelector('.js-add-ingredient');
-
-        if (addBtn && rowsContainer) {
-            addBtn.addEventListener('click', function () {
-                const rows = rowsContainer.querySelectorAll('[data-ingredient-row]');
-                const newIndex = rows.length;
-                const row = document.createElement('div');
-                row.className = 'row g-2 align-items-start ingredient-row';
-                row.setAttribute('data-ingredient-row', '');
-                row.innerHTML =
-                    '<div class="col-md-5">' +
-                        '<input type="text" class="form-control" name="ingredients[' + newIndex + '][name]" placeholder="Ingredient name">' +
-                    '</div>' +
-                    '<div class="col-md-5">' +
-                        '<input type="text" class="form-control" name="ingredients[' + newIndex + '][quantity]" placeholder="Quantity (e.g., 2 cups)">' +
-                    '</div>' +
-                    '<div class="col-md-2 d-grid">' +
-                        '<button type="button" class="btn btn-outline-danger js-remove-ingredient">Remove</button>' +
-                    '</div>';
-                rowsContainer.appendChild(row);
-            });
-        }
-
-        // Event delegation for remove buttons
-        if (rowsContainer) {
-            rowsContainer.addEventListener('click', function (e) {
-                if (e.target.classList.contains('js-remove-ingredient')) {
-                    const row = e.target.closest('[data-ingredient-row]');
-                    if (rowsContainer.querySelectorAll('[data-ingredient-row]').length > 1) {
-                        row.remove();
-                    } else {
-                        // Clear the last row instead of removing it
-                        row.querySelectorAll('input').forEach(function (input) { input.value = ''; });
-                    }
-                }
-            });
-        }
-    });
-
     // ── Client-Side Form Validation ──
     const recipeForm = document.querySelector('form[action*="recipes"]');
 
