@@ -38,6 +38,12 @@ Route::get('/contact', function () {
     return view('pages.contact');
 })->name('contact');
 
+// Google OAuth routes
+use App\Http\Controllers\Auth\GoogleController;
+
+Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
