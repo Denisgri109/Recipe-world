@@ -1,105 +1,105 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-5">
-    <div class="row mb-4 align-items-center">
-        <div class="col-md-8">
-            <h2 class="fw-bold mb-0">
-                <i class="bi bi-cart-check text-success me-2"></i>My Purchased Recipes
-            </h2>
-            <p class="text-muted mt-2 mb-0">View all the amazing recipes you've unlocked</p>
-        </div>
-        <div class="col-md-4 text-md-end mt-3 mt-md-0">
-            <a href="{{ route('recipes.browse') }}" class="btn btn-outline-success rounded-pill px-4 shadow-sm">
-                <i class="bi bi-compass me-1"></i> Browse More
+<div class="orders-hero position-relative">
+    <div class="container hero-content">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <h1 class="mb-1"><i class="bi bi-cart-check me-2"></i>My Purchased Recipes</h1>
+                <p class="mb-0">View all the amazing recipes you've unlocked</p>
+            </div>
+            <a href="{{ route('recipes.browse') }}" class="btn-hero btn-white btn-hero-sm">
+                <i class="bi bi-compass me-2"></i>Browse More
             </a>
         </div>
     </div>
+    <div class="browse-wave position-absolute bottom-0 w-100">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:60px; display:block;">
+            <path d="M0,30 C480,70 960,0 1440,30 L1440,60 L0,60 Z" fill="#FFFCF8"/>
+        </svg>
+    </div>
+</div>
 
+<div class="container py-4">
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show shadow-sm border-0" role="alert">
+        <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 rounded-3" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
-    <div class="card shadow-sm border-0 bg-white rounded-3">
-        <div class="card-body p-0">
-            @if($orders->count() > 0)
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th scope="col" class="ps-4">Recipe</th>
-                                <th scope="col">Seller</th>
-                                <th scope="col">Date Purchased</th>
-                                <th scope="col" class="text-end pe-4">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="border-top-0">
-                            @foreach($orders as $order)
-                            <tr>
-                                <td class="ps-4 py-3">
-                                    @if($order->recipe)
-                                        <div class="d-flex align-items-center">
-                                            @if($order->recipe->image)
-                                                <img src="{{ asset('storage/' . $order->recipe->image) }}" class="rounded me-3 object-fit-cover shadow-sm" style="width: 60px; height: 60px;" alt="{{ $order->recipe->title }}">
-                                            @else
-                                                <div class="bg-light rounded me-3 d-flex align-items-center justify-content-center text-muted shadow-sm" style="width: 60px; height: 60px;">
-                                                    <i class="bi bi-egg-fried" style="font-size: 1.8rem;"></i>
-                                                </div>
-                                            @endif
-                                            <div>
-                                                <h6 class="mb-1 fw-bold text-dark">{{ $order->recipe->title }}</h6>
-                                                <small class="text-muted">{{ Str::limit($order->recipe->description, 50) }}</small>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="d-flex align-items-center text-muted">
-                                            <div class="bg-light rounded me-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 60px; height: 60px;">
-                                                <i class="bi bi-journal-x" style="font-size: 1.8rem;"></i>
-                                            </div>
-                                            <span class="fst-italic">Deleted Recipe</span>
-                                        </div>
-                                    @endif
-                                </td>    
-                                <td>
+    @if($orders->count() > 0)
+        <div class="orders-table-card">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="ps-4">Recipe</th>
+                            <th scope="col">Seller</th>
+                            <th scope="col">Date Purchased</th>
+                            <th scope="col" class="text-end pe-4">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($orders as $order)
+                        <tr>
+                            <td class="ps-4 py-3">
+                                @if($order->recipe)
                                     <div class="d-flex align-items-center">
-                                        <i class="bi bi-person-circle text-secondary me-2 fs-5"></i>
-                                        <span class="fw-medium text-dark">{{ $order->seller->name ?? 'Unknown' }}</span>
+                                        @if($order->recipe->image)
+                                            <img src="{{ asset('storage/' . $order->recipe->image) }}" class="rounded-3 me-3 object-fit-cover shadow-sm" style="width: 60px; height: 60px;" alt="{{ $order->recipe->title }}">
+                                        @else
+                                            <div class="rounded-3 me-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 60px; height: 60px; background: linear-gradient(135deg, rgba(232,87,61,0.08), rgba(245,166,35,0.08));">
+                                                <i class="bi bi-egg-fried text-coral" style="font-size: 1.5rem;"></i>
+                                            </div>
+                                        @endif
+                                        <div>
+                                            <h6 class="mb-1 fw-bold text-dark">{{ $order->recipe->title }}</h6>
+                                            <small class="text-muted">{{ Str::limit($order->recipe->description, 50) }}</small>
+                                        </div>
                                     </div>
-                                </td>
-                                <td>
-                                    <span class="badge bg-light text-dark border p-2">
-                                        <i class="bi bi-calendar3 me-1 text-muted"></i>
-                                        {{ $order->created_at->format('M d, Y') }}
-                                    </span>
-                                </td>
-                                <td class="text-end pe-4">
-                                    @if($order->recipe)
-                                        <a href="{{ route('recipes.show', $order->recipe->id) }}" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm">
-                                            <i class="bi bi-eye me-1"></i> View Recipe
-                                        </a>
-                                    @endif
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @else
-                <div class="text-center py-5">
-                    <div class="mb-3">
-                        <i class="bi bi-bag-x text-muted" style="font-size: 3rem; opacity: 0.5;"></i>
-                    </div>
-                    <h4 class="fw-bold text-dark mb-2">No purchases yet</h4>
-                    <p class="text-muted mb-4">You haven't bought any premium recipes yet. Time to unlock some delicious secrets!</p>
-                    <a href="{{ route('recipes.browse') }}" class="btn btn-success px-4 py-2 rounded-pill shadow-sm fw-bold">
-                        <i class="bi bi-search me-2"></i>Browse Recipes
-                    </a>
-                </div>
-            @endif
+                                @else
+                                    <div class="d-flex align-items-center text-muted">
+                                        <div class="rounded-3 me-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background: rgba(0,0,0,0.04);">
+                                            <i class="bi bi-journal-x" style="font-size: 1.5rem;"></i>
+                                        </div>
+                                        <span class="fst-italic">Deleted Recipe</span>
+                                    </div>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person-circle text-coral me-2 fs-5"></i>
+                                    <span class="fw-medium text-dark">{{ $order->seller->name ?? 'Unknown' }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge rounded-pill px-3 py-2" style="background: rgba(232,87,61,0.08); color: #E8573D; font-weight: 600;">
+                                    <i class="bi bi-calendar3 me-1"></i>{{ $order->created_at->format('M d, Y') }}
+                                </span>
+                            </td>
+                            <td class="text-end pe-4">
+                                @if($order->recipe)
+                                    <a href="{{ route('recipes.show', $order->recipe->id) }}" class="btn-view">
+                                        <i class="bi bi-eye me-1"></i>View
+                                    </a>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    @else
+        <div class="empty-state mt-4">
+            <div class="empty-icon">🛍️</div>
+            <h3>No Purchases Yet</h3>
+            <p>You haven't bought any premium recipes yet. Time to unlock some delicious secrets!</p>
+            <a href="{{ route('recipes.browse') }}" class="btn btn-primary mt-3 rounded-pill px-4 fw-bold">
+                <i class="bi bi-search me-2"></i>Browse Recipes
+            </a>
+        </div>
+    @endif
 </div>
 @endsection

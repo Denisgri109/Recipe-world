@@ -1,5 +1,6 @@
 @import url('https://fonts.bunny.net/css?family=Nunito');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @import 'variables';
 @import 'bootstrap/scss/bootstrap';
@@ -7,18 +8,21 @@
 // ─── Design Tokens ──────────────────────────────────────────
 $coral: #E8573D;
 $coral-dark: #D14429;
+$coral-light: #FF7B5F;
 $amber: #F5A623;
 $gold: #D4942A;
 $warm-cream: #FFF8F0;
 $warm-bg: #FFFCF8;
 $charcoal: #1E1E2A;
 $charcoal-alt: #2A2A3A;
+$charcoal-light: #35354A;
 $text-dark: #2D2D3F;
 $text-body: #4A4A5A;
 $text-muted-custom: #8A8A9A;
 $sage: #6B8F71;
-$card-radius: 18px;
+$card-radius: 20px;
 $transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$transition-fast: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
 // ─── Animations ─────────────────────────────────────────────
 @keyframes fadeInUp {
@@ -48,12 +52,33 @@ $transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     50% { box-shadow: 0 5px 50px rgba(232, 87, 61, 0.45); }
 }
 
+@keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-subtle {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
 // ─── Base ───────────────────────────────────────────────────
 html { scroll-behavior: smooth; }
 
 body {
     background: $warm-bg;
     color: $text-body;
+    font-family: 'Inter', 'Nunito', sans-serif;
 }
 
 h1, h2, h3, h4, h5 {
@@ -61,25 +86,50 @@ h1, h2, h3, h4, h5 {
     color: $text-dark;
 }
 
+// ─── Glass Utilities ────────────────────────────────────────
+.glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: $card-radius;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+.glass-dark {
+    background: rgba(30, 30, 42, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+// ─── Navbar ─────────────────────────────────────────────────
 .navbar {
     border-bottom: none;
     box-shadow: 0 1px 30px rgba(0, 0, 0, 0.05);
-    backdrop-filter: blur(16px);
-    background: rgba(255, 252, 248, 0.92) !important;
-    padding: 0.6rem 0;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 252, 248, 0.88) !important;
+    padding: 0.7rem 0;
     position: relative;
     z-index: 1050;
+    transition: $transition;
 
     .navbar-brand {
         font-family: 'Playfair Display', serif;
         font-weight: 800;
-        font-size: 1.5rem;
+        font-size: 1.55rem;
         color: $coral !important;
         letter-spacing: -0.5px;
         -webkit-text-fill-color: initial;
         background: none;
         -webkit-background-clip: initial;
         background-clip: initial;
+        transition: $transition-fast;
+
+        &:hover {
+            transform: scale(1.03);
+        }
     }
 
     .nav-link {
@@ -87,8 +137,9 @@ h1, h2, h3, h4, h5 {
         color: $text-body !important;
         position: relative;
         transition: color 0.3s ease;
-        padding: 0.5rem 0.85rem !important;
+        padding: 0.5rem 0.9rem !important;
         font-size: 0.88rem;
+        letter-spacing: 0.2px;
 
         &::after {
             content: '';
@@ -97,7 +148,7 @@ h1, h2, h3, h4, h5 {
             left: 50%;
             width: 0;
             height: 2.5px;
-            background: $coral;
+            background: linear-gradient(90deg, $coral, $coral-light);
             transition: all 0.3s ease;
             transform: translateX(-50%);
             border-radius: 2px;
@@ -125,21 +176,21 @@ h1, h2, h3, h4, h5 {
     background-size: 400% 400%;
     animation: gradientMove 14s ease infinite;
     color: #fff;
-    padding: 6rem 0 5.5rem;
+    padding: 7rem 0 6rem;
     position: relative;
     overflow: hidden;
 
-    // Decorative blobs
     &::before {
         content: '';
         position: absolute;
         top: -120px;
         right: -100px;
-        width: 450px;
-        height: 450px;
+        width: 500px;
+        height: 500px;
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.06);
         pointer-events: none;
+        animation: float 8s ease-in-out infinite;
     }
 
     &::after {
@@ -147,11 +198,27 @@ h1, h2, h3, h4, h5 {
         position: absolute;
         bottom: -80px;
         left: -80px;
-        width: 320px;
-        height: 320px;
+        width: 350px;
+        height: 350px;
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.04);
         pointer-events: none;
+        animation: float 6s ease-in-out infinite reverse;
+    }
+}
+
+.hero-particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+
+    .particle {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        animation: float var(--duration, 6s) ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
     }
 }
 
@@ -171,29 +238,29 @@ h1, h2, h3, h4, h5 {
 }
 
 .hero-emoji {
-    font-size: 4rem;
+    font-size: 4.5rem;
     display: inline-block;
     animation: floatBounce 4s ease-in-out infinite;
     margin-bottom: 1rem;
-    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 6px 16px rgba(0,0,0,0.25));
 }
 
 .hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
     font-weight: 900;
     color: #fff;
     letter-spacing: -1.5px;
     line-height: 1.1;
-    text-shadow: 0 3px 30px rgba(0,0,0,0.15);
+    text-shadow: 0 3px 30px rgba(0,0,0,0.2);
     animation: fadeInUp 0.9s ease;
 }
 
 .hero-subtitle {
     font-size: 1.3rem;
-    font-weight: 300;
+    font-weight: 500;
     opacity: 0.92;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-transform: uppercase;
     animation: fadeInUp 0.9s ease 0.12s both;
 }
@@ -215,7 +282,7 @@ h1, h2, h3, h4, h5 {
 .btn-hero {
     display: inline-flex;
     align-items: center;
-    padding: 0.85rem 2rem;
+    padding: 0.9rem 2.2rem;
     font-size: 0.95rem;
     font-weight: 700;
     border-radius: 60px;
@@ -227,11 +294,11 @@ h1, h2, h3, h4, h5 {
         background: #fff;
         color: $coral;
         border: none;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
 
         &:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 36px rgba(0,0,0,0.2);
             color: $coral-dark;
         }
     }
@@ -245,7 +312,7 @@ h1, h2, h3, h4, h5 {
         &:hover {
             background: rgba(255,255,255,0.22);
             border-color: rgba(255,255,255,0.6);
-            transform: translateY(-3px);
+            transform: translateY(-4px);
         }
     }
 }
@@ -253,36 +320,49 @@ h1, h2, h3, h4, h5 {
 // ─── Stats ──────────────────────────────────────────────────
 .stats-section {
     background: $charcoal;
-    padding: 3rem 0;
+    padding: 3.5rem 0;
     position: relative;
 }
 
 .stat-item {
     text-align: center;
-    padding: 1rem 0;
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: $transition;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-4px);
+    }
 
     .stat-icon {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         color: $coral;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.6rem;
         display: block;
     }
 
     .stat-number {
         font-family: 'Playfair Display', serif;
-        font-size: 2.4rem;
+        font-size: 2.6rem;
         font-weight: 800;
         color: #fff;
         line-height: 1;
+        background: linear-gradient(135deg, #fff, rgba(255,255,255,0.7));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     .stat-label {
-        font-size: 0.78rem;
+        font-size: 0.75rem;
         color: rgba(255,255,255,0.5);
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-top: 0.4rem;
+        letter-spacing: 2.5px;
+        margin-top: 0.5rem;
     }
 }
 
@@ -292,7 +372,7 @@ h1, h2, h3, h4, h5 {
 
     h2 {
         font-family: 'Playfair Display', serif;
-        font-size: 2.2rem;
+        font-size: 2.4rem;
         font-weight: 800;
         letter-spacing: -0.5px;
         margin-bottom: 0.5rem;
@@ -300,14 +380,14 @@ h1, h2, h3, h4, h5 {
 
     p {
         color: $text-muted-custom;
-        font-size: 1.05rem;
+        font-size: 1.08rem;
     }
 
     .section-line {
         display: block;
         width: 50px;
         height: 4px;
-        background: $coral;
+        background: linear-gradient(90deg, $coral, $amber);
         border-radius: 4px;
         margin: 1.2rem auto 0;
     }
@@ -322,7 +402,7 @@ h1, h2, h3, h4, h5 {
     transition: $transition;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 
     &::before {
         content: '';
@@ -357,33 +437,33 @@ h1, h2, h3, h4, h5 {
     }
 
     .feature-icon {
-        width: 68px;
-        height: 68px;
-        border-radius: 18px;
+        width: 72px;
+        height: 72px;
+        border-radius: 20px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.6rem;
+        font-size: 1.7rem;
         margin-bottom: 1.5rem;
         transition: $transition;
     }
 
     &:nth-child(1) .feature-icon {
-        background: rgba(232, 87, 61, 0.1);
+        background: linear-gradient(135deg, rgba(232, 87, 61, 0.12), rgba(232, 87, 61, 0.05));
         color: $coral;
     }
     &:nth-child(2) .feature-icon {
-        background: rgba(245, 166, 35, 0.1);
+        background: linear-gradient(135deg, rgba(245, 166, 35, 0.12), rgba(245, 166, 35, 0.05));
         color: $gold;
     }
     &:nth-child(3) .feature-icon {
-        background: rgba(107, 143, 113, 0.1);
+        background: linear-gradient(135deg, rgba(107, 143, 113, 0.12), rgba(107, 143, 113, 0.05));
         color: $sage;
     }
 
     h5 {
         font-weight: 700;
-        font-size: 1.15rem;
+        font-size: 1.18rem;
         margin-bottom: 0.75rem;
         color: $text-dark;
     }
@@ -392,7 +472,7 @@ h1, h2, h3, h4, h5 {
         color: $text-muted-custom;
         margin: 0;
         line-height: 1.75;
-        font-size: 0.92rem;
+        font-size: 0.93rem;
     }
 }
 
@@ -401,26 +481,27 @@ h1, h2, h3, h4, h5 {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.7rem 1.5rem;
+    padding: 0.75rem 1.6rem;
     background: #fff;
     border: 1.5px solid rgba(0,0,0,0.06);
     border-radius: 60px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     color: $text-dark;
     text-decoration: none;
     transition: $transition;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
 
     .cat-emoji {
-        font-size: 1.3rem;
+        font-size: 1.35rem;
     }
 
     &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(232, 87, 61, 0.12);
+        transform: translateY(-5px);
+        box-shadow: 0 16px 32px rgba(232, 87, 61, 0.14);
         border-color: rgba(232, 87, 61, 0.3);
         color: $coral;
+        background: rgba(232, 87, 61, 0.03);
     }
 }
 
@@ -428,7 +509,7 @@ h1, h2, h3, h4, h5 {
 .cta-banner {
     background: linear-gradient(135deg, $charcoal, $charcoal-alt);
     border-radius: 24px;
-    padding: 3.5rem;
+    padding: 4rem;
     color: #fff;
     position: relative;
     overflow: hidden;
@@ -438,11 +519,12 @@ h1, h2, h3, h4, h5 {
         position: absolute;
         top: -60%;
         right: -15%;
-        width: 400px;
-        height: 400px;
+        width: 450px;
+        height: 450px;
         border-radius: 50%;
-        background: rgba(232, 87, 61, 0.08);
+        background: rgba(232, 87, 61, 0.1);
         pointer-events: none;
+        animation: float 10s ease-in-out infinite;
     }
 
     &::after {
@@ -450,43 +532,45 @@ h1, h2, h3, h4, h5 {
         position: absolute;
         bottom: -40%;
         left: -10%;
-        width: 250px;
-        height: 250px;
+        width: 300px;
+        height: 300px;
         border-radius: 50%;
         background: rgba(245, 166, 35, 0.06);
         pointer-events: none;
+        animation: float 8s ease-in-out infinite reverse;
     }
 
     h3 {
         font-family: 'Playfair Display', serif;
         color: #fff;
         font-weight: 800;
-        font-size: 2rem;
+        font-size: 2.2rem;
         letter-spacing: -0.5px;
     }
 
     p {
         opacity: 0.75;
-        font-size: 1.05rem;
+        font-size: 1.08rem;
     }
 
     .btn-cta {
         display: inline-flex;
         align-items: center;
-        background: $coral;
+        background: linear-gradient(135deg, $coral, $coral-light);
         color: #fff;
         border: none;
-        padding: 0.85rem 2rem;
+        padding: 0.9rem 2.2rem;
         font-weight: 700;
         font-size: 0.95rem;
         border-radius: 60px;
         text-decoration: none;
         transition: $transition;
+        box-shadow: 0 4px 20px rgba(232, 87, 61, 0.3);
 
         &:hover {
-            background: $coral-dark;
+            background: linear-gradient(135deg, $coral-dark, $coral);
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(232, 87, 61, 0.4);
+            box-shadow: 0 10px 36px rgba(232, 87, 61, 0.45);
         }
     }
 }
@@ -500,15 +584,27 @@ h1, h2, h3, h4, h5 {
     background: linear-gradient(-45deg, #E8573D, #D14429, #B83A22, #F5A623);
     background-size: 400% 400%;
     animation: gradientMove 14s ease infinite;
-    padding: 3rem 0 3.5rem;
+    padding: 3.5rem 0 4rem;
     color: #fff;
     position: relative;
     overflow: hidden;
 
+    &::before {
+        content: '';
+        position: absolute;
+        top: -80px;
+        right: -60px;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        pointer-events: none;
+    }
+
     h1 {
         font-family: 'Playfair Display', serif;
         color: #fff;
-        font-size: 2.2rem;
+        font-size: 2.4rem;
         font-weight: 800;
         letter-spacing: -0.5px;
     }
@@ -536,43 +632,45 @@ h1, h2, h3, h4, h5 {
 
 // ─── Filter Bar ─────────────────────────────────────────────
 .filter-bar {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: $card-radius;
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.06);
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    padding: 1.75rem;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 1.8rem;
     margin-top: -2.5rem;
     position: relative;
     z-index: 10;
 
     .form-control, .form-select {
-        border-radius: 12px;
+        border-radius: 14px;
         border: 1.5px solid #E8E4E0;
-        padding: 0.65rem 1rem;
+        padding: 0.7rem 1.1rem;
         font-size: 0.9rem;
-        background: $warm-cream;
+        background: rgba(255, 248, 240, 0.8);
         transition: $transition;
 
         &:focus {
             border-color: $coral;
-            box-shadow: 0 0 0 3px rgba(232, 87, 61, 0.12);
+            box-shadow: 0 0 0 4px rgba(232, 87, 61, 0.1);
             background: #fff;
         }
     }
 
     .btn-search {
-        background: $coral;
+        background: linear-gradient(135deg, $coral, $coral-light);
         border: none;
-        border-radius: 12px;
+        border-radius: 14px;
         color: #fff;
         font-weight: 700;
-        padding: 0.65rem 1.5rem;
+        padding: 0.7rem 1.6rem;
         transition: $transition;
 
         &:hover {
-            background: $coral-dark;
+            background: linear-gradient(135deg, $coral-dark, $coral);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(232, 87, 61, 0.35);
+            box-shadow: 0 8px 24px rgba(232, 87, 61, 0.35);
         }
     }
 
@@ -581,8 +679,8 @@ h1, h2, h3, h4, h5 {
         color: $text-dark;
         font-size: 0.75rem;
         text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 0.4rem;
+        letter-spacing: 1.2px;
+        margin-bottom: 0.5rem;
     }
 }
 
@@ -599,7 +697,7 @@ h1, h2, h3, h4, h5 {
         color: $coral;
         border: 1px solid rgba(232, 87, 61, 0.15);
         border-radius: 60px;
-        padding: 0.35rem 0.9rem;
+        padding: 0.4rem 1rem;
         font-size: 0.8rem;
         font-weight: 600;
 
@@ -613,7 +711,7 @@ h1, h2, h3, h4, h5 {
     border-radius: $card-radius;
     overflow: hidden;
     border: 1px solid rgba(0,0,0,0.03);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
     transition: $transition;
     height: 100%;
     display: flex;
@@ -621,7 +719,7 @@ h1, h2, h3, h4, h5 {
 
     &:hover {
         transform: translateY(-10px);
-        box-shadow: 0 24px 48px rgba(232, 87, 61, 0.1), 0 8px 16px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 24px 48px rgba(232, 87, 61, 0.12), 0 8px 16px rgba(0, 0, 0, 0.06);
 
         .recipe-card-img img { transform: scale(1.1); }
         .recipe-card-overlay { opacity: 1; }
@@ -671,16 +769,16 @@ h1, h2, h3, h4, h5 {
             color: $coral;
             font-weight: 700;
             font-size: 0.7rem;
-            padding: 0.4rem 0.85rem;
+            padding: 0.4rem 0.9rem;
             border-radius: 60px;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
     }
 
     .recipe-card-body {
-        padding: 1.4rem 1.5rem 1.5rem;
+        padding: 1.5rem 1.5rem 1.5rem;
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -707,8 +805,9 @@ h1, h2, h3, h4, h5 {
             align-items: center;
             gap: 0.35rem;
             background: $warm-cream;
-            padding: 0.25rem 0.6rem;
-            border-radius: 8px;
+            padding: 0.3rem 0.65rem;
+            border-radius: 10px;
+            font-weight: 500;
 
             i {
                 color: $coral;
@@ -720,7 +819,7 @@ h1, h2, h3, h4, h5 {
     .recipe-card-footer {
         margin-top: auto;
         padding-top: 1rem;
-        border-top: 1px solid rgba(0,0,0,0.04);
+        border-top: 1px solid rgba(0,0,0,0.05);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -734,12 +833,12 @@ h1, h2, h3, h4, h5 {
         }
 
         .btn-view {
-            background: $coral;
+            background: linear-gradient(135deg, $coral, $coral-light);
             border: none;
             color: #fff;
             font-weight: 700;
             font-size: 0.78rem;
-            padding: 0.5rem 1.2rem;
+            padding: 0.5rem 1.3rem;
             border-radius: 60px;
             transition: $transition;
             text-decoration: none;
@@ -748,8 +847,9 @@ h1, h2, h3, h4, h5 {
             gap: 0.3rem;
 
             &:hover {
-                background: $coral-dark;
+                background: linear-gradient(135deg, $coral-dark, $coral);
                 transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(232, 87, 61, 0.3);
             }
         }
     }
@@ -865,20 +965,20 @@ h1, h2, h3, h4, h5 {
     border-radius: $card-radius;
 
     &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08) !important;
+        transform: translateY(-5px);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08) !important;
     }
 }
 
 .btn-primary {
-    background: $coral;
+    background: linear-gradient(135deg, $coral, $coral-light);
     border: none;
     font-weight: 600;
     border-radius: 12px;
     transition: $transition;
 
     &:hover, &:active, &:focus {
-        background: $coral-dark !important;
+        background: linear-gradient(135deg, $coral-dark, $coral) !important;
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(232, 87, 61, 0.35);
     }
@@ -907,8 +1007,21 @@ h1, h2, h3, h4, h5 {
     background: #fff;
     border-radius: $card-radius;
     border: 2px dashed rgba(232, 87, 61, 0.15);
+    position: relative;
+    overflow: hidden;
 
-    .empty-icon { font-size: 4.5rem; margin-bottom: 1.5rem; }
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 50% 0%, rgba(232, 87, 61, 0.03), transparent 70%);
+        pointer-events: none;
+    }
+
+    .empty-icon { font-size: 5rem; margin-bottom: 1.5rem; animation: floatBounce 3s ease-in-out infinite; }
     h3 { font-family: 'Playfair Display', serif; font-weight: 700; margin-bottom: 0.5rem; }
     p { color: $text-muted-custom; max-width: 400px; margin: 0 auto; line-height: 1.7; }
 }
@@ -931,7 +1044,7 @@ h1, h2, h3, h4, h5 {
             }
         }
         &.active .page-link {
-            background: $coral;
+            background: linear-gradient(135deg, $coral, $coral-light);
             border: none;
             box-shadow: 0 4px 14px rgba(232, 87, 61, 0.3);
         }
@@ -946,8 +1059,6 @@ h1, h2, h3, h4, h5 {
 
     span { color: $coral; font-weight: 800; }
 }
-
-
 
 // ─── Utility ────────────────────────────────────────────────
 .alert-success {
@@ -973,7 +1084,7 @@ h1, h2, h3, h4, h5 {
     }
 }
 
-// ─── Utility classes (extracted from inline styles) ──────────
+// ─── Utility classes ────────────────────────────────────────
 .hero-content {
     position: relative;
     z-index: 3;
@@ -987,23 +1098,36 @@ h1, h2, h3, h4, h5 {
 // ─── Features Showcase Section ──────────────────────────────
 .features-showcase {
     background: linear-gradient(135deg, $warm-cream, #FFF0E5);
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 80% 20%, rgba(232, 87, 61, 0.03), transparent 50%),
+                    radial-gradient(circle at 20% 80%, rgba(245, 166, 35, 0.03), transparent 50%);
+        pointer-events: none;
+    }
 }
 
 .features-badge {
     display: inline-block;
-    padding: 0.25rem 0.75rem;
+    padding: 0.3rem 0.85rem;
     border-radius: 60px;
-    background: rgba(232, 87, 61, 0.1);
+    background: linear-gradient(135deg, rgba(232, 87, 61, 0.12), rgba(232, 87, 61, 0.05));
     color: $coral;
     font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
+    font-size: 0.78rem;
+    letter-spacing: 1.5px;
     margin-bottom: 0.75rem;
 }
 
 .features-title {
     font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     font-weight: 800;
     letter-spacing: -0.5px;
 }
@@ -1015,20 +1139,21 @@ h1, h2, h3, h4, h5 {
 }
 
 .feature-check {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(107, 143, 113, 0.15);
+    background: linear-gradient(135deg, rgba(107, 143, 113, 0.2), rgba(107, 143, 113, 0.08));
     color: $sage;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
 }
 
 .features-img {
     border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
 }
 
 // ─── Small Hero Button Variant ──────────────────────────────
@@ -1045,6 +1170,18 @@ h1, h2, h3, h4, h5 {
 // ─── Footer ─────────────────────────────────────────────────
 footer {
     background: linear-gradient(135deg, $charcoal, $charcoal-alt) !important;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 80% 20%, rgba(232, 87, 61, 0.04), transparent 50%);
+        pointer-events: none;
+    }
 
     a:hover {
         color: $coral !important;
@@ -1052,7 +1189,7 @@ footer {
 
     .footer-accent-bar {
         height: 4px;
-        background: linear-gradient(90deg, $coral 0%, $amber 100%);
+        background: linear-gradient(90deg, $coral 0%, $amber 50%, $coral-light 100%);
     }
 
     .footer-brand-icon {
@@ -1087,18 +1224,21 @@ footer {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.08);
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.06);
         color: rgba(255, 255, 255, 0.65);
         text-decoration: none;
-        transition: all 0.2s ease;
+        transition: $transition;
+        border: 1px solid rgba(255, 255, 255, 0.08);
 
         &:hover {
-            background: $coral;
+            background: linear-gradient(135deg, $coral, $coral-light);
             color: #fff;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(232, 87, 61, 0.3);
+            border-color: transparent;
         }
     }
 }
@@ -1106,34 +1246,326 @@ footer {
 // ─── About Page ─────────────────────────────────────────────
 .text-coral { color: $coral !important; }
 
+.about-section {
+    position: relative;
+
+    &.alt-bg {
+        background: linear-gradient(135deg, $warm-cream, #FFF0E5);
+    }
+}
+
+.about-story-card {
+    background: #fff;
+    border-radius: $card-radius;
+    padding: 2.5rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    height: 100%;
+    transition: $transition;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(to bottom, $coral, $amber);
+        border-radius: 0 2px 2px 0;
+    }
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 48px rgba(232, 87, 61, 0.1);
+    }
+
+    h3 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+    }
+
+    p {
+        color: $text-body;
+        line-height: 1.8;
+    }
+}
+
 .team-member-card {
-    background: linear-gradient(135deg, rgba($coral, 0.08) 0%, rgba($amber, 0.08) 100%);
-    border-radius: 12px;
-    transition: transform 0.2s ease;
-    &:hover { transform: translateY(-2px); }
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: $transition;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(232, 87, 61, 0.1);
+    }
 }
 
 .team-avatar {
-    width: 50px;
-    height: 50px;
-    min-width: 50px;
-    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, $coral 0%, $amber 100%);
     color: #fff;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 12px rgba(232, 87, 61, 0.25);
 }
 
 .tech-card {
-    background: $warm-cream;
-    border-radius: 12px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: #fff;
+    border-radius: 16px;
+    transition: $transition;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, $coral, $amber);
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+    }
+
     &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+
+        &::after { transform: scaleX(1); }
     }
 }
+
+.tech-icon-wrap {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+// ─── Contact Page ───────────────────────────────────────────
+.contact-info-card {
+    background: #fff;
+    border-radius: $card-radius;
+    padding: 2rem;
+    text-align: center;
+    transition: $transition;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, $coral, $amber);
+        transform: scaleX(0);
+        transition: transform 0.5s ease;
+    }
+
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 48px rgba(232, 87, 61, 0.1);
+
+        &::before { transform: scaleX(1); }
+
+        .contact-icon-circle {
+            transform: scale(1.1) rotate(-5deg);
+        }
+    }
+}
+
+.contact-icon-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+    transition: $transition;
+    background: linear-gradient(135deg, rgba(232, 87, 61, 0.1), rgba(232, 87, 61, 0.05));
+    color: $coral;
+}
+
+.contact-form-card {
+    background: #fff;
+    border-radius: $card-radius;
+    padding: 2.5rem;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+
+    .form-control {
+        border-radius: 14px;
+        border: 1.5px solid rgba(0, 0, 0, 0.08);
+        padding: 0.8rem 1.2rem;
+        font-size: 0.95rem;
+        background: rgba(255, 248, 240, 0.5);
+        transition: $transition;
+
+        &:focus {
+            border-color: $coral;
+            box-shadow: 0 0 0 4px rgba(232, 87, 61, 0.1);
+            background: #fff;
+        }
+
+        &::placeholder {
+            color: rgba(0, 0, 0, 0.3);
+        }
+    }
+}
+
+// ─── Orders Page ────────────────────────────────────────────
+.orders-hero {
+    background: linear-gradient(-45deg, #E8573D, #D14429, #B83A22, #F5A623);
+    background-size: 400% 400%;
+    animation: gradientMove 14s ease infinite;
+    padding: 3rem 0 3.5rem;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -80px;
+        right: -80px;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        pointer-events: none;
+    }
+
+    h1 {
+        font-family: 'Playfair Display', serif;
+        color: #fff;
+        font-weight: 800;
+        font-size: 2.2rem;
+    }
+
+    p {
+        color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+.orders-table-card {
+    background: #fff;
+    border-radius: $card-radius;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+
+    .table {
+        margin-bottom: 0;
+
+        thead {
+            background: linear-gradient(135deg, rgba(232, 87, 61, 0.04), rgba(245, 166, 35, 0.03));
+
+            th {
+                font-size: 0.78rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: $text-muted-custom;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+                padding: 1rem 1.2rem;
+            }
+        }
+
+        tbody tr {
+            transition: $transition-fast;
+
+            &:hover {
+                background: rgba(232, 87, 61, 0.02);
+            }
+
+            td {
+                padding: 1rem 1.2rem;
+                vertical-align: middle;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            }
+        }
+    }
+}
+
+// ─── Categories Page ────────────────────────────────────────
+.category-grid-card {
+    background: #fff;
+    border-radius: $card-radius;
+    padding: 2rem;
+    transition: $transition;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, $coral, $amber);
+        transform: scaleX(0);
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-origin: left;
+    }
+
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 48px rgba(232, 87, 61, 0.1), 0 8px 16px rgba(0, 0, 0, 0.04);
+
+        &::before { transform: scaleX(1); }
+
+        .category-icon-wrap {
+            transform: scale(1.1) rotate(-3deg);
+        }
+    }
+}
+
+.category-icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: $transition;
+    flex-shrink: 0;
+}
+
+.category-color-1 { background: linear-gradient(135deg, rgba(232, 87, 61, 0.12), rgba(232, 87, 61, 0.05)); color: $coral; }
+.category-color-2 { background: linear-gradient(135deg, rgba(245, 166, 35, 0.12), rgba(245, 166, 35, 0.05)); color: $gold; }
+.category-color-3 { background: linear-gradient(135deg, rgba(107, 143, 113, 0.12), rgba(107, 143, 113, 0.05)); color: $sage; }
+.category-color-4 { background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(99, 102, 241, 0.05)); color: #6366F1; }
+.category-color-5 { background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(236, 72, 153, 0.05)); color: #EC4899; }
+.category-color-6 { background: linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(14, 165, 233, 0.05)); color: #0EA5E9; }
 
 // ─── Recipe Detail Page ─────────────────────────────────────
 .recipe-detail-card {
@@ -1182,21 +1614,7 @@ footer {
     max-width: 300px;
 }
 
-// ─── Empty State ────────────────────────────────────────────
-.empty-state {
-    text-align: center;
-    padding: 3rem 2rem;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-}
-
-.empty-icon {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-}
-
-// ─── Hero Elevate & Browse Header ───────────────────────────
+// ─── Browse / Hero Elevate ──────────────────────────────────
 .browse-header, .custom-hero {
     background: linear-gradient(135deg, $coral 0%, $amber 100%);
     padding: 4rem 0 6rem;
@@ -1230,10 +1648,11 @@ footer {
 
 // ─── Hero Enhancements ──────────────────────────────────────
 .hero-emoji {
-    font-size: 3rem;
+    font-size: 4rem;
     display: block;
     margin-bottom: 0.5rem;
     animation: floatBounce 3s ease-in-out infinite;
+    filter: drop-shadow(0 6px 16px rgba(0,0,0,0.25));
 }
 
 .hero-title {
@@ -1259,7 +1678,7 @@ footer {
     margin-top: 1.5rem;
 }
 
-// ─── Section Header ─────────────────────────────────────────
+// ─── Section Header ──────────────────────
 .section-header {
     margin-bottom: 2.5rem;
 
@@ -1284,7 +1703,7 @@ footer {
     margin: 0.5rem auto 0;
 }
 
-// --- Immersive Design Additions ---
+// ─── Immersive Design ───────────────────────────────────────
 .animate-on-scroll {
     opacity: 0;
     transform: translateY(30px) scale(0.98);
@@ -1321,13 +1740,3 @@ footer {
     background-repeat: no-repeat;
     background-size: cover;
 }
-
-.card {
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-}
-
-

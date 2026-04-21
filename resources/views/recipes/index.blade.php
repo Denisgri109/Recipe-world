@@ -6,6 +6,7 @@
     <div class="container hero-content">
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
             <div>
+                <div class="hero-emoji" style="font-size: 2.5rem; display: inline-block;">🍽️</div>
                 <h1 class="mb-1 text-white"><i class="bi bi-book me-2"></i>Browse Recipes</h1>
                 <p class="mb-0 text-white-50">Discover delicious recipes from our community</p>
             </div>
@@ -161,12 +162,12 @@
                                       @if(auth()->check() && $recipe->user_id !== auth()->id() && !\App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists())
                                           <form action="{{ route('orders.purchase', $recipe) }}" method="POST" class="m-0 p-0">
                                               @csrf
-                                              <button type="submit" class="btn btn-sm btn-success">
+                                              <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">
                                                   <i class="bi bi-cart"></i> Buy
                                               </button>
                                           </form>
                                       @elseif(auth()->check() && \App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists())
-                                          <span class="badge bg-success"><i class="bi bi-check-circle"></i> Purchased</span>
+                                          <span class="badge bg-success rounded-pill"><i class="bi bi-check-circle"></i> Purchased</span>
                                     @endif
                                     <a href="{{ route('recipes.show', $recipe) }}" class="btn-view">
                                         View <i class="bi bi-arrow-right"></i>
@@ -189,7 +190,7 @@
             <h3>No Recipes Yet</h3>
             <p>No recipes have been posted yet. Be the first to share something delicious!</p>
             @auth
-                <a href="{{ route('recipes.create') }}" class="btn btn-primary mt-3">
+                <a href="{{ route('recipes.create') }}" class="btn btn-primary mt-3 rounded-pill px-4">
                     <i class="bi bi-plus-circle me-1"></i> Create First Recipe
                 </a>
             @endauth
@@ -197,4 +198,3 @@
     @endif
 </div>
 @endsection
-

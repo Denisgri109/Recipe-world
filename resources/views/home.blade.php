@@ -3,6 +3,14 @@
 @section('content')
 {{-- ─── Hero ──────────────────────────────────────────────── --}}
 <div class="custom-hero-small" style="background: linear-gradient(rgba(232,87,61,0.8), rgba(209,68,41,0.9)), url('https://images.unsplash.com/photo-1542010589005-d1eabd39f864?q=80&w=2670&auto=format&fit=crop') no-repeat center center; background-size: cover; padding-top: 5rem; padding-bottom: 5rem;">
+    {{-- Decorative particles --}}
+    <div class="hero-particles">
+        <div class="particle" style="width: 8px; height: 8px; top: 20%; left: 15%; --duration: 7s; --delay: 0s;"></div>
+        <div class="particle" style="width: 12px; height: 12px; top: 60%; left: 75%; --duration: 5s; --delay: 1s;"></div>
+        <div class="particle" style="width: 6px; height: 6px; top: 35%; left: 55%; --duration: 8s; --delay: 2s;"></div>
+        <div class="particle" style="width: 10px; height: 10px; top: 75%; left: 25%; --duration: 6s; --delay: 0.5s;"></div>
+        <div class="particle" style="width: 14px; height: 14px; top: 15%; left: 85%; --duration: 9s; --delay: 1.5s;"></div>
+    </div>
     <div class="container text-center hero-content">
         <div class="hero-emoji">🍳</div>
         <h1 class="hero-title mb-2">Recipe World</h1>
@@ -38,28 +46,28 @@
     <div class="container">
         <div class="row g-3">
             <div class="col-6 col-md-3">
-                <div class="stat-item">
+                <div class="stat-item animate-in animate-delay-1">
                     <span class="stat-icon"><i class="bi bi-journal-richtext"></i></span>
                     <div class="stat-number">{{ \App\Models\Recipe::count() }}+</div>
                     <div class="stat-label">Recipes</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="stat-item">
+                <div class="stat-item animate-in animate-delay-2">
                     <span class="stat-icon"><i class="bi bi-people"></i></span>
                     <div class="stat-number">{{ \App\Models\User::count() }}+</div>
                     <div class="stat-label">Cooks</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="stat-item">
+                <div class="stat-item animate-in animate-delay-3">
                     <span class="stat-icon"><i class="bi bi-grid"></i></span>
                     <div class="stat-number">{{ \App\Models\Category::count() }}+</div>
                     <div class="stat-label">Categories</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="stat-item">
+                <div class="stat-item animate-in animate-delay-4">
                     <span class="stat-icon"><i class="bi bi-star"></i></span>
                     <div class="stat-number">∞</div>
                     <div class="stat-label">Inspiration</div>
@@ -70,7 +78,7 @@
 </div>
 
 {{-- ─── Why Choose Us ─────────────────────────────────────── --}}
-<div class="container py-5 mt-3">
+<div class="container py-5 mt-4">
     <div class="section-header text-center">
         <h2>Why Choose Recipe World?</h2>
         <p>Everything you need to share your culinary creations</p>
