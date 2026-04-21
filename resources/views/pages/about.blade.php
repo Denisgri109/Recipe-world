@@ -2,7 +2,7 @@
 
 @section('content')
 {{-- ─── Hero ──────────────────────────────────────────────── --}}
-<div class="browse-header position-relative" style="background: linear-gradient(rgba(232,87,61,0.8), rgba(209,68,41,0.85)), url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=2670&auto=format&fit=crop') center/cover; padding: 4rem 0 6rem; color: #fff;">
+<div class="browse-header position-relative" style="background: linear-gradient(rgba(232,87,61,0.8), rgba(209,68,41,0.85)), url('https://images.unsplash.com/photo-1493770348161-369560ae357d?q=80&w=2670&auto=format&fit=crop') center/cover; padding: 4rem 0 6rem; color: #fff;">
     <div class="container hero-content text-center">
         <div class="hero-emoji" style="font-size: 3rem;">ℹ️</div>
         <h1 class="mb-2 text-white" style="font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 800;">About Recipe World</h1>
@@ -149,7 +149,7 @@
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-10">
-            <div class="cta-banner text-center cta-content py-5 rounded-4 shadow-lg text-white" style="background: linear-gradient(rgba(232,87,61,0.7), rgba(209,68,41,0.85)), url('https://images.unsplash.com/photo-1542010589005-d1eabd39f864?q=80&w=2670&auto=format&fit=crop') center/cover; z-index: 1;">
+            <div class="cta-banner text-center cta-content py-5 rounded-4 shadow-lg text-white" style="background: linear-gradient(rgba(232,87,61,0.7), rgba(209,68,41,0.85)), url('https://images.unsplash.com/photo-1493770348161-369560ae357d?q=80&w=2670&auto=format&fit=crop') center/cover; z-index: 1;">
                 <h3 class="mb-2 fw-bold" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">Ready to Start Cooking?</h3>
                 <p class="mb-4 lead text-white-50">Join our community and start sharing your favourite recipes today.</p>
                 @guest

@@ -18,7 +18,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="feature-card">
-                <form action="{{ route('categories.update', $category) }}" method="POST">
+                <form action="{{ route('categories.update', $category) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -26,6 +26,23 @@
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $category->name) }}" required>
                         @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Category Image</label>
+                        @if($category->image)
+                            <div class="mb-2">
+                                @php
+                                    $imageUrl = Str::startsWith($category->image, 'http') ? $category->image : asset('storage/' . $category->image);
+                                @endphp
+                                <img src="{{ $imageUrl }}" alt="Current Image" class="img-thumbnail" style="max-height: 100px;">
+                            </div>
+                        @endif
+                        <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" accept="image/*">
+                        <div class="form-text">Leave blank to keep the current image.</div>
+                        @error('image')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

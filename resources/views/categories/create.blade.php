@@ -18,13 +18,21 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="feature-card">
-                <form action="{{ route('categories.store') }}" method="POST">
+                <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required>
                         @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Category Image (optional)</label>
+                        <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" accept="image/*">
+                        @error('image')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

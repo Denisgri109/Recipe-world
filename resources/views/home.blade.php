@@ -2,7 +2,7 @@
 
 @section('content')
 {{-- ─── Hero ──────────────────────────────────────────────── --}}
-<div class="custom-hero-small" style="background: linear-gradient(rgba(232,87,61,0.8), rgba(209,68,41,0.9)), url('https://images.unsplash.com/photo-1542010589005-d1eabd39f864?q=80&w=2670&auto=format&fit=crop') no-repeat center center; background-size: cover; padding-top: 5rem; padding-bottom: 5rem;">
+<div class="custom-hero-small" style="background: linear-gradient(rgba(232,87,61,0.8), rgba(209,68,41,0.9)), url('https://images.unsplash.com/photo-1493770348161-369560ae357d?q=80&w=2670&auto=format&fit=crop') no-repeat center center; background-size: cover; padding-top: 5rem; padding-bottom: 5rem; color: #fff;">
     {{-- Decorative particles --}}
     <div class="hero-particles">
         <div class="particle" style="width: 8px; height: 8px; top: 20%; left: 15%; --duration: 7s; --delay: 0s;"></div>
@@ -87,33 +87,42 @@
 
     <div class="row g-4 g-lg-5">
         <div class="col-md-4">
-            <div class="feature-card text-center animate-in animate-delay-1">
-                <span class="feature-step">01</span>
-                <div class="feature-icon">
-                    <i class="bi bi-egg-fried"></i>
+            <div class="feature-card animate-in animate-delay-1" style="padding:0; overflow:hidden;">
+                <div style="height:150px; background: url('https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=800') center/cover;"></div>
+                <div class="text-center p-4">
+                    <span class="feature-step" style="top: 140px;">01</span>
+                    <div class="feature-icon mt-2">
+                        <i class="bi bi-egg-fried"></i>
+                    </div>
+                    <h5>Share Your Recipes</h5>
+                    <p>Create detailed recipes with ingredients, step-by-step instructions, cooking times, and beautiful photos.</p>
                 </div>
-                <h5>Share Your Recipes</h5>
-                <p>Create detailed recipes with ingredients, step-by-step instructions, cooking times, and beautiful photos.</p>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="feature-card text-center animate-in animate-delay-2">
-                <span class="feature-step">02</span>
-                <div class="feature-icon">
-                    <i class="bi bi-people"></i>
+            <div class="feature-card animate-in animate-delay-2" style="padding:0; overflow:hidden;">
+                <div style="height:150px; background: url('https://images.unsplash.com/photo-1556910103-1c02745a872f?auto=format&fit=crop&w=800') center/cover;"></div>
+                <div class="text-center p-4">
+                    <span class="feature-step" style="top: 140px;">02</span>
+                    <div class="feature-icon mt-2">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <h5>Community Driven</h5>
+                    <p>Connect with fellow food enthusiasts, discover new cuisines, and grow your culinary skills together.</p>
                 </div>
-                <h5>Community Driven</h5>
-                <p>Connect with fellow food enthusiasts, discover new cuisines, and grow your culinary skills together.</p>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="feature-card text-center animate-in animate-delay-3">
-                <span class="feature-step">03</span>
-                <div class="feature-icon">
-                    <i class="bi bi-lightning-charge"></i>
+            <div class="feature-card animate-in animate-delay-3" style="padding:0; overflow:hidden;">
+                <div style="height:150px; background: url('https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?auto=format&fit=crop&w=800') center/cover;"></div>
+                <div class="text-center p-4">
+                    <span class="feature-step" style="top: 140px;">03</span>
+                    <div class="feature-icon mt-2">
+                        <i class="bi bi-lightning-charge"></i>
+                    </div>
+                    <h5>Easy to Use</h5>
+                    <p>Intuitive interface with powerful search, filtering, and category features. Start creating in minutes.</p>
                 </div>
-                <h5>Easy to Use</h5>
-                <p>Intuitive interface with powerful search, filtering, and category features. Start creating in minutes.</p>
             </div>
         </div>
     </div>

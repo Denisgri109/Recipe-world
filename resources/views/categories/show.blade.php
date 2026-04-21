@@ -2,16 +2,19 @@
 
 @section('content')
 {{-- ─── Hero ──────────────────────────────────────────────── --}}
-<div class="browse-header">
+@php
+    $imageUrl = $category->image ? (Str::startsWith($category->image, 'http') ? $category->image : asset('storage/' . $category->image)) : 'https://images.unsplash.com/photo-1493770348161-369560ae357d?q=80&w=2670&auto=format&fit=crop';
+@endphp
+<div class="browse-header position-relative" style="background: linear-gradient(rgba(232,87,61,0.8), rgba(209,68,41,0.85)), url('{{ $imageUrl }}') center/cover; padding: 4rem 0 6rem; color: #fff;">
     <div class="container hero-content">
-        <h1 class="mb-1"><i class="bi bi-tag me-2"></i>{{ $category->name }}</h1>
-        <p class="mb-0">Created {{ $category->created_at->format('F j, Y') }}
+        <h1 class="mb-1 text-white"><i class="bi bi-tag me-2"></i>{{ $category->name }}</h1>
+        <p class="mb-0 text-white-50">Created {{ $category->created_at->format('F j, Y') }}
             @if($category->created_at != $category->updated_at)
                 · Updated {{ $category->updated_at->format('M d, Y') }}
             @endif
         </p>
     </div>
-    <div class="browse-wave">
+    <div class="browse-wave position-absolute bottom-0 w-100">
         <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0,30 C480,70 960,0 1440,30 L1440,60 L0,60 Z" fill="#FFFCF8"/>
         </svg>

@@ -34,40 +34,53 @@
         @endphp
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <div class="category-grid-card mb-3 animate-in animate-delay-{{ ($loop->index % 6) + 1 }}">
-                    <div class="d-flex gap-3 align-items-start">
-                        <div class="category-icon-wrap category-color-{{ $colorIndex }}">
-                            <i class="bi {{ $icon }}"></i>
-                        </div>
-                        <div class="flex-grow-1">
-                            <h4 class="mb-1">
-                                <a href="{{ route('categories.show', $category) }}" class="text-decoration-none text-coral fw-bold">
-                                    {{ $category->name }}
-                                </a>
-                            </h4>
-                            <p class="text-muted small mb-2">
-                                <i class="bi bi-calendar3 me-1"></i>Created {{ $category->created_at->format('M d, Y') }}
-                            </p>
-                            <p class="mb-0" style="color: #6A6A7A; line-height: 1.7;">{{ $category->description ?? 'No description provided.' }}</p>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-3 pt-3" style="border-top: 1px solid rgba(0,0,0,0.05);">
-                        <a href="{{ route('categories.show', $category) }}" class="btn-view">
-                            View <i class="bi bi-arrow-right"></i>
-                        </a>
-                        @if(auth()->check() && auth()->id() === $category->user_id)
-                            <div class="d-flex gap-2">
-                                <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                                    <i class="bi bi-pencil me-1"></i>Edit
-                                </a>
-                                <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline delete-form">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3 delete-btn" data-confirm-message="Are you sure you want to delete the category '{{ $category->name }}'?">
-                                        <i class="bi bi-trash me-1"></i>Delete
-                                    </button>
-                                </form>
+                <div class="category-grid-card mb-3 animate-in animate-delay-{{ ($loop->index % 6) + 1 }}" style="padding: 0; overflow: hidden;">
+                    <!-- YOU CAN EDIT CHUNK WIDTHS RIGHT HERE: 'col-md-6' is 50% width on desktop. Make it 'col-md-5' and 'col-md-7' below to tweak ratio. -->
+                    <div class="row g-0 flex-column-reverse flex-md-row">
+                        <div class="col-md-{{ $category->image ? '6' : '12' }}">
+                            <div style="padding: 1.5rem;">
+                                <div class="d-flex gap-3 align-items-start">
+                                    <div class="category-icon-wrap category-color-{{ $colorIndex }}">
+                                        <i class="bi {{ $icon }}"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h4 class="mb-1">
+                                            <a href="{{ route('categories.show', $category) }}" class="text-decoration-none text-coral fw-bold">
+                                                {{ $category->name }}
+                                            </a>
+                                        </h4>
+                                        <p class="text-muted small mb-2">
+                                            <i class="bi bi-calendar3 me-1"></i>Created {{ $category->created_at->format('M d, Y') }}
+                                        </p>
+                                        <p class="mb-0" style="color: #6A6A7A; line-height: 1.7;">{{ \Illuminate\Support\Str::limit($category->description ?? 'No description provided.', 120) }}</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-4 pt-3" style="border-top: 1px solid rgba(0,0,0,0.05);">
+                                    <a href="{{ route('categories.show', $category) }}" class="btn-view">
+                                        View <i class="bi bi-arrow-right"></i>
+                                    </a>
+                                    @if(auth()->check() && auth()->id() === $category->user_id)
+                                        <div class="d-flex gap-2">
+                                            <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                                                <i class="bi bi-pencil me-1"></i>Edit
+                                            </a>
+                                            <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline delete-form">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3 delete-btn" data-confirm-message="Are you sure you want to delete the category '{{ $category->name }}'?">
+                                                    <i class="bi bi-trash me-1"></i>Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
+                        </div>
+                        @if($category->image)
+                        @php
+                            $imageUrl = Str::startsWith($category->image, 'http') ? $category->image : asset('storage/' . $category->image);
+                        @endphp
+                        <div class="col-md-6" style="min-height: 200px; background: url('{{ $imageUrl }}') center/cover;"></div>
                         @endif
                     </div>
                 </div>
