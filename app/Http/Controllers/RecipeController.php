@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Recipe;
 use App\Models\Category;
+use App\Services\RecipeViewTrackingService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -90,8 +91,17 @@ class RecipeController extends Controller
         return redirect()->route('recipes.show', $recipe)->with('success', 'Recipe created successfully!');
     }
 
-    public function show(Recipe $recipe): View
+    public function show(Request $request, Recipe $recipe, RecipeViewTrackingService $recipeViewTrackingService): View
     {
+        $this->authorize('view', $recipe);
+
+        $recipeViewTrackingService->track(
+            $recipe,
+            $request->user(),
+            $request->ip(),
+            $request->userAgent()
+        );
+
         $recipe->load(['ingredients' => function ($query) {
             $query->orderBy('order');
         }, 'user', 'category']);

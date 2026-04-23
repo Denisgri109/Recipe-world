@@ -62,6 +62,11 @@ class Recipe extends Model
         return $this->hasMany(Ingredient::class);
     }
 
+    public function views(): HasMany
+    {
+        return $this->hasMany(RecipeView::class);
+    }
+
     public function sluggable(): array
     {
         return [
