@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CreatorAnalyticsController;
 use App\Http\Controllers\Api\CreatorRecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,4 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/creator/recipes', [CreatorRecipeController::class, 'index'])
         ->name('api.creator.recipes.index');
+
+    Route::get('/creator/analytics/summary', [CreatorAnalyticsController::class, 'summary'])
+        ->name('api.creator.analytics.summary');
 });
