@@ -110,6 +110,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('creator.recipes.*') ? 'active' : '' }}" href="{{ route('creator.recipes.index') }}">
+                                    <i class="bi bi-collection me-1"></i>My Recipes
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('recipes.create') ? 'active' : '' }}" href="{{ route('recipes.create') }}">
                                     <i class="bi bi-plus-circle me-1"></i>Create Recipe
                                 </a>

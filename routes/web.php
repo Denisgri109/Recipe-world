@@ -3,6 +3,7 @@
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CreatorDashboardController;
+use App\Http\Controllers\CreatorRecipeManagementController;
 use App\Models\Recipe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -50,4 +51,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [CreatorDashboardController::class, 'index'])->name('dashboard');
     Route::get('/creator/dashboard', [CreatorDashboardController::class, 'index'])->name('creator.dashboard');
     Route::get('/creator/dashboard/summary', [CreatorDashboardController::class, 'summary'])->name('creator.dashboard.summary');
+    Route::get('/creator/my-recipes', [CreatorRecipeManagementController::class, 'index'])->name('creator.recipes.index');
 });
