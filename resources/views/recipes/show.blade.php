@@ -22,14 +22,23 @@
                             <p class="text-muted mb-0">By {{ $recipe->user->name ?? 'Unknown Author' }}</p>
                         </div>
                         <div class="d-flex gap-2">
-                              @if(auth()->check() && $recipe->user_id !== auth()->id() && !\App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists())
-                                  <form action="{{ route('orders.purchase', $recipe) }}" method="POST" class="m-0 p-0">
-                                      @csrf
-                                      <button type="submit" class="btn btn-success">Buy Recipe</button>
-                                  </form>
-                              @elseif(auth()->check() && \App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists())
+                              @php
+                                  $isFree = empty($recipe->price) || $recipe->price <= 0;
+                              @endphp
+                              @if(auth()->check() && $recipe->user_id !== auth()->id() && !$isFree && !\App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists())
+                                  @if(session()->has("cart.{$recipe->id}"))
+                                      <a href="{{ route('cart.index') }}" class="btn btn-secondary"><i class="bi bi-cart-check"></i> In Cart</a>
+                                  @else
+                                      <form action="{{ route('cart.add', $recipe) }}" method="POST" class="m-0 p-0">
+                                          @csrf
+                                          <button type="submit" class="btn btn-success"><i class="bi bi-cart-plus me-1"></i>Add to Cart for €{{ number_format($recipe->price, 2) }}</button>
+                                      </form>
+                                  @endif
+                              @elseif(auth()->check() && !\App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists() && !$isFree)
+                                  <!-- Not purchased, just handled above or locked -->
+                              @elseif(auth()->check() && \App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists() && !$isFree)
                                   <button class="btn btn-secondary" disabled>Purchased</button>
-                            @endif
+                              @endif
                             @can('update', $recipe)
                                 <a href="{{ route('recipes.edit', $recipe) }}" class="btn btn-primary">Edit</a>
                             @endcan
@@ -96,7 +105,8 @@
                     @php
                         $isOwner = auth()->check() && $recipe->user_id === auth()->id();
                         $hasPurchased = auth()->check() && \App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists();
-                        $canViewFull = $isOwner || $hasPurchased;
+                        $isFree = empty($recipe->price) || $recipe->price <= 0;
+                        $canViewFull = $isOwner || $hasPurchased || $isFree;
                     @endphp
 
                     @if($canViewFull)
@@ -132,12 +142,18 @@
                                 Purchase this recipe to view the full ingredients list and step-by-step instructions.
                             </p>
                             @auth
-                                <form action="{{ route('orders.purchase', $recipe) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-success btn-lg">
-                                        <i class="bi bi-cart me-1"></i> Buy This Recipe
-                                    </button>
-                                </form>
+                                @if(session()->has("cart.{$recipe->id}"))
+                                    <a href="{{ route('cart.index') }}" class="btn btn-secondary btn-lg">
+                                        <i class="bi bi-cart-check me-1"></i> In Your Cart
+                                    </a>
+                                @else
+                                    <form action="{{ route('cart.add', $recipe) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success btn-lg">
+                                            <i class="bi bi-cart-plus me-1"></i> Add to Cart (Total: €{{ number_format($recipe->price, 2) }})
+                                        </button>
+                                    </form>
+                                @endif
                             @else
                                 <a href="{{ route('login') }}" class="btn btn-primary btn-lg">
                                     <i class="bi bi-box-arrow-in-right me-1"></i> Log In to Purchase

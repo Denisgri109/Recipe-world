@@ -324,6 +324,7 @@ class RecipeSeeder extends Seeder
             $recipeData['user_id'] = $userIds[$index % count($userIds)];
             $recipeData['category_id'] = $categories[$categoryName] ?? array_values($categories)[0];
             $recipeData['slug'] = Str::slug($recipeData['title']) . '-' . ($index + 1);
+            $recipeData['price'] = rand(3, 18);
 
             $recipe = Recipe::create($recipeData);
 

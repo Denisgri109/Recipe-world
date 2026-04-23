@@ -53,6 +53,17 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
+                        <li class="nav-item me-3 d-flex align-items-center">
+                            <a id="navbar-cart-icon" class="nav-link position-relative {{ request()->routeIs('cart.index') ? 'text-primary' : '' }}" href="{{ route('cart.index') }}" title="Shopping Cart">
+                                <i class="bi bi-cart3 fs-5"></i>
+                                @if(session()->has('cart') && count(session('cart')) > 0)
+                                    <span id="cart-badge-count" class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger border border-white" style="font-size: 0.65rem; transform: translate(-30%, -20%) !important;">
+                                        {{ count(session('cart')) }}
+                                    </span>
+                                @endif
+                            </a>
+                        </li>
+                        
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -254,6 +265,52 @@ document.addEventListener('DOMContentLoaded',()=>{
             globalDeleteModal.hide();
         });
     }
+
+    // AJAX Cart Add Logic
+    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = form.querySelector('button[type="submit"]');
+            const originalHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> ...';
+
+            try {
+                const fetchResponse = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json'
+                    },
+                    body: new FormData(form)
+                });
+                
+                const data = await fetchResponse.json();
+
+                if (fetchResponse.ok) {
+                    btn.innerHTML = '<i class="bi bi-cart-check"></i> In Cart';
+                    btn.classList.replace('btn-success', 'btn-secondary');
+                    
+                    const cartBadge = document.getElementById('cart-badge-count');
+                    const cartNavIcon = document.getElementById('navbar-cart-icon');
+                    
+                    if (cartBadge) {
+                        cartBadge.textContent = data.cart_count;
+                    } else if (cartNavIcon && data.cart_count > 0) {
+                        cartNavIcon.innerHTML += '<span id="cart-badge-count" class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger border border-white" style="font-size: 0.65rem; transform: translate(-30%, -20%) !important;">' + data.cart_count + '</span>';
+                    }
+                } else {
+                    alert(data.error || data.warning || 'Failed to add to cart.');
+                    btn.disabled = false;
+                    btn.innerHTML = originalHtml;
+                }
+            } catch (err) {
+                alert('A network error occurred.');
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+            }
+        });
+    });
 });
 </script>
 </body>

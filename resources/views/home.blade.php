@@ -101,7 +101,7 @@
         </div>
         <div class="col-md-4">
             <div class="feature-card animate-in animate-delay-2" style="padding:0; overflow:hidden;">
-                <div style="height:150px; background: url('https://images.unsplash.com/photo-1556910103-1c02745a872f?auto=format&fit=crop&w=800') center/cover;"></div>
+                <div style="height:150px; background: url('https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800') center/cover;"></div>
                 <div class="text-center p-4">
                     <span class="feature-step" style="top: 140px;">02</span>
                     <div class="feature-icon mt-2">

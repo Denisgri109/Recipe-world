@@ -25,6 +25,7 @@ class Recipe extends Model
         'difficulty',
         'image_path',
         'category_id',
+        'price',
     ];
 
     public function user(): BelongsTo

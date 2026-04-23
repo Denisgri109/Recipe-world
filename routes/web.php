@@ -57,8 +57,28 @@ Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
 
 use App\Http\Controllers\OrderController;
 
+use App\Http\Controllers\StripeController;
+
 Route::middleware(['auth'])->prefix('orders')->name('orders.')->group(function () {
     Route::get('my-purchases', [OrderController::class, 'myOrders'])->name('my');
     Route::get('sales', [OrderController::class, 'sales'])->name('sales');
     Route::post('{recipe}/purchase', [OrderController::class, 'purchase'])->name('purchase');
+});
+
+Route::middleware('auth')->group(function () {
+    // Cart Routes
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/{recipe}/add', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/{recipe}/remove', [App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
+
+    // Stripe Routes
+    Route::post('/stripe/checkout/cart', [App\Http\Controllers\StripeController::class, 'checkoutCart'])->name('stripe.checkout.cart');
+    Route::post('/stripe/checkout/{recipe}', [App\Http\Controllers\StripeController::class, 'checkout'])->name('stripe.checkout');
+    Route::get('/stripe/success/cart', [App\Http\Controllers\StripeController::class, 'successCart'])->name('stripe.success.cart');
+    Route::get('/stripe/success/{recipe}', [App\Http\Controllers\StripeController::class, 'success'])->name('stripe.success');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/recipes/{recipe}/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
+    Route::get('/recipes/{recipe}/checkout/success', [StripeController::class, 'success'])->name('stripe.success');
 });

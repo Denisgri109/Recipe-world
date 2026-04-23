@@ -126,6 +126,16 @@
                                     <span class="badge">{{ $recipe->category->name }}</span>
                                 </div>
                             @endif
+
+                            @php
+                                $isFree = empty($recipe->price) || $recipe->price <= 0;
+                            @endphp
+
+                            @if(!$isFree)
+                                <div class="position-absolute top-0 end-0 m-3 py-1 px-3 bg-white text-dark fw-bold rounded-pill shadow-sm" style="font-size: 0.9rem; z-index: 10;">
+                                    €{{ number_format($recipe->price, 2) }}
+                                </div>
+                            @endif
                         </div>
 
                         {{-- Body --}}
@@ -159,16 +169,23 @@
                                     {{ optional($recipe->user)->name ?? 'Unknown' }}
                                 </span>
                                 <div class="d-flex align-items-center gap-2">
-                                      @if(auth()->check() && $recipe->user_id !== auth()->id() && !\App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists())
-                                          <form action="{{ route('orders.purchase', $recipe) }}" method="POST" class="m-0 p-0">
-                                              @csrf
-                                              <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">
-                                                  <i class="bi bi-cart"></i> Buy
-                                              </button>
-                                          </form>
-                                      @elseif(auth()->check() && \App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists())
+                                      @php
+                                          $isFree = empty($recipe->price) || $recipe->price <= 0;
+                                      @endphp
+                                      @if(auth()->check() && $recipe->user_id !== auth()->id() && !$isFree && !\App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists())
+                                          @if(session()->has("cart.{$recipe->id}"))
+                                              <span class="badge bg-secondary rounded-pill px-3 py-2"><i class="bi bi-cart-check"></i> In Cart</span>
+                                          @else
+                                              <form action="{{ route('cart.add', $recipe) }}" method="POST" class="m-0 p-0 add-to-cart-form">
+                                                  @csrf
+                                                  <button type="submit" class="btn btn-sm btn-success rounded-pill px-3 shadow-sm fw-bold">
+                                                      <i class="bi bi-cart-plus"></i> Add
+                                                  </button>
+                                              </form>
+                                          @endif
+                                      @elseif(auth()->check() && \App\Models\Order::where('buyer_id', auth()->id())->where('recipe_id', $recipe->id)->exists() && !$isFree)
                                           <span class="badge bg-success rounded-pill"><i class="bi bi-check-circle"></i> Purchased</span>
-                                    @endif
+                                      @endif
                                     <a href="{{ route('recipes.show', $recipe) }}" class="btn-view">
                                         View <i class="bi bi-arrow-right"></i>
                                     </a>
