@@ -76,9 +76,62 @@ $transition-fast: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 html { scroll-behavior: smooth; }
 
 body {
-    background: $warm-bg;
+    background-color: #FFFCF8;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(255, 240, 235, 0.8) 0, transparent 50%), 
+        radial-gradient(at 100% 100%, rgba(255, 248, 237, 0.8) 0, transparent 50%);
+    background-attachment: fixed;
     color: $text-body;
     font-family: 'Inter', 'Nunito', sans-serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    z-index: 0;
+}
+
+// ─── Premium Glassmorphic Floating Orbs (Background) ───────
+body::before, body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+body::before {
+    width: 60vw;
+    height: 60vw;
+    max-width: 800px;
+    max-height: 800px;
+    background: radial-gradient(circle, rgba(232, 87, 61, 0.18) 0%, rgba(232, 87, 61, 0) 70%);
+    top: -15vh;
+    left: -10vw;
+    animation: floatOrb 28s infinite alternate ease-in-out;
+}
+
+body::after {
+    width: 50vw;
+    height: 50vw;
+    max-width: 700px;
+    max-height: 700px;
+    background: radial-gradient(circle, rgba(245, 166, 35, 0.15) 0%, rgba(245, 166, 35, 0) 70%);
+    bottom: -15vh;
+    right: -5vw;
+    animation: floatOrbReverse 32s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes floatOrb {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(12vw, 15vh) scale(1.15); }
+    100% { transform: translate(8vw, 30vh) scale(0.9); }
+}
+
+@keyframes floatOrbReverse {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-10vw, -15vh) scale(1.2); }
+    100% { transform: translate(-25vw, -8vh) scale(0.95); }
 }
 
 h1, h2, h3, h4, h5 {
@@ -615,20 +668,7 @@ h1, h2, h3, h4, h5 {
     }
 }
 
-.browse-wave {
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    line-height: 0;
-    z-index: 2;
 
-    svg {
-        display: block;
-        width: 100%;
-        height: 60px;
-    }
-}
 
 // ─── Filter Bar ─────────────────────────────────────────────
 .filter-bar {

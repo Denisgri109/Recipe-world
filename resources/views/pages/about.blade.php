@@ -4,7 +4,7 @@
 {{-- ─── Hero ──────────────────────────────────────────────── --}}
 <div class="browse-header position-relative" style="background: linear-gradient(rgba(232,87,61,0.8), rgba(209,68,41,0.85)), url('https://images.unsplash.com/photo-1493770348161-369560ae357d?q=80&w=2670&auto=format&fit=crop') center/cover; padding: 4rem 0 6rem; color: #fff;">
     <div class="container hero-content text-center">
-        <div class="hero-emoji" style="font-size: 3rem;">ℹ️</div>
+        <div class="hero-emoji" style="font-size: 3.5rem;">🧑‍🍳</div>
         <h1 class="mb-2 text-white" style="font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 800;">About Recipe World</h1>
         <p class="mb-0 text-white-50 fs-5">A digital community cookbook built with passion</p>
     </div>

@@ -29,7 +29,7 @@
                                   @if(session()->has("cart.{$recipe->id}"))
                                       <a href="{{ route('cart.index') }}" class="btn btn-secondary"><i class="bi bi-cart-check"></i> In Cart</a>
                                   @else
-                                      <form action="{{ route('cart.add', $recipe) }}" method="POST" class="m-0 p-0">
+                                      <form action="{{ route('cart.add', $recipe) }}" method="POST" class="m-0 p-0 add-to-cart-form">
                                           @csrf
                                           <button type="submit" class="btn btn-success"><i class="bi bi-cart-plus me-1"></i>Add to Cart for €{{ number_format($recipe->price, 2) }}</button>
                                       </form>
@@ -147,7 +147,7 @@
                                         <i class="bi bi-cart-check me-1"></i> In Your Cart
                                     </a>
                                 @else
-                                    <form action="{{ route('cart.add', $recipe) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('cart.add', $recipe) }}" method="POST" class="d-inline add-to-cart-form">
                                         @csrf
                                         <button type="submit" class="btn btn-success btn-lg">
                                             <i class="bi bi-cart-plus me-1"></i> Add to Cart (Total: €{{ number_format($recipe->price, 2) }})
