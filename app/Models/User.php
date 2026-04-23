@@ -32,4 +32,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Recipe::class);
     }
+
+    public function monetizationEvents(): HasMany
+    {
+        return $this->hasMany(MonetizationEvent::class, 'creator_id');
+    }
 }

@@ -67,6 +67,11 @@ class Recipe extends Model
         return $this->hasMany(RecipeView::class);
     }
 
+    public function monetizationEvents(): HasMany
+    {
+        return $this->hasMany(MonetizationEvent::class);
+    }
+
     public function sluggable(): array
     {
         return [
