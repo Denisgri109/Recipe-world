@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CreatorDashboardController;
 use App\Models\Recipe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,4 +46,8 @@ Route::get('/contact', function () {
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [CreatorDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/creator/dashboard', [CreatorDashboardController::class, 'index'])->name('creator.dashboard');
+    Route::get('/creator/dashboard/summary', [CreatorDashboardController::class, 'summary'])->name('creator.dashboard.summary');
+});

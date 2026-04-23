@@ -105,6 +105,11 @@
                             @endif
                         @else
                             <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('dashboard') || request()->routeIs('creator.dashboard*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                                    <i class="bi bi-speedometer2 me-1"></i>Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('recipes.create') ? 'active' : '' }}" href="{{ route('recipes.create') }}">
                                     <i class="bi bi-plus-circle me-1"></i>Create Recipe
                                 </a>
