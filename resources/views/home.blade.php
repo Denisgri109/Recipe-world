@@ -109,10 +109,8 @@
                     </div>
                     <h5>Community Driven</h5>
                     <p>Connect with fellow food enthusiasts, discover new cuisines, and grow your culinary skills together.</p>
-                <div class="col-12">
-                    <div class="alert alert-info mb-0">No featured recipes yet. Be the first to add one.</div>
                 </div>
-            @endforelse
+            </div>
         </div>
         <div class="col-md-4">
             <div class="feature-card animate-in animate-delay-3" style="padding:0; overflow:hidden;">
@@ -221,8 +219,6 @@
                 <i class="bi bi-plus-circle me-2"></i>Share Your Recipe
             </a>
         @endguest
-    </div>
-</div>
     </div>
 </div>
 @endsection
