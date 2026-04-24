@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CreatorDashboardController;
+use App\Http\Controllers\CreatorRecipeManagementController;
+use App\Models\Recipe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +20,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    $featuredRecipes = Recipe::with(['user', 'category'])
+        ->latest()
+        ->take(6)
+        ->get();
+
+    return view('home', compact('featuredRecipes'));
 })->name('home');
 
 Route::get('/browse', [RecipeController::class, 'index'])->name('recipes.browse');
@@ -53,10 +60,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
+// Use CreatorDashboardController instead of HomeController for /home if it's the new standard
+Route::get('/home', [CreatorDashboardController::class, 'index'])->name('dashboard');
 
 use App\Http\Controllers\OrderController;
-
 use App\Http\Controllers\StripeController;
 
 Route::middleware(['auth'])->prefix('orders')->name('orders.')->group(function () {
@@ -66,6 +73,11 @@ Route::middleware(['auth'])->prefix('orders')->name('orders.')->group(function (
 });
 
 Route::middleware('auth')->group(function () {
+    // Creator Dashboard Routes
+    Route::get('/creator/dashboard', [CreatorDashboardController::class, 'index'])->name('creator.dashboard');
+    Route::get('/creator/dashboard/summary', [CreatorDashboardController::class, 'summary'])->name('creator.dashboard.summary');
+    Route::get('/creator/my-recipes', [CreatorRecipeManagementController::class, 'index'])->name('creator.recipes.index');
+
     // Cart Routes
     Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/{recipe}/add', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
@@ -76,9 +88,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/stripe/checkout/{recipe}', [App\Http\Controllers\StripeController::class, 'checkout'])->name('stripe.checkout');
     Route::get('/stripe/success/cart', [App\Http\Controllers\StripeController::class, 'successCart'])->name('stripe.success.cart');
     Route::get('/stripe/success/{recipe}', [App\Http\Controllers\StripeController::class, 'success'])->name('stripe.success');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::post('/recipes/{recipe}/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
-    Route::get('/recipes/{recipe}/checkout/success', [StripeController::class, 'success'])->name('stripe.success');
 });

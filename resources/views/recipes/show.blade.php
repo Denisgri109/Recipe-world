@@ -19,7 +19,10 @@
                     <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
                         <div>
                             <h2 class="recipe-detail-title">{{ $recipe->title }}</h2>
-                            <p class="text-muted mb-0">By {{ $recipe->user->name ?? 'Unknown Author' }}</p>
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <p class="text-muted mb-0">By {{ $recipe->user->name ?? 'Unknown Author' }}</p>
+                                <x-difficulty-badge :difficulty="$recipe->difficulty" />
+                            </div>
                         </div>
                         <div class="d-flex gap-2">
                               @php

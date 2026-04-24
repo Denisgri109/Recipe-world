@@ -13,7 +13,7 @@ class RecipePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,11 @@ class RecipePolicy
      */
     public function view(User $user, Recipe $recipe): bool
     {
-        //
+        if ($recipe->is_draft) {
+            return $user->id === $recipe->user_id;
+        }
+
+        return true;
     }
 
     /**
@@ -29,7 +33,7 @@ class RecipePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +57,7 @@ class RecipePolicy
      */
     public function restore(User $user, Recipe $recipe): bool
     {
-        //
+        return $user->id === $recipe->user_id;
     }
 
     /**
@@ -61,6 +65,6 @@ class RecipePolicy
      */
     public function forceDelete(User $user, Recipe $recipe): bool
     {
-        //
+        return $user->id === $recipe->user_id;
     }
 }

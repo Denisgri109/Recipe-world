@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 class Recipe extends Model
@@ -26,7 +27,26 @@ class Recipe extends Model
         'image_path',
         'category_id',
         'price',
+        'is_draft',
+        'views_count',
     ];
+
+    protected $casts = [
+        'is_draft' => 'boolean',
+    ];
+
+    public function scopeOwnedBy(Builder $query, int $userId): Builder
+    {
+        return $query->where('user_id', $userId);
+    }
+
+    public function scopeSortForCreator(Builder $query, string $sort): Builder
+    {
+        return match ($sort) {
+            'most_viewed' => $query->orderByDesc('views_count')->latest('id'),
+            default => $query->latest(),
+        };
+    }
 
     public function user(): BelongsTo
     {
@@ -41,6 +61,16 @@ class Recipe extends Model
     public function ingredients(): HasMany
     {
         return $this->hasMany(Ingredient::class);
+    }
+
+    public function views(): HasMany
+    {
+        return $this->hasMany(RecipeView::class);
+    }
+
+    public function monetizationEvents(): HasMany
+    {
+        return $this->hasMany(MonetizationEvent::class);
     }
 
     public function sluggable(): array

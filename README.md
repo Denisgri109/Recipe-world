@@ -4,27 +4,33 @@
 
 ## Live Demo
 
-> **Azure Public URL:** *(coming soon)*
+> **Vercel Public URL:** https://recipe-world-roman.vercel.app
+
+## Deployment
+
+The application is deployed on Vercel with environment variables configured for production.
 
 ## Features
 
 - User registration and authentication (Register, Login, Logout)
 - Full CRUD operations for recipes (Create, Read, Update, Delete)
-- Ingredient management with dynamic add/remove fields
+- Ingredient management in recipe create/update flows
 - Recipe categorisation by type (e.g. Breakfast, Dinner, Dessert)
 - Search and filter recipes by keyword, category, or difficulty
-- Image upload support for recipe featured images
+- Featured image upload support for recipes
 - Automatic slug generation from recipe titles
 - Recipe ownership and authorization policies
 - Responsive Bootstrap 5 UI
 - Pagination support
+- Informational pages: About and Contact
 
 ## Technology Stack
 
-- **Laravel 10.x** - PHP framework
-- **MySQL** - Database
-- **Bootstrap 5** - Frontend framework
-- **Vite** - Asset bundling
+- **Vercel** - Hosting and deployment platform
+- **Laravel 10.x** - PHP web framework
+- **MySQL** - Relational database
+- **Bootstrap 5** - Frontend styling and layout
+- **Vite** - Frontend asset bundling
 - **Laravel UI** - Authentication scaffolding
 - **Eloquent Sluggable** - Automatic slug generation
 
@@ -119,6 +125,26 @@ The application will be available at `http://localhost:8000`
 3. **Create a recipe** with a title, description, step-by-step instructions, ingredients, cooking times, difficulty level, and a featured image
 4. **Edit or delete** your own recipes
 5. **Search and filter** recipes by keyword, category, or difficulty
+
+## Screenshots
+
+### About Page
+
+![About page](docs/screenshots/about.png)
+
+### Contact Page
+
+![Contact page](docs/screenshots/contact.png)
+
+### Login Page
+
+![Login page](docs/screenshots/login.png)
+
+## Known Issues / Limitations
+
+- Some database-backed pages can be slow or fail intermittently if cloud database network access is not fully configured.
+- Vercel Git integration is not yet connected for automatic deploys from repository pushes.
+- Persistent local disk writes are not available on Vercel serverless runtime, so storage/logging paths must use serverless-safe configuration.
 
 ## Project Structure
 
