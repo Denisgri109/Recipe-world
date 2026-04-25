@@ -2,7 +2,7 @@
 
 @section('content')
 {{-- ─── Browse Header ─────────────────────────────────────── --}}
-<div class="browse-header position-relative" style="background: linear-gradient(rgba(232,87,61,0.8), rgba(209,68,41,0.85)), url('https://images.unsplash.com/photo-1542010589005-d1eabd39f864?q=80&w=2670&auto=format&fit=crop') center/cover; padding: 4rem 0 6rem; color: #fff;">
+<div class="browse-header position-relative" style="background: linear-gradient(rgba(232,87,61,0.8), rgba(209,68,41,0.85)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2670&auto=format&fit=crop') center/cover; padding: 4rem 0 6rem; color: #fff;">
     <div class="container hero-content">
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
             <div>
@@ -10,11 +10,6 @@
                 <h1 class="mb-1 text-white"><i class="bi bi-book me-2"></i>Browse Recipes</h1>
                 <p class="mb-0 text-white-50">Discover delicious recipes from our community</p>
             </div>
-            @auth
-                <a href="{{ route('recipes.create') }}" class="btn-hero btn-white btn-hero-sm">
-                    <i class="bi bi-plus-circle me-2"></i>Create New Recipe
-                </a>
-            @endauth
         </div>
     </div>
     <div class="browse-wave position-absolute bottom-0 w-100">

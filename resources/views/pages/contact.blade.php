@@ -16,8 +16,8 @@
 </div>
 
 {{-- ─── Contact Info Cards ────────────────────────────────── --}}
-<div class="container py-5">
-    <div class="row mb-5 g-4 justify-content-center">
+<div class="container py-5 d-flex flex-column">
+    <div class="row mb-5 g-4 justify-content-center order-2 order-lg-1 mt-4 mt-lg-0">
         <div class="col-md-4">
             <div class="contact-info-card h-100 animate-in animate-delay-1">
                 <div class="contact-icon-circle mx-auto">
@@ -48,7 +48,7 @@
     </div>
 
     {{-- ─── Form & Image ──────────────────────────────────── --}}
-    <div class="row align-items-center g-5">
+    <div class="row align-items-center g-5 order-1 order-lg-2">
         <div class="col-lg-6 d-none d-lg-block animate-in animate-delay-4">
             <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=800&auto=format&fit=crop" class="img-fluid rounded-4 shadow-lg" alt="Contact Us" style="height: 580px; width: 100%; object-fit: cover;">
         </div>

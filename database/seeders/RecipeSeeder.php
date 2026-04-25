@@ -161,7 +161,7 @@ class RecipeSeeder extends Seeder
                 'description' => 'Golden-fried mozzarella sticks with a crunchy breadcrumb coating and marinara dip.',
                 'instructions' => "1. Cut mozzarella into thick sticks.\n\n2. Set up a breading station: flour, beaten eggs, and seasoned breadcrumbs.\n\n3. Coat each stick in flour, dip in egg, then roll in breadcrumbs. Repeat for a thicker crust.\n\n4. Freeze the sticks for 20 minutes to firm up.\n\n5. Heat oil to 180C (350F) and fry sticks for 2 minutes until golden.\n\n6. Drain on paper towels.\n\n7. Serve hot with warm marinara sauce.",
                 'prep_time' => 25, 'cook_time' => 5, 'servings' => 4, 'difficulty' => 'medium',
-                'image_path' => 'https://images.unsplash.com/photo-1531749668029-2db88e4571c8?q=80&w=800&auto=format&fit=crop',
+                'image_path' => 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop',
                 'category' => 'Snacks',
                 'ingredients' => [
                     ['name' => 'Mozzarella block', 'quantity' => '400g'],

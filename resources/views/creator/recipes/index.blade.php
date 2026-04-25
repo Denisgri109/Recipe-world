@@ -3,18 +3,23 @@
 @section('title', 'My Recipes')
 
 @section('content')
-<div class="container py-4">
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-        <div>
-            <h1 class="h3 mb-1">My Recipes</h1>
-            <p class="text-muted mb-0">Manage your recipes and track performance in one place.</p>
+<div class="orders-hero position-relative">
+    <div class="container hero-content">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <h1 class="mb-1"><i class="bi bi-journal-richtext me-2"></i>My Recipes</h1>
+                <p class="mb-0">Manage your recipes and track performance in one place.</p>
+            </div>
         </div>
-        <a href="{{ route('recipes.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle me-1"></i>Create New Recipe
-        </a>
     </div>
+    <div class="browse-wave position-absolute bottom-0 w-100">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:60px; display:block;">
+            <path d="M0,30 C480,70 960,0 1440,30 L1440,60 L0,60 Z" fill="#FFFCF8"/>
+        </svg>
+    </div>
+</div>
 
-    <div class="card mb-4 shadow-sm border-0 bg-light">
+<div class="container py-4">    <div class="card mb-4 shadow-sm border-0 bg-light">
         <div class="card-body py-3">
             <form action="{{ route('creator.recipes.index') }}" method="GET" class="row g-2 align-items-end">
                 <div class="col-12 col-lg-4">

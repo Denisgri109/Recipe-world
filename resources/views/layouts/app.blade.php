@@ -115,44 +115,42 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('dashboard') || request()->routeIs('creator.dashboard*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
-                                    <i class="bi bi-speedometer2 me-1"></i>Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('creator.recipes.*') ? 'active' : '' }}" href="{{ route('creator.recipes.index') }}">
-                                    <i class="bi bi-collection me-1"></i>My Recipes
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('recipes.create') ? 'active' : '' }}" href="{{ route('recipes.create') }}">
-                                    <i class="bi bi-plus-circle me-1"></i>Create Recipe
-                                </a>
-                            </li>
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <i class="bi bi-person-circle me-1"></i>{{ Auth::user()->name }}
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="bi bi-person-circle fs-5"></i>
+                                    <span class="fw-medium">{{ Auth::user()->name }}</span>
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('orders.my') }}">
-                                        {{ __('My Orders') }}
+                                <div class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item py-2 {{ request()->routeIs('dashboard') || request()->routeIs('creator.dashboard*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                                        <i class="bi bi-speedometer2 me-2 text-muted"></i>{{ __('Dashboard') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('orders.sales') }}">
-                                        {{ __('My Sales') }}
+                                    <a class="dropdown-item py-2 {{ request()->routeIs('creator.recipes.*') ? 'active' : '' }}" href="{{ route('creator.recipes.index') }}">
+                                        <i class="bi bi-collection me-2 text-muted"></i>{{ __('My Recipes') }}
                                     </a>
-                                    <hr class="dropdown-divider">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item py-2" href="{{ route('orders.my') }}">
+                                        <i class="bi bi-bag-check me-2 text-muted"></i>{{ __('My Orders') }}
+                                    </a>
+                                    <a class="dropdown-item py-2" href="{{ route('orders.sales') }}">
+                                        <i class="bi bi-graph-up me-2 text-muted"></i>{{ __('My Sales') }}
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item py-2 text-danger" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        <i class="bi bi-box-arrow-right me-2"></i>{{ __('Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </div>
+                            </li>
+                            <li class="nav-item ms-md-2 d-flex align-items-center mt-2 mt-md-0">
+                                <a class="btn btn-primary rounded-pill px-3 shadow-sm {{ request()->routeIs('recipes.create') ? 'disabled' : '' }}" href="{{ route('recipes.create') }}">
+                                    <i class="bi bi-plus-circle me-1"></i> Create Recipe
+                                </a>
                             </li>
                         @endguest
                     </ul>
