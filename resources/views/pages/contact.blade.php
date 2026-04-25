@@ -56,24 +56,25 @@
             <div class="contact-form-card animate-in animate-delay-5">
                 <h3 class="mb-1 fw-bold" style="font-family: 'Playfair Display', serif;">Send Us a Message</h3>
                 <p class="text-muted mb-4">Fill out the form below and we'll get back to you shortly.</p>
-                <form>
+                <form action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="4220c034-20da-4234-a4dd-70fa15382aa2">
                     <div class="row g-3 mb-3">
                         <div class="col-sm-6">
                             <label for="name" class="form-label small fw-bold text-muted text-uppercase" style="letter-spacing: 1px; font-size: 0.75rem;">Your Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="John Doe">
+                            <input type="text" name="name" class="form-control" id="name" placeholder="John Doe" required>
                         </div>
                         <div class="col-sm-6">
                             <label for="email" class="form-label small fw-bold text-muted text-uppercase" style="letter-spacing: 1px; font-size: 0.75rem;">Email Address</label>
-                            <input type="email" class="form-control" id="email" placeholder="john@example.com">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="john@example.com" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="subject" class="form-label small fw-bold text-muted text-uppercase" style="letter-spacing: 1px; font-size: 0.75rem;">Subject</label>
-                        <input type="text" class="form-control" id="subject" placeholder="What is this about?">
+                        <input type="text" name="subject" class="form-control" id="subject" placeholder="What is this about?" required>
                     </div>
                     <div class="mb-4">
                         <label for="message" class="form-label small fw-bold text-muted text-uppercase" style="letter-spacing: 1px; font-size: 0.75rem;">Message</label>
-                        <textarea class="form-control" id="message" rows="5" placeholder="Write your message here..."></textarea>
+                        <textarea class="form-control" name="message" id="message" rows="5" placeholder="Write your message here..." required></textarea>
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary btn-lg rounded-3 fw-bold py-3" style="font-size: 0.95rem;">
