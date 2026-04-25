@@ -16,7 +16,7 @@ class StripeController extends Controller
             return redirect()->route('recipes.show', $recipe);
         }
 
-        Stripe::setApiKey(env('STRIPE_SECRET', 'sk_test_mock'));
+        Stripe::setApiKey(config('services.stripe.secret', 'sk_test_mock'));
 
         $checkout_session = Session::create([
             'line_items' => [[
@@ -49,7 +49,7 @@ class StripeController extends Controller
             return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
         }
 
-        Stripe::setApiKey(env('STRIPE_SECRET', 'sk_test_mock'));
+        Stripe::setApiKey(config('services.stripe.secret', 'sk_test_mock'));
 
         $line_items = [];
         foreach ($cart as $id => $details) {
@@ -81,7 +81,7 @@ class StripeController extends Controller
 
     public function successCart(Request $request)
     {
-        Stripe::setApiKey(env('STRIPE_SECRET', 'sk_test_mock'));
+        Stripe::setApiKey(config('services.stripe.secret', 'sk_test_mock'));
         $sessionId = $request->get('session_id');
 
         if (!$sessionId) {
@@ -127,7 +127,7 @@ class StripeController extends Controller
 
     public function success(Request $request, Recipe $recipe)
     {
-        Stripe::setApiKey(env('STRIPE_SECRET', 'sk_test_mock'));
+        Stripe::setApiKey(config('services.stripe.secret', 'sk_test_mock'));
         $sessionId = $request->get('session_id');
 
         if (!$sessionId) {
