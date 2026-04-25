@@ -117,10 +117,10 @@
                                         <a href="{{ route('recipes.edit', $recipe) }}" class="btn btn-sm btn-outline-secondary" title="Edit">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <form action="{{ route('recipes.destroy', $recipe) }}" method="POST" onsubmit="return confirm('Delete this recipe?');">
+                                        <form action="{{ route('recipes.destroy', $recipe) }}" method="POST" class="delete-form">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger delete-btn" title="Delete" data-confirm-message="Delete this recipe?">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>

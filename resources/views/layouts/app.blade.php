@@ -122,11 +122,20 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="navbarDropdown">
+                                    @if(Auth::user()->is_admin)
+                                        <a class="dropdown-item py-2 text-primary fw-bold {{ request()->routeIs('admin.*') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                                            <i class="bi bi-shield-lock me-2"></i>Admin Dashboard
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                    @endif
                                     <a class="dropdown-item py-2 {{ request()->routeIs('dashboard') || request()->routeIs('creator.dashboard*') ? 'active' : '' }}" href="{{ route('dashboard') }}">
                                         <i class="bi bi-speedometer2 me-2 text-muted"></i>{{ __('Dashboard') }}
                                     </a>
                                     <a class="dropdown-item py-2 {{ request()->routeIs('creator.recipes.*') ? 'active' : '' }}" href="{{ route('creator.recipes.index') }}">
                                         <i class="bi bi-collection me-2 text-muted"></i>{{ __('My Recipes') }}
+                                    </a>
+                                    <a class="dropdown-item py-2 {{ request()->routeIs('profile.edit') ? 'active' : '' }}" href="{{ route('profile.edit') }}">
+                                        <i class="bi bi-person-gear me-2 text-muted"></i>{{ __('Profile Settings') }}
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item py-2" href="{{ route('orders.my') }}">
@@ -264,12 +273,38 @@
                 </div>
             </div>
         </div>
+
+        <!-- Global Alert Modal -->
+        <div class="modal fade" id="globalAlertModal" tabindex="-1" aria-labelledby="globalAlertModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="modal-header bg-white border-bottom-0 pb-0">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center pt-0 pb-4 px-4">
+                        <i class="bi bi-info-circle text-primary mb-3" style="font-size: 3rem;"></i>
+                        <h4 class="mb-3 fw-bold" id="globalAlertModalMessage">Alert message goes here.</h4>
+                        <button type="button" class="btn btn-primary px-4 rounded-pill fw-bold" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
     // Existing intersection observer code
     const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}});},{threshold:0.1});
     document.querySelectorAll('.animate-on-scroll').forEach(el=>observer.observe(el));
+
+    // Global Modals and JS Config
+    window.USER_PREFERENCES = {
+        skipDeleteConfirm: {{ auth()->check() && auth()->user()->skip_delete_confirm ? 'true' : 'false' }}
+    };
+
+    window.showAlert = function(message) {
+        document.getElementById('globalAlertModalMessage').textContent = message;
+        new bootstrap.Modal(document.getElementById('globalAlertModal')).show();
+    };
 
     // Global Delete Modal Logic
     const deleteForms = document.querySelectorAll('.delete-form');
@@ -283,8 +318,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     deleteForms.forEach(form => {
         form.addEventListener('submit', function(e) {
-            const skipConfirm = localStorage.getItem('skipDeleteConfirm');
-            if (skipConfirm === 'true') {
+            if (window.USER_PREFERENCES.skipDeleteConfirm) {
                 return; // Let the form submit naturally
             }
 
@@ -300,11 +334,26 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     const confirmBtn = document.getElementById('globalDeleteModalConfirmBtn');
     if (confirmBtn) {
-        confirmBtn.addEventListener('click', function() {
+        confirmBtn.addEventListener('click', async function() {
             const dontShowAgain = document.getElementById('dontShowDeleteConfirmAgain').checked;
+            
             if (dontShowAgain) {
-                localStorage.setItem('skipDeleteConfirm', 'true');
+                // Save locally first for instant effect
+                window.USER_PREFERENCES.skipDeleteConfirm = true;
+                
+                // Save to server
+                try {
+                    await fetch('{{ route('profile.preference', [], false) }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({ skip_delete_confirm: true })
+                    });
+                } catch(e) { }
             }
+            
             if (currentFormToSubmit) {
                 currentFormToSubmit.submit();
             }
@@ -346,12 +395,12 @@ document.addEventListener('DOMContentLoaded',()=>{
                         cartNavIcon.innerHTML += '<span id="cart-badge-count" class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger border border-white" style="font-size: 0.65rem; transform: translate(-30%, -20%) !important;">' + data.cart_count + '</span>';
                     }
                 } else {
-                    alert(data.error || data.warning || 'Failed to add to cart.');
+                    window.showAlert(data.error || data.warning || 'Failed to add to cart.');
                     btn.disabled = false;
                     btn.innerHTML = originalHtml;
                 }
             } catch (err) {
-                alert('A network error occurred.');
+                window.showAlert('A network error occurred.');
                 btn.disabled = false;
                 btn.innerHTML = originalHtml;
             }

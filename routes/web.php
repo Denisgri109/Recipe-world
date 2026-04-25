@@ -45,6 +45,22 @@ Route::get('/contact', function () {
     return view('pages.contact');
 })->name('contact');
 
+use App\Models\Complaint;
+use Illuminate\Http\Request;
+
+Route::post('/contact', function (Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'subject' => 'required|string|max:255',
+        'message' => 'required|string',
+    ]);
+
+    Complaint::create($request->only(['name', 'email', 'subject', 'message']));
+
+    return redirect()->back()->with('success', 'Your message has been sent successfully. We will deal with it shortly!');
+})->name('contact.submit');
+
 // Google OAuth routes
 use App\Http\Controllers\Auth\GoogleController;
 
@@ -58,6 +74,8 @@ use App\Http\Controllers\ProfileController;
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::post('/profile/preference', [ProfileController::class, 'updatePreference'])->name('profile.preference');
 });
 
 // Use CreatorDashboardController instead of HomeController for /home if it's the new standard
@@ -88,4 +106,23 @@ Route::middleware('auth')->group(function () {
     Route::post('/stripe/checkout/{recipe}', [App\Http\Controllers\StripeController::class, 'checkout'])->name('stripe.checkout');
     Route::get('/stripe/success/cart', [App\Http\Controllers\StripeController::class, 'successCart'])->name('stripe.success.cart');
     Route::get('/stripe/success/{recipe}', [App\Http\Controllers\StripeController::class, 'success'])->name('stripe.success');
+});
+
+// Admin Routes
+use App\Http\Controllers\AdminController;
+
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    
+    Route::get('/users', [AdminController::class, 'users'])->name('users');
+    Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('users.edit');
+    Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
+    Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.destroy');
+    
+    Route::get('/recipes', [AdminController::class, 'recipes'])->name('recipes');
+    Route::delete('/recipes/{recipe}', [AdminController::class, 'deleteRecipe'])->name('recipes.destroy');
+    
+    Route::get('/complaints', [AdminController::class, 'complaints'])->name('complaints');
+    Route::get('/complaints/{complaint}', [AdminController::class, 'showComplaint'])->name('complaints.show');
+    Route::post('/complaints/{complaint}/reply', [AdminController::class, 'replyComplaint'])->name('complaints.reply');
 });

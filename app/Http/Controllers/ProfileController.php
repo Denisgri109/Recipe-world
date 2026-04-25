@@ -35,8 +35,32 @@ class ProfileController extends Controller
             $user->avatar = $path;
         }
 
+        $user->skip_delete_confirm = $request->has('skip_delete_confirm');
         $user->save();
 
         return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required', 'current_password'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $request->user()->update([
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->route('profile.edit')->with('success', 'Password updated successfully.');
+    }
+
+    public function updatePreference(Request $request)
+    {
+        $user = Auth::user();
+        $user->skip_delete_confirm = $request->input('skip_delete_confirm', false);
+        $user->save();
+
+        return response()->json(['success' => true]);
     }
 }

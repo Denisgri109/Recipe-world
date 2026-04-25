@@ -20,6 +20,8 @@ class User extends Authenticatable
         'avatar',
         'bio',
         'email_verified_at',
+        'skip_delete_confirm',
+        'is_admin',
     ];
 
     protected $hidden = [
