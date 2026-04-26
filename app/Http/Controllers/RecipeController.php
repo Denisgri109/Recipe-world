@@ -63,6 +63,7 @@ class RecipeController extends Controller
             'difficulty' => 'required|in:easy,medium,hard',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category_id' => 'nullable|exists:categories,id',
+            'new_category' => 'nullable|string|max:255',
             'price' => 'nullable|numeric|min:0|max:1000',
             'ingredients' => 'nullable|array',
             'ingredients.*.name' => 'required_with:ingredients|string|max:255',
@@ -70,6 +71,14 @@ class RecipeController extends Controller
         ]);
 
         $validated['user_id'] = auth()->id();
+
+        if ($request->filled('new_category')) {
+            $category = \App\Models\Category::firstOrCreate(
+                ['name' => trim($request->string('new_category')->toString())],
+                ['user_id' => auth()->id()]
+            );
+            $validated['category_id'] = $category->id;
+        }
 
         if ($request->hasFile('image_path')) {
             $validated['image_path'] = $request->file('image_path')->store('recipes', 'public');
@@ -136,11 +145,20 @@ class RecipeController extends Controller
             'difficulty' => 'required|in:easy,medium,hard',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category_id' => 'nullable|exists:categories,id',
+            'new_category' => 'nullable|string|max:255',
             'price' => 'nullable|numeric|min:0|max:1000',
             'ingredients' => 'nullable|array',
             'ingredients.*.name' => 'required_with:ingredients|string|max:255',
             'ingredients.*.quantity' => 'nullable|string|max:100',
         ]);
+
+        if ($request->filled('new_category')) {
+            $category = \App\Models\Category::firstOrCreate(
+                ['name' => trim($request->string('new_category')->toString())],
+                ['user_id' => auth()->id()]
+            );
+            $validated['category_id'] = $category->id;
+        }
 
         if ($request->hasFile('image_path')) {
             if ($recipe->image_path) {

@@ -2,13 +2,13 @@
 
 **Recipe World** is a collaborative, database-driven web application that acts as a digital community cookbook. Built with the Laravel framework, it allows food enthusiasts to create personal accounts, share their favourite recipes, and discover new dishes from the community.
 
-## Live Demo
-
-> **Vercel Public URL:** https://recipe-world-roman.vercel.app
-
 ## Deployment
 
-The application is deployed on Vercel with environment variables configured for production.
+The application is hosted on Microsoft Azure with environment variables configured for production.
+
+## Developer
+
+[Denis Grinevicius on LinkedIn](https://www.linkedin.com/in/denis-grinevicius-2615a32b1/)
 
 ## Features
 
@@ -26,7 +26,7 @@ The application is deployed on Vercel with environment variables configured for 
 
 ## Technology Stack
 
-- **Vercel** - Hosting and deployment platform
+- **Azure** - Hosting and deployment platform
 - **Laravel 10.x** - PHP web framework
 - **MySQL** - Relational database
 - **Bootstrap 5** - Frontend styling and layout
@@ -126,25 +126,10 @@ The application will be available at `http://localhost:8000`
 4. **Edit or delete** your own recipes
 5. **Search and filter** recipes by keyword, category, or difficulty
 
-## Screenshots
+## Screencast
 
-### About Page
 
-![About page](docs/screenshots/about.png)
-
-### Contact Page
-
-![Contact page](docs/screenshots/contact.png)
-
-### Login Page
-
-![Login page](docs/screenshots/login.png)
-
-## Known Issues / Limitations
-
-- Some database-backed pages can be slow or fail intermittently if cloud database network access is not fully configured.
-- Vercel Git integration is not yet connected for automatic deploys from repository pushes.
-- Persistent local disk writes are not available on Vercel serverless runtime, so storage/logging paths must use serverless-safe configuration.
+<video controls src="2026-04-13 23-48-09.mp4" title="Title"></video>
 
 ## Project Structure
 
@@ -171,11 +156,6 @@ Recipe-world/
     └── web.php                        # Route definitions
 ```
 
-## Known Issues & Limitations
-
-- **Contact form** - The contact page includes a form layout for demonstration purposes but does not send emails. A mail driver would need to be configured in production.
-- **Image storage** - Uploaded recipe images are stored on the local filesystem via Laravel's `storage/app/public` disk. In a production deployment, a cloud storage solution would be more scalable.
-- **No admin role** - Any authenticated user can create, edit and delete categories. A future improvement would add an admin role to restrict category management.
 
 ## Assumptions
 

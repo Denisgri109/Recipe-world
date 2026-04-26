@@ -51,6 +51,12 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <div class="mt-2">
+                                <input type="text" class="form-control form-control-sm @error('new_category') is-invalid @enderror" id="new_category" name="new_category" value="{{ old('new_category') }}" placeholder="Or create new category...">
+                                @error('new_category')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                             @error('category_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
