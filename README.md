@@ -2,6 +2,10 @@
 
 **Recipe World** is a collaborative, database-driven web application that acts as a digital community cookbook. Built with the Laravel framework, it allows food enthusiasts to create personal accounts, share their favourite recipes, and discover new dishes from the community.
 
+## Screencast
+
+![Screencast Demo](screencast.gif)
+
 ## Deployment
 
 The application is hosted on Microsoft Azure with environment variables configured for production.
@@ -126,10 +130,6 @@ The application will be available at `http://localhost:8000`
 4. **Edit or delete** your own recipes
 5. **Search and filter** recipes by keyword, category, or difficulty
 
-## Screencast
-
-
-<video controls src="2026-04-13 23-48-09.mp4" title="Title"></video>
 
 ## Project Structure
 
