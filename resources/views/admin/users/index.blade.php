@@ -40,6 +40,8 @@
                             <td>
                                 @if($user->is_admin)
                                     <span class="badge bg-danger rounded-pill">Admin</span>
+                                @elseif($user->is_banned)
+                                    <span class="badge bg-dark rounded-pill">Banned</span>
                                 @else
                                     <span class="badge bg-secondary rounded-pill">User</span>
                                 @endif
@@ -51,7 +53,22 @@
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                     @if(!$user->is_admin)
-                                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="delete-form d-inline" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                        @if($user->is_banned)
+                                            <form action="{{ route('admin.users.unban', $user) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-outline-success" title="Unban User">
+                                                    <i class="bi bi-unlock"></i>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('admin.users.ban', $user) }}" method="POST" class="delete-form d-inline" data-confirm-message="Are you sure you want to ban this user?">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-outline-warning" title="Ban User">
+                                                    <i class="bi bi-lock"></i>
+                                                </button>
+                                            </form>
+                                        @endif
+                                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="delete-form d-inline" data-confirm-message="Are you sure you want to permanently delete this user?">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete User">

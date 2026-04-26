@@ -40,7 +40,7 @@
                                     <a href="{{ route('recipes.show', $recipe) }}" target="_blank" class="btn btn-sm btn-outline-primary" title="View Recipe">
                                         <i class="bi bi-box-arrow-up-right"></i>
                                     </a>
-                                    <form action="{{ route('admin.recipes.destroy', $recipe) }}" method="POST" class="delete-form d-inline" onsubmit="return confirm('Are you sure you want to delete this recipe permanently?');">
+                                    <form action="{{ route('admin.recipes.destroy', $recipe) }}" method="POST" class="delete-form d-inline" data-confirm-message="Are you sure you want to permanently delete this recipe?">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Recipe">

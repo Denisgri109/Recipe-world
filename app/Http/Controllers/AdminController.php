@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Recipe;
 use App\Models\Category;
 use App\Models\Order;
-use App\Models\Complaint;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -18,7 +18,7 @@ class AdminController extends Controller
             'total_recipes' => Recipe::count(),
             'total_categories' => Category::count(),
             'total_orders' => Order::count(),
-            'pending_complaints' => Complaint::where('status', 'pending')->count(),
+            'pending_messages' => Message::where('status', 'pending')->count(),
         ];
 
         return view('admin.dashboard', compact('stats'));
@@ -51,6 +51,19 @@ class AdminController extends Controller
         return redirect()->route('admin.users')->with('success', 'User deleted.');
     }
 
+    public function banUser(User $user)
+    {
+        if ($user->is_admin) return redirect()->back()->with('error', 'Cannot ban an admin.');
+        $user->update(['is_banned' => true]);
+        return redirect()->back()->with('success', 'User banned successfully.');
+    }
+
+    public function unbanUser(User $user)
+    {
+        $user->update(['is_banned' => false]);
+        return redirect()->back()->with('success', 'User unbanned successfully.');
+    }
+
     // Recipes
     public function recipes()
     {
@@ -64,26 +77,31 @@ class AdminController extends Controller
         return redirect()->route('admin.recipes')->with('success', 'Recipe deleted.');
     }
 
-    // Complaints
-    public function complaints()
+    // Messages
+    public function messages()
     {
-        $complaints = Complaint::latest()->paginate(20);
-        return view('admin.complaints.index', compact('complaints'));
+        $messages = Message::latest()->paginate(20);
+        return view('admin.messages.index', compact('messages'));
     }
 
-    public function showComplaint(Complaint $complaint)
+    public function showMessage(Message $message)
     {
-        return view('admin.complaints.show', compact('complaint'));
+        return view('admin.messages.show', compact('message'));
     }
 
-    public function replyComplaint(Request $request, Complaint $complaint)
+    public function replyMessage(Request $request, Message $message)
     {
         $request->validate(['reply' => 'required|string']);
         
-        // Simulating email send
-        // Mail::to($complaint->email)->send(new ReplyMail($complaint, $request->reply));
+        \Illuminate\Support\Facades\Mail::to($message->email)
+            ->send(new \App\Mail\ReplyMessageMail($message, $request->reply));
 
-        $complaint->update(['status' => 'resolved']);
-        return redirect()->route('admin.complaints')->with('success', 'Reply recorded and marked as resolved.');
+        return redirect()->route('admin.messages.show', $message)->with('success', 'Email sent to the user successfully! The message is still marked as Pending until you resolve it.');
+    }
+
+    public function resolveMessage(Message $message)
+    {
+        $message->update(['status' => 'resolved']);
+        return redirect()->back()->with('success', 'Message marked as resolved.');
     }
 }

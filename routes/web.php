@@ -45,18 +45,30 @@ Route::get('/contact', function () {
     return view('pages.contact');
 })->name('contact');
 
-use App\Models\Complaint;
+use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 Route::post('/contact', function (Request $request) {
-    $request->validate([
+    $data = $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255',
         'subject' => 'required|string|max:255',
         'message' => 'required|string',
     ]);
 
-    Complaint::create($request->only(['name', 'email', 'subject', 'message']));
+    // Save to local database
+    $messageRecord = Message::create($data);
+
+    // Send notification to admin via Resend
+    try {
+        \Illuminate\Support\Facades\Mail::to(env('ADMIN_EMAIL', env('MAIL_FROM_ADDRESS'))) // Send to your personal email
+            ->send(new \App\Mail\ContactAdminMail($data));
+        
+        \Illuminate\Support\Facades\Log::info('Resend Email Submitted Successfully');
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\Log::error('Resend Submission Failed: ' . $e->getMessage());
+    }
 
     return redirect()->back()->with('success', 'Your message has been sent successfully. We will deal with it shortly!');
 })->name('contact.submit');
@@ -118,11 +130,14 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('users.edit');
     Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
     Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.destroy');
+    Route::post('/users/{user}/ban', [AdminController::class, 'banUser'])->name('users.ban');
+    Route::post('/users/{user}/unban', [AdminController::class, 'unbanUser'])->name('users.unban');
     
     Route::get('/recipes', [AdminController::class, 'recipes'])->name('recipes');
     Route::delete('/recipes/{recipe}', [AdminController::class, 'deleteRecipe'])->name('recipes.destroy');
     
-    Route::get('/complaints', [AdminController::class, 'complaints'])->name('complaints');
-    Route::get('/complaints/{complaint}', [AdminController::class, 'showComplaint'])->name('complaints.show');
-    Route::post('/complaints/{complaint}/reply', [AdminController::class, 'replyComplaint'])->name('complaints.reply');
+    Route::get('/messages', [AdminController::class, 'messages'])->name('messages');
+    Route::get('/messages/{message}', [AdminController::class, 'showMessage'])->name('messages.show');
+    Route::post('/messages/{message}/reply', [AdminController::class, 'replyMessage'])->name('messages.reply');
+    Route::post('/messages/{message}/resolve', [AdminController::class, 'resolveMessage'])->name('messages.resolve');
 });

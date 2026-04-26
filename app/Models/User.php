@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email_verified_at',
         'skip_delete_confirm',
         'is_admin',
+        'is_banned',
     ];
 
     protected $hidden = [

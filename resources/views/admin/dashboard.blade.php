@@ -9,7 +9,7 @@
         <div>
             <a href="{{ route('admin.users') }}" class="btn btn-outline-primary me-2">Manage Users</a>
             <a href="{{ route('admin.recipes') }}" class="btn btn-outline-success me-2">Manage Recipes</a>
-            <a href="{{ route('admin.complaints') }}" class="btn btn-outline-danger">Complaints</a>
+            <a href="{{ route('admin.messages') }}" class="btn btn-outline-danger">Messages</a>
         </div>
     </div>
 
@@ -44,9 +44,9 @@
         <div class="col-md-3">
             <div class="card border-0 shadow-sm rounded-4 h-100">
                 <div class="card-body text-center p-4">
-                    <div class="display-4 text-danger mb-2"><i class="bi bi-chat-left-dots"></i></div>
-                    <h2 class="fw-bold">{{ $stats['pending_complaints'] }}</h2>
-                    <p class="text-muted mb-0">Pending Complaints</p>
+                    <div class="display-4 text-danger mb-2"><i class="bi bi-envelope-paper"></i></div>
+                    <h2 class="fw-bold">{{ $stats['pending_messages'] }}</h2>
+                    <p class="text-muted mb-0">Pending Messages</p>
                 </div>
             </div>
         </div>
